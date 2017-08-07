@@ -1,11 +1,20 @@
 package com.nokia.tpl;
 
 public class SubTaskTemplate {
+    private String id;
     private boolean selected;
     private String name;
     private VariableTemplate description;
     private VariableTemplate rationale;
     private VariableTemplate issue;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 
     public boolean isSelected() {
         return selected;
@@ -45,5 +54,20 @@ public class SubTaskTemplate {
 
     public void setIssue(VariableTemplate issue) {
         this.issue = issue;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        SubTaskTemplate that = (SubTaskTemplate) o;
+
+        return id != null ? id.equals(that.id) : that.id == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
     }
 }

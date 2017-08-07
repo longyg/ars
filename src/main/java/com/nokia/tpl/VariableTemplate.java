@@ -9,11 +9,10 @@ public class VariableTemplate {
     private boolean getCalculated;
 
     public VariableTemplate() {
-
     }
 
     public VariableTemplate(String tpl) {
-        this.tpl = tpl;
+        this.setTpl(tpl);
     }
 
     public String getTpl() {
@@ -26,8 +25,7 @@ public class VariableTemplate {
         while (m.find()) {
             String param = m.group(); //${xx}
             String name = param.substring(2, param.length() - 1);
-            Variable variable = new Variable(name);
-            VariablesRepository.addVariable(variable);
+            VariablesRepository.newVariable(name.trim());
         }
     }
 
@@ -48,7 +46,8 @@ public class VariableTemplate {
 
         while (m.find()) {
             String param = m.group(); //${xx}
-            String value = VariablesRepository.getVariableValue(param.substring(2, param.length() - 1));
+            String paramName = param.substring(2, param.length() - 1);
+            String value = VariablesRepository.getVariableValue(paramName);
             m.appendReplacement(sb, value == null ? "" : value.toString());
         }
 
@@ -62,7 +61,10 @@ public class VariableTemplate {
     public static void main(String[] args) {
         VariableTemplate template = new VariableTemplate();
         template.setTpl("This is a ${NE_version} template");
-        VariablesRepository.addVariable(new Variable("NE_version", "11.0"));
+
+        VariablesRepository.newVariable("NE_version");
+        VariablesRepository.setValue("NE_version", "11.0");
+
         System.out.println(template.getReal());
     }
 }

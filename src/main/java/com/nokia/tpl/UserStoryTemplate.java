@@ -24,7 +24,9 @@ public class UserStoryTemplate extends VariableTemplate {
     }
 
     public void addSubTask(SubTaskTemplate subTaskTemplate) {
-        subTaskTemplateList.add(subTaskTemplate);
+        if (!subTaskTemplateList.contains(subTaskTemplate)) {
+            subTaskTemplateList.add(subTaskTemplate);
+        }
     }
 
     @Override

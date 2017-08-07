@@ -10,9 +10,18 @@ public class VariablesRepository {
         return variables;
     }
 
-    public static void addVariable(Variable variable) {
+    public static void newVariable(String name) {
+        Variable variable = new Variable(name);
         if (!variables.contains(variable)) {
             variables.add(variable);
+        }
+    }
+
+    public static void setValue(String name, String value) {
+        for (Variable variable : variables) {
+            if (variable.getName().equals(name)) {
+                variable.setValue(value);
+            }
         }
     }
 

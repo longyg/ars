@@ -26,7 +26,7 @@ public class TemplateDefParser {
                 case XMLStreamConstants.START_ELEMENT:
                     StartElement startElement = event.asStartElement();
                     String qName = startElement.getName().getLocalPart();
-                    if (qName.equals("templateDef")) {
+                    if (qName.equals("template")) {
                         Iterator<Attribute> attributes = startElement.getAttributes();
                         while (attributes.hasNext()) {
                             Attribute attribute = attributes.next();

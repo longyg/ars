@@ -10,8 +10,8 @@
         <info name="pmPbs" row="8"></info>
     </basic>
     <userstories>
-        <us name="us1" row="1" sub="2,5"></us>
-        <us name="us2" row="6" sub="7,10"></us>
-        <us name="us1" row="11" sub="12"></us>
+        <us name="us1" row="12" sub="13,15"></us>
+        <us name="us2" row="16" sub="17"></us>
+        <us name="us3" row="18" sub="19,22"></us>
     </userstories>
 </template>
