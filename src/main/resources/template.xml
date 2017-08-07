@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<template sheet="1" name="user story">
+    <basic>
+        <title row="0"></title>
+        <info name="adapDescription" row="5"></info>
+        <info name="fmDBPrefix" row="6"></info>
+    </basic>
+    <userstories>
+        <us name="us1" row="1" sub="(2,5)"></us>
+        <us name="us2" row="6" sub="(7,10)"></us>
+    </userstories>
+</template>
