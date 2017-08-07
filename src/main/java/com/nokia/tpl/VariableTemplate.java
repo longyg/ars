@@ -8,12 +8,27 @@ public class VariableTemplate {
     private String real;
     private boolean getCalculated;
 
+    public VariableTemplate() {
+
+    }
+
+    public VariableTemplate(String tpl) {
+        this.tpl = tpl;
+    }
+
     public String getTpl() {
         return tpl;
     }
 
     public void setTpl(String tpl) {
         this.tpl = tpl;
+        Matcher m = Pattern.compile(Constants.VARIABLE_REGEX).matcher(tpl);
+        while (m.find()) {
+            String param = m.group(); //${xx}
+            String name = param.substring(2, param.length() - 1);
+            Variable variable = new Variable(name);
+            VariablesRepository.addVariable(variable);
+        }
     }
 
     public String getReal() {
@@ -27,7 +42,7 @@ public class VariableTemplate {
 
     private void calculateTpl() {
         //用参数替换模板中的${}变量
-        Matcher m = Pattern.compile("\\$\\{\\w+\\}").matcher(tpl);
+        Matcher m = Pattern.compile(Constants.VARIABLE_REGEX).matcher(tpl);
 
         StringBuffer sb = new StringBuffer();
 
