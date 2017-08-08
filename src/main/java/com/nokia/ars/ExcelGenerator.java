@@ -27,8 +27,11 @@ public class ExcelGenerator {
 
             wb.write(fileOut);
         } catch (Exception e) {
+            e.printStackTrace();
             LOG.error("Exception while generating excel: ", e);
             throw new Exception("Exception while generating excel: ", e);
+        } finally {
+            wb.close();
         }
     }
 }

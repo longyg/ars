@@ -37,7 +37,7 @@ public class USExcelTemplateParser {
         List<AdapInfoTemplate> adapInfoTemplateList = new ArrayList<>();
         for (Info info : tplDef.getBasic().getInfoList()) {
             AdapInfoTemplate adapTpl = new AdapInfoTemplate();
-            adapTpl.setName(tplDef.getName());
+            adapTpl.setName(info.getName());
             String presentation = usSheet.getRow(info.getRow()).getCell(Constants.ADAP_INFO_PRESENTATION_COL).getStringCellValue();
             adapTpl.setPresentation(presentation);
 

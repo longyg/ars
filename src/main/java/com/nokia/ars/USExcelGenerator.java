@@ -26,7 +26,9 @@ public class USExcelGenerator {
         HSSFRow titleRow = usSheet.getRow(tplDef.getBasic().getTitle().getRow());
         HSSFCell titleCell = titleRow.getCell(Constants.TITLE_COL);
         titleCell.setCellType(CellType.STRING);
-        titleCell.setCellValue(template.getUsExcelTemplate().getBasicTemplate().getTitleTemplate().getReal());
+        String value = template.getUsExcelTemplate().getBasicTemplate().getTitleTemplate().getReal();
+        System.out.println(value);
+        titleCell.setCellValue(value);
 
         for (Info info : tplDef.getBasic().getInfoList()) {
             HSSFRow row = usSheet.getRow(info.getRow());

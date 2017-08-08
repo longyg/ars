@@ -17,10 +17,9 @@ public class ExcelTemplateParser  {
     }
 
     public ExcelTemplate parse(String templatePath) throws Exception {
-        try (FileInputStream fi = new FileInputStream(templatePath);
-             POIFSFileSystem fs = new POIFSFileSystem(fi);)
+        try (FileInputStream fi = new FileInputStream(templatePath);)
         {
-            wb = new HSSFWorkbook(fs);
+            wb = new HSSFWorkbook(fi);
         }
         catch (Exception e)
         {
