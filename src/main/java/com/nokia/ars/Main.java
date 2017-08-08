@@ -13,7 +13,7 @@ import java.io.InputStreamReader;
 public class Main {
     private static final String xlsTplPath = "template.xls";
     private static final String tplDefPath = "template.xml";
-    private static final String outXlsPath = "ars_new.xls";
+    //private static final String outXlsPath = "ars_new.xls";
 
     public static void main(String[] args) throws Exception {
         TemplateDefParser tplDefParser = new TemplateDefParser();
@@ -25,7 +25,8 @@ public class Main {
         readVariableInput();
 
         ExcelGenerator generator = new ExcelGenerator(tplDef, template, xlsTplParser.getWb());
-        generator.generate(outXlsPath);
+        String outFileName = template.getUsExcelTemplate().getBasicTemplate().getTitleTemplate().getReal();
+        generator.generate(outFileName + ".xls");
     }
 
     private static void readVariableInput() throws Exception {

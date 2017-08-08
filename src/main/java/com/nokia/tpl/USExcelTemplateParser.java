@@ -58,7 +58,6 @@ public class USExcelTemplateParser {
             userStoryTemplate.setName(us.getName());
             HSSFRow row = usSheet.getRow(us.getRow());
             HSSFCell cell = row.getCell(Constants.US_TITLE_COL);
-            System.out.println(cell);
             String tpl = cell.getStringCellValue();
             userStoryTemplate.setTpl(tpl);
 
