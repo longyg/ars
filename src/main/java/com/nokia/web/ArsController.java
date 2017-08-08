@@ -17,4 +17,9 @@ public class ArsController {
         model.addAttribute("name", name);
         return "greeting";
     }
+
+    @RequestMapping("/ars")
+    public String ars() {
+        return "ars";
+    }
 }
