@@ -30,6 +30,6 @@ public class NeController {
     @RequestMapping(value = "/ne/add", method = RequestMethod.POST)
     public String addNe(@ModelAttribute("ne") NetworkElement ne) {
         neRepository.save(ne);
-        return "ne";
+        return "redirect:/ne";
     }
 }
