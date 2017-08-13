@@ -2,6 +2,7 @@ package com.longyg.backend.ars.tpl;
 
 public class SubTaskTemplate {
     private String id;
+    private int row;
     private boolean selected;
     private String name;
     private VariableTemplate description;
@@ -14,6 +15,14 @@ public class SubTaskTemplate {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+    public void setRow(int row) {
+        this.row = row;
     }
 
     public boolean isSelected() {

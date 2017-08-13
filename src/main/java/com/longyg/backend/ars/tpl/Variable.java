@@ -4,8 +4,16 @@ public class Variable {
     private String name;
     private String value;
 
+    public Variable() {
+    }
+
     public Variable(String name) {
         this.name = name;
+    }
+
+    public Variable(String name, String value) {
+        this.name = name;
+        this.value = value;
     }
 
     public String getName() {

@@ -1,6 +1,6 @@
 package com.longyg.backend.ars.tpl.definition;
 
-public class UserStory {
+public class US {
     private String name;
     private int row;
     private String sub;

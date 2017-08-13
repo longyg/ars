@@ -5,54 +5,22 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <title>ARS</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <title>Network Element</title>
 </head>
 <body>
 
 <div class="container-fluid">
-    <div class="row">
-        <div class="col-md-1"></div>
-        <div class="col-md-10">
-            <nav class="navbar navbar-default" role="navigation">
-                <div class="container-fluid">
-                    <div class="navbar-header">
-                        <a class="navbar-brand" href="/">ARS Tool</a>
-                    </div>
-                    <div>
-                        <ul class="nav navbar-nav">
-                            <li class="active"><a href="#">iOS</a></li>
-                            <li><a href="#">SVN</a></li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    Java
-                                    <b class="caret"></b>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#">jmeter</a></li>
-                                    <li><a href="#">EJB</a></li>
-                                    <li><a href="#">Jasper Report</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="#">分离的链接</a></li>
-                                    <li class="divider"></li>
-                                    <li><a href="#">另一个分离的链接</a></li>
-                                </ul>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-        </div>
-        <div class="col-md-1"></div>
-    </div>
+    <#include "/inc/nav.ftl" />
 
     <div class="row">
         <div class="col-md-1"></div>
         <div class="col-md-10">
             <div><h3>Network Elements</h3></div>
             <div style="margin:10px">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createNEFromModal">Add</button>
-                <button type="button" class="btn btn-primary">Delete</button>
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createNEFromModal">
+                    <span class="glyphicon glyphicon-plus-sign"></span> Add
+                </button>
             </div>
             <table class="table table-bordered">
                 <thead>
@@ -60,6 +28,7 @@
                     <th>NE Type</th>
                     <th>NE Version</th>
                     <th>Remarks</th>
+                    <th>Operations</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -68,6 +37,17 @@
                         <td>${ne.neType}</td>
                         <td>${ne.neVersion}</td>
                         <td>${ne.remarks}</td>
+                        <td>
+                            <a class="btn btn-sm btn-primary" href="/param?neType=${ne.neType}&neVersion=${ne.neVersion}">
+                                <span class="glyphicon glyphicon-cog"></span> Parameters
+                            </a>
+                            <a class="btn btn-sm btn-info" href="/ars?neType=${ne.neType}&neVersion=${ne.neVersion}">
+                                <span class="glyphicon glyphicon-book"></span> ARS
+                            </a>
+                            <a class="btn btn-sm btn-danger" href="/ne/delete?neType=${ne.neType}&neVersion=${ne.neVersion}">
+                                <span class="glyphicon glyphicon-remove-sign"></span> Delete
+                            </a>
+                        </td>
                     </tr>
                     </#list>
                 </tbody>
@@ -75,6 +55,8 @@
         </div>
         <div class="col-md-1"></div>
     </div>
+
+    <#include "/inc/footer.ftl" />
 </div>
 
 <div class="modal fade" id="createNEFromModal" tabindex="-1" role="dialog"
@@ -140,7 +122,7 @@
     </div>
 </div>
 
-<script src="js/jquery-1.9.1.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
+<script src="/js/jquery-1.9.1.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
 </body>
 </html>

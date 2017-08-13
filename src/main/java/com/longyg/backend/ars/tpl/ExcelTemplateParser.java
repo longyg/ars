@@ -3,19 +3,19 @@ package com.longyg.backend.ars.tpl;
 import com.longyg.backend.ars.tpl.definition.TemplateDefinition;
 import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.FileInputStream;
 
+@Component
 public class ExcelTemplateParser  {
     private static final Logger LOG = Logger.getLogger(ExcelTemplateParser.class);
     private TemplateDefinition tplDef;
     private HSSFWorkbook wb;
 
-    public ExcelTemplateParser(TemplateDefinition tplDef) {
+    public ExcelTemplate parse(String templatePath, TemplateDefinition tplDef) throws Exception {
         this.tplDef = tplDef;
-    }
-
-    public ExcelTemplate parse(String templatePath) throws Exception {
         try (FileInputStream fi = new FileInputStream(templatePath);)
         {
             wb = new HSSFWorkbook(fi);
@@ -27,8 +27,8 @@ public class ExcelTemplateParser  {
         }
 
         // User Story sheet
-        USExcelTemplateParser usExcelTemplateParser = new USExcelTemplateParser(wb, tplDef);
-        USExcelTemplate usExcelTemplate = usExcelTemplateParser.parse();
+        USExcelTemplateParser usExcelTemplateParser = new USExcelTemplateParser();
+        USExcelTemplate usExcelTemplate = usExcelTemplateParser.parse(wb, this.tplDef);
 
         ExcelTemplate excelTemplate = new ExcelTemplate();
         excelTemplate.setUsExcelTemplate(usExcelTemplate);

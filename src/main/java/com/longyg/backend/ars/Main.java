@@ -19,8 +19,8 @@ public class Main {
         TemplateDefParser tplDefParser = new TemplateDefParser();
         TemplateDefinition tplDef = tplDefParser.parse(tplDefPath);
 
-        ExcelTemplateParser xlsTplParser = new ExcelTemplateParser(tplDef);
-        ExcelTemplate template = xlsTplParser.parse(xlsTplPath);
+        ExcelTemplateParser xlsTplParser = new ExcelTemplateParser();
+        ExcelTemplate template = xlsTplParser.parse(xlsTplPath, tplDef);
 
         readVariableInput();
 

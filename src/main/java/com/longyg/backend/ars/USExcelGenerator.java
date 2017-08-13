@@ -3,7 +3,7 @@ package com.longyg.backend.ars;
 import com.longyg.backend.ars.tpl.*;
 import com.longyg.backend.ars.tpl.definition.Info;
 import com.longyg.backend.ars.tpl.definition.TemplateDefinition;
-import com.longyg.backend.ars.tpl.definition.UserStory;
+import com.longyg.backend.ars.tpl.definition.US;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -37,7 +37,7 @@ public class USExcelGenerator {
             cell.setCellValue(getAdapInfo(info.getName()));
         }
 
-        for (UserStory us : tplDef.getUsList()) {
+        for (US us : tplDef.getUsList()) {
             HSSFRow usRow = usSheet.getRow(us.getRow());
             HSSFCell usCell = usRow.getCell(Constants.US_TITLE_COL);
             usCell.setCellType(CellType.STRING);
@@ -124,7 +124,7 @@ public class USExcelGenerator {
         return "";
     }
 
-    private void setSubTaskCells(UserStory us, UserStoryTemplate usTemplate, String subTaskId, HSSFRow row) {
+    private void setSubTaskCells(US us, UserStoryTemplate usTemplate, String subTaskId, HSSFRow row) {
         // Description
         HSSFCell descCell = row.getCell(Constants.SUB_DESCRIPTION_COL);
         if (descCell == null) {

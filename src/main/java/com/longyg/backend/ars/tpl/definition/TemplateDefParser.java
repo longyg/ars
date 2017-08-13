@@ -1,5 +1,7 @@
 package com.longyg.backend.ars.tpl.definition;
 
+import org.springframework.stereotype.Component;
+
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamConstants;
@@ -11,6 +13,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Iterator;
 
+@Component
 public class TemplateDefParser {
     public TemplateDefinition parse(String templatePath) throws FileNotFoundException, XMLStreamException {
         XMLInputFactory factory = XMLInputFactory.newInstance();
@@ -56,7 +59,7 @@ public class TemplateDefParser {
                         }
                         templateDef.getBasic().add(info);
                     } else if (qName.equals("us")) {
-                        UserStory us = new UserStory();
+                        US us = new US();
                         Iterator<Attribute> attributes = startElement.getAttributes();
                         while (attributes.hasNext()) {
                             Attribute attribute = attributes.next();
@@ -87,7 +90,7 @@ public class TemplateDefParser {
         for (Info info : template.getBasic().getInfoList()) {
             System.out.println(info.getName() + ", " + info.getRow());
         }
-        for (UserStory us : template.getUsList()) {
+        for (US us : template.getUsList()) {
             System.out.println(us.getName() + "," + us.getRow() + "," + us.getSub());
         }
     }

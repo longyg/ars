@@ -2,26 +2,26 @@ package com.longyg.backend.ars.tpl;
 
 import com.longyg.backend.ars.tpl.definition.Info;
 import com.longyg.backend.ars.tpl.definition.TemplateDefinition;
-import com.longyg.backend.ars.tpl.definition.UserStory;
+import com.longyg.backend.ars.tpl.definition.US;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class USExcelTemplateParser {
     private USExcelTemplate template;
     private HSSFWorkbook wb;
     private TemplateDefinition tplDef;
 
-    public USExcelTemplateParser(HSSFWorkbook wb, TemplateDefinition tplDef) {
+    public USExcelTemplate parse(HSSFWorkbook wb, TemplateDefinition tplDef) {
         this.wb = wb;
         this.tplDef = tplDef;
-    }
 
-    public USExcelTemplate parse() {
         template = new USExcelTemplate();
         template.setName(tplDef.getName());
 
@@ -53,7 +53,7 @@ public class USExcelTemplateParser {
         basicTemplate.setTitleTemplate(titleTemplate);
 
         List<UserStoryTemplate> userStoryTemplates = new ArrayList<>();
-        for (UserStory us : tplDef.getUsList()) {
+        for (US us : tplDef.getUsList()) {
             UserStoryTemplate userStoryTemplate = new UserStoryTemplate();
             userStoryTemplate.setName(us.getName());
             HSSFRow row = usSheet.getRow(us.getRow());
@@ -81,7 +81,7 @@ public class USExcelTemplateParser {
         this.template = template;
     }
 
-    private void parseSubTasks(UserStoryTemplate template, UserStory us, HSSFSheet usSheet) {
+    private void parseSubTasks(UserStoryTemplate template, US us, HSSFSheet usSheet) {
         String sub = us.getSub();
         if (sub.contains(",")) {
             String[] ss = sub.split(",");
@@ -92,6 +92,7 @@ public class USExcelTemplateParser {
                 HSSFRow row = usSheet.getRow(i);
                 SubTaskTemplate subTaskTemplate = createSubTaskTemplate(row);
                 subTaskTemplate.setId(template.getName() + "_" + i);
+                subTaskTemplate.setRow(i);
                 template.addSubTask(subTaskTemplate);
             }
         } else {
@@ -99,6 +100,7 @@ public class USExcelTemplateParser {
             HSSFRow row = usSheet.getRow(rowIndex);
             SubTaskTemplate subTaskTemplate = createSubTaskTemplate(row);
             subTaskTemplate.setId(template.getName() + "_" + rowIndex);
+            subTaskTemplate.setRow(rowIndex);
             template.addSubTask(subTaskTemplate);
         }
     }

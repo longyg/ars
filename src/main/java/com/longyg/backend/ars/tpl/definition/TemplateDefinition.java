@@ -7,7 +7,7 @@ public class TemplateDefinition {
     private int sheet;
     private String name;
     private Basic basic;
-    private List<UserStory> usList = new ArrayList<UserStory>();
+    private List<US> usList = new ArrayList<US>();
 
     public int getSheet() {
         return sheet;
@@ -33,16 +33,25 @@ public class TemplateDefinition {
         this.basic = basic;
     }
 
-    public List<UserStory> getUsList() {
+    public List<US> getUsList() {
         return usList;
     }
 
-    public void setUsList(List<UserStory> usList) {
+    public void setUsList(List<US> usList) {
         this.usList = usList;
     }
 
-    public void addUs(UserStory us) {
+    public void addUs(US us) {
         usList.add(us);
+    }
+
+    public US getUsByName(String name) {
+        for (US us : usList) {
+            if (us.getName().equals(name)) {
+                return us;
+            }
+        }
+        return null;
     }
 }
 

@@ -26,4 +26,13 @@ public class Basic {
     public void add(Info info) {
         infoList.add(info);
     }
+
+    public Info getInfoByName(String name) {
+        for (Info info : infoList) {
+            if (info.getName().equals(name)) {
+                return info;
+            }
+        }
+        return null;
+    }
 }
