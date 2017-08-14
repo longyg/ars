@@ -13,6 +13,19 @@ public class PmbObject implements Comparable<PmbObject> {
     private String presentation;
     private boolean isMeasuredObject;
 
+    private boolean hasIcon;
+    private boolean isAlarmingObject;
+    private boolean isCmObject;
+    private String tgppNbiObjName;
+    private String integrationVersion;
+    private boolean agentClass;
+
+    private int min;
+    private int max;
+    private int avg;
+    private int avgPerNetwork;
+
+
     private List<String> supporteredVersions = new ArrayList<String>();
     private List<String> dimensions = new ArrayList<String>();
 
