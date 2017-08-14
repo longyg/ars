@@ -1,4 +1,4 @@
-package com.longyg.backend.ars.tpl.definition;
+package com.longyg.backend.ars.tpl.definition.userstory;
 
 public class Title {
     private int row;

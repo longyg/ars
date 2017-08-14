@@ -1,9 +1,10 @@
 package com.longyg.backend.ars;
 
+import com.longyg.backend.TemplateRepository;
 import com.longyg.backend.ars.tpl.*;
-import com.longyg.backend.ars.tpl.definition.Info;
-import com.longyg.backend.ars.tpl.definition.TemplateDefinition;
-import com.longyg.backend.ars.tpl.definition.US;
+import com.longyg.backend.ars.tpl.definition.userstory.Info;
+import com.longyg.backend.ars.tpl.definition.userstory.TemplateDefinition;
+import com.longyg.backend.ars.tpl.definition.userstory.US;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -11,18 +12,15 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.CellType;
 
 public class USExcelGenerator {
-    private TemplateDefinition tplDef;
-    private ExcelTemplate template;
-    private HSSFWorkbook wb;
+    private HSSFSheet usSheet;
+    private TemplateDefinition tplDef = TemplateRepository.getTplDef();
+    private ExcelTemplate template = TemplateRepository.getTemplate();
 
-    public USExcelGenerator(TemplateDefinition tplDef, ExcelTemplate template, HSSFWorkbook wb) {
-        this.tplDef = tplDef;
-        this.template = template;
-        this.wb = wb;
+    public USExcelGenerator(HSSFSheet usSheet) {
+        this.usSheet = usSheet;
     }
 
     public void generate() {
-        HSSFSheet usSheet = wb.getSheetAt(tplDef.getSheet());
         HSSFRow titleRow = usSheet.getRow(tplDef.getBasic().getTitle().getRow());
         HSSFCell titleCell = titleRow.getCell(Constants.TITLE_COL);
         titleCell.setCellType(CellType.STRING);

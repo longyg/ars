@@ -4,6 +4,7 @@ import com.longyg.backend.adaptation.pm.*;
 import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +17,9 @@ public class TopologyRepository {
 
     private List<PmbObject> allReleaseObjects = new ArrayList<PmbObject>();
 
+    private int maxLevel = 0;
+    private List<PmbObject> rootObjects = new ArrayList<PmbObject>();
+
     public static TopologyRepository getInstance() {
         if (null == INSTANCE) {
             INSTANCE = new TopologyRepository();
@@ -25,6 +29,53 @@ public class TopologyRepository {
 
     public void buildTopology() throws Exception {
         buildTopologyFromPmb();
+
+        maxLevel = extractTotalLevel();
+        addRootObjects();
+        Collections.sort(rootObjects);
+    }
+
+    private int extractTotalLevel() {
+        int currentLevel = 0;
+        int maxLevel = currentLevel;
+        for (PmbObject pmbObject : TopologyRepository.getInstance().getAllReleaseObjects()) {
+            currentLevel = 1;
+            if (pmbObject.getChildObjects().size() > 0) {
+                currentLevel++;
+            }
+            for (PmbObject childObj : pmbObject.getChildObjects()) {
+                int tmplevel = getLevel(childObj, currentLevel);
+                if (tmplevel > maxLevel) {
+                    maxLevel = tmplevel;
+                }
+            }
+        }
+        return maxLevel;
+    }
+
+    private void addRootObjects() {
+        for (PmbObject pmbObject : TopologyRepository.getInstance().getAllReleaseObjects()) {
+            if (pmbObject.getParentObjects().size() < 1) {
+                rootObjects.add(pmbObject);
+            }
+        }
+    }
+
+    private int getLevel(PmbObject pmbObject, int currentLevel) {
+        int curLevel = 0;
+        int maxLevel = currentLevel;
+        if (pmbObject.getChildObjects().size() > 0) {
+            curLevel = currentLevel + 1;
+        }
+        for (PmbObject childObj : pmbObject.getChildObjects())
+        {
+            int childLevel = getLevel(childObj, curLevel);
+            if (childLevel > maxLevel) {
+                maxLevel = childLevel;
+            }
+        }
+
+        return maxLevel;
     }
 
     private void buildTopologyFromPmb() throws Exception {
@@ -155,6 +206,22 @@ public class TopologyRepository {
 
     public List<PmbObject> getAllReleaseObjects() {
         return allReleaseObjects;
+    }
+
+    public int getMaxLevel() {
+        return maxLevel;
+    }
+
+    public void setMaxLevel(int maxLevel) {
+        this.maxLevel = maxLevel;
+    }
+
+    public void setRootObjects(List<PmbObject> rootObjects) {
+        this.rootObjects = rootObjects;
+    }
+
+    public List<PmbObject> getRootObjects() {
+        return rootObjects;
     }
 
     public static void main(String[] args) throws Exception {

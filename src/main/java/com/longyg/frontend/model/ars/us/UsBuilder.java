@@ -2,10 +2,9 @@ package com.longyg.frontend.model.ars.us;
 
 import com.longyg.backend.TemplateRepository;
 import com.longyg.backend.ars.tpl.*;
-import com.longyg.backend.ars.tpl.definition.Info;
-import com.longyg.backend.ars.tpl.definition.US;
+import com.longyg.backend.ars.tpl.definition.userstory.Info;
+import com.longyg.backend.ars.tpl.definition.userstory.US;
 import com.longyg.frontend.model.param.NeParam;
-import freemarker.template.Template;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

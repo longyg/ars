@@ -17,8 +17,7 @@ public class TopologyGenerator {
     private static final String OUT_FILE_NAME = "topology.csv";
     private String outFilePath;
     private StringBuffer topology;
-    private int maxLevel = 0;
-    private List<PmbObject> rootObjects = new ArrayList<PmbObject>();
+    private TopologyRepository topologyRepository = TopologyRepository.getInstance();
 
     public TopologyGenerator() {
         this.topology = new StringBuffer();
@@ -26,16 +25,14 @@ public class TopologyGenerator {
     }
 
     public void generate() throws Exception {
-        TopologyRepository topologyRepository = TopologyRepository.getInstance();
         topologyRepository.buildTopology();
         writeTopology();
         writeToFile();
     }
 
     private void writeTopology() {
-        maxLevel = extractTotalLevel();
-        getRootObjects();
-        Collections.sort(rootObjects);
+        int maxLevel = topologyRepository.getMaxLevel();
+        List<PmbObject> rootObjects = topologyRepository.getRootObjects();
 
         for (PmbObject parentObj : rootObjects) {
             topology.append(parentObj.getName());
@@ -71,7 +68,7 @@ public class TopologyGenerator {
         }
         topology.append("|- ").append(rootObj.getName()).append(",");
 
-        for (int i = maxLevel; i > level; i--)
+        for (int i = topologyRepository.getMaxLevel(); i > level; i--)
         {
             topology.append(",");
         }
@@ -101,48 +98,5 @@ public class TopologyGenerator {
         writer.write(topology.toString());
         writer.flush();
         writer.close();
-    }
-
-    private int extractTotalLevel() {
-        int currentLevel = 0;
-        int maxLevel = currentLevel;
-        for (PmbObject pmbObject : TopologyRepository.getInstance().getAllReleaseObjects()) {
-            currentLevel = 1;
-            if (pmbObject.getChildObjects().size() > 0) {
-                currentLevel++;
-            }
-            for (PmbObject childObj : pmbObject.getChildObjects()) {
-                int tmplevel = getLevel(childObj, currentLevel);
-                if (tmplevel > maxLevel) {
-                    maxLevel = tmplevel;
-                }
-            }
-        }
-        return maxLevel;
-    }
-
-    private void getRootObjects() {
-        for (PmbObject pmbObject : TopologyRepository.getInstance().getAllReleaseObjects()) {
-            if (pmbObject.getParentObjects().size() < 1) {
-                rootObjects.add(pmbObject);
-            }
-        }
-    }
-
-    private int getLevel(PmbObject pmbObject, int currentLevel) {
-        int curLevel = 0;
-        int maxLevel = currentLevel;
-        if (pmbObject.getChildObjects().size() > 0) {
-            curLevel = currentLevel + 1;
-        }
-        for (PmbObject childObj : pmbObject.getChildObjects())
-        {
-            int childLevel = getLevel(childObj, curLevel);
-            if (childLevel > maxLevel) {
-                maxLevel = childLevel;
-            }
-        }
-
-        return maxLevel;
     }
 }

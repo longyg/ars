@@ -1,9 +1,8 @@
 package com.longyg.backend.ars.tpl;
 
-import com.longyg.backend.ars.tpl.definition.TemplateDefinition;
+import com.longyg.backend.ars.tpl.definition.userstory.TemplateDefinition;
 import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.FileInputStream;
