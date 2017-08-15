@@ -8,25 +8,18 @@
                 </div>
                 <div>
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="/ne">NE</a></li>
+                        <li><a href="/ne">NE</a></li>
                         <li><a href="#">ARS</a></li>
-                        <!--
-                        <li class="dropdown">
+                        <li class="dropdown active">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                Java
+                                Config
                                 <b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="#">jmeter</a></li>
-                                <li><a href="#">EJB</a></li>
-                                <li><a href="#">Jasper Report</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#">分离的链接</a></li>
-                                <li class="divider"></li>
-                                <li><a href="#">另一个分离的链接</a></li>
+                                <li class="active"><a href="/interface">Interfaces</a></li>
+                                <li><a href="/object">Objects</a></li>
                             </ul>
                         </li>
-                        -->
                     </ul>
                 </div>
             </div>
