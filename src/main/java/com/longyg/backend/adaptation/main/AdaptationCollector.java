@@ -23,7 +23,7 @@ public class AdaptationCollector {
         this.configRepository = ConfigRepository.getInstance();
     }
 
-    private void initialize() throws Exception {
+    public void initialize() throws Exception {
         readConfig();
         ResourceRepository.initialize();
         ResourceParser parser = new ResourceParser();

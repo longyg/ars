@@ -25,7 +25,10 @@ public class PmbObject implements Comparable<PmbObject> {
     private int avgPerNet;
     private int maxPerNet;
     private int maxPerNE;
+    private int maxNePerNet;
+    private int avgNePerNet;
     private boolean mocrNeeded;
+    private String comment;
     private List<String> supporteredVersions = new ArrayList<String>();
     private List<String> dimensions = new ArrayList<String>();
     private List<PmbObject> childObjects = new ArrayList<PmbObject>();
@@ -234,6 +237,30 @@ public class PmbObject implements Comparable<PmbObject> {
 
     public void setSupporteredVersions(List<String> supporteredVersions) {
         this.supporteredVersions = supporteredVersions;
+    }
+
+    public int getMaxNePerNet() {
+        return maxNePerNet;
+    }
+
+    public void setMaxNePerNet(int maxNePerNet) {
+        this.maxNePerNet = maxNePerNet;
+    }
+
+    public int getAvgNePerNet() {
+        return avgNePerNet;
+    }
+
+    public void setAvgNePerNet(int avgNePerNet) {
+        this.avgNePerNet = avgNePerNet;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     public List<PmbObject> getChildObjects() {

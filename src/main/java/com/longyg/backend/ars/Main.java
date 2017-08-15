@@ -1,6 +1,7 @@
 package com.longyg.backend.ars;
 
 import com.longyg.backend.TemplateRepository;
+import com.longyg.backend.adaptation.main.AdaptationCollector;
 import com.longyg.backend.ars.tpl.ExcelTemplate;
 import com.longyg.backend.ars.tpl.ExcelTemplateParser;
 import com.longyg.backend.ars.tpl.Variable;
@@ -32,11 +33,17 @@ public class Main {
         TemplateRepository.setTemplate(template);
         TemplateRepository.setObjectModelTplDef(objectModelTplDef);
 
+        prepareAdaptation();
         readVariableInput();
 
         ExcelGenerator generator = new ExcelGenerator(xlsTplParser.getWb());
         String outFileName = template.getUsExcelTemplate().getBasicTemplate().getTitleTemplate().getReal();
         generator.generate(outFileName + ".xls");
+    }
+
+    private static void prepareAdaptation() throws Exception {
+        AdaptationCollector adaptationCollector = new AdaptationCollector("D:\\workspace\\IntelliJProjects\\ars\\myconfig\\cscf_18.0VNF_config.json");
+        adaptationCollector.initialize();
     }
 
     private static void readVariableInput() throws Exception {
