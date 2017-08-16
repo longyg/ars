@@ -1,13 +1,12 @@
 package com.longyg.frontend.controller;
 
-import com.longyg.backend.adaptation.topology.PmbObject;
 import com.longyg.frontend.model.iface.InterfaceObject;
 import com.longyg.frontend.model.iface.InterfaceRepository;
+import com.longyg.frontend.model.object.GlobalObject;
 import com.longyg.frontend.model.object.ObjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -55,9 +54,30 @@ public class ConfigController {
 
     @RequestMapping("/object")
     public ModelAndView listObject() {
-        List<PmbObject> objectList = objectRepository.findAll();
+        List<GlobalObject> objectList = objectRepository.findAll();
         Map<String, Object> params = new HashMap<String, Object>();
         params.put("objectList", objectList);
         return new ModelAndView("config/object", params);
+    }
+
+    @RequestMapping(value = "/object/add", method = RequestMethod.POST)
+    public String addObject(@ModelAttribute GlobalObject ao) {
+        objectRepository.save(ao);
+        return "redirect:/object";
+    }
+
+    @RequestMapping("/object/delete")
+    public String deleteObject(@ModelAttribute GlobalObject ao) {
+        List<GlobalObject> objectList = objectRepository.findAll();
+        GlobalObject addo = null;
+        for (GlobalObject ado : objectList) {
+            if (ado.getName().equals(ao.getName())) {
+                addo = ado;
+            }
+        }
+        if (null != addo) {
+            objectRepository.delete(addo);
+        }
+        return "redirect:/object";
     }
 }

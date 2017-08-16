@@ -11,7 +11,7 @@ public class NeConfig {
     private NetworkElement ne;
 
     private List<InterfaceObject> interfaceObjects = new ArrayList<>();
-    private List<PmbObject> parentObjects = new ArrayList<>();
+    private ParentObject parentObject;
 
     public NetworkElement getNe() {
         return ne;
@@ -29,11 +29,11 @@ public class NeConfig {
         this.interfaceObjects = interfaceObjects;
     }
 
-    public List<PmbObject> getParentObjects() {
-        return parentObjects;
+    public ParentObject getParentObject() {
+        return parentObject;
     }
 
-    public void setParentObjects(List<PmbObject> parentObjects) {
-        this.parentObjects = parentObjects;
+    public void setParentObject(ParentObject parentObject) {
+        this.parentObject = parentObject;
     }
 }
