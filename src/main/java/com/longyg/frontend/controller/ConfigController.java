@@ -1,7 +1,9 @@
 package com.longyg.frontend.controller;
 
+import com.longyg.backend.adaptation.topology.PmbObject;
 import com.longyg.frontend.model.iface.InterfaceObject;
 import com.longyg.frontend.model.iface.InterfaceRepository;
+import com.longyg.frontend.model.object.ObjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -18,6 +20,9 @@ import java.util.Map;
 public class ConfigController {
     @Autowired
     private InterfaceRepository interfaceRepository;
+
+    @Autowired
+    private ObjectRepository objectRepository;
 
     @RequestMapping("/interface")
     public ModelAndView listInterface() {
@@ -50,9 +55,9 @@ public class ConfigController {
 
     @RequestMapping("/object")
     public ModelAndView listObject() {
-        List<InterfaceObject> interfaceList = interfaceRepository.findAll();
+        List<PmbObject> objectList = objectRepository.findAll();
         Map<String, Object> params = new HashMap<String, Object>();
-        params.put("interfaceList", interfaceList);
-        return new ModelAndView("config/interface", params);
+        params.put("objectList", objectList);
+        return new ModelAndView("config/object", params);
     }
 }
