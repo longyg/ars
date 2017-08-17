@@ -29,6 +29,7 @@
                     <th>Presentation</th>
                     <th>Name In OMeS</th>
                     <th>Is Transient Object</th>
+                    <th>Operations</th>
                 </tr>
                 </thead>
                 <tbody>
