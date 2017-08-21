@@ -1,6 +1,5 @@
 package com.longyg.frontend.model.config;
 
-import com.longyg.backend.adaptation.topology.PmbObject;
 import com.longyg.frontend.model.iface.InterfaceObject;
 import com.longyg.frontend.model.ne.NetworkElement;
 
