@@ -4,22 +4,22 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "nes")
-public class NetworkElement {
+public class NeRelease {
     @Id
     private String id;
     private String neType;
     private String neVersion;
     private String remarks;
 
-    public NetworkElement() {
+    public NeRelease() {
     }
 
-    public NetworkElement(String neType, String neVersion) {
+    public NeRelease(String neType, String neVersion) {
         this.neType = neType;
         this.neVersion = neVersion;
     }
 
-    public NetworkElement(String neType, String neVersion, String remarks) {
+    public NeRelease(String neType, String neVersion, String remarks) {
         this.neType = neType;
         this.neVersion = neVersion;
         this.remarks = remarks;
@@ -62,7 +62,7 @@ public class NetworkElement {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        NetworkElement that = (NetworkElement) o;
+        NeRelease that = (NeRelease) o;
 
         if (neType != null ? !neType.equals(that.neType) : that.neType != null) return false;
         return neVersion != null ? neVersion.equals(that.neVersion) : that.neVersion == null;

@@ -18,34 +18,29 @@
         <div class="col-md-10">
             <div><h3>Adaptation Resource</h3></div>
             <div style="margin:10px">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createObjectFromModal">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createResourceFromModal">
                     <span class="glyphicon glyphicon-plus-sign"></span> Add
                 </button>
             </div>
             <table class="table table-bordered">
                 <thead>
                 <tr>
-                    <th>NE Type</th>
-                    <th>NE Version</th>
-                    <th>Resource Type</th>
+                    <th>Adaptation ID</th>
+                    <th>Adaptation Release</th>
+                    <th>SVN Root</th>
                     <th>Resource Path</th>
                     <th>Operations</th>
                 </tr>
                 </thead>
                 <tbody>
-                <#list objectList as obj>
+                <#list adaptationResources as src>
                 <tr>
-                    <td>${obj.name}</td>
-                    <td>${obj.presentation}</td>
-                    <td>${obj.nameInOMeS}</td>
+                    <td>${src.adaptation.id}</td>
+                    <td>${src.adaptation.release}</td>
+                    <td>${src.svnRoot}</td>
+                    <td>${src.sourcePath}</td>
                     <td>
-                        <#if obj.transient == true>
-                            <input type="checkbox" checked disabled/>
-                        <#else>
-                            <input type="checkbox" disabled/>
-                        </#if>
-                    <td>
-                        <a class="btn btn-sm btn-danger" href="/object/delete?name=${obj.name}">
+                        <a class="btn btn-sm btn-danger" href="/resource/delete?id=${src.id}">
                             <span class="glyphicon glyphicon-remove-sign"></span> Delete
                         </a>
                     </td>
@@ -60,7 +55,7 @@
 <#include "/inc/footer.ftl" />
 </div>
 
-<div class="modal fade" id="createObjectFromModal" tabindex="-1" role="dialog"
+<div class="modal fade" id="createResourceFromModal" tabindex="-1" role="dialog"
      aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -72,35 +67,47 @@
                     <span class="sr-only">Close</span>
                 </button>
                 <h4 class="modal-title" id="myModalLabel">
-                    Add Global Object
+                    Add Adaptation Resource
                 </h4>
             </div>
 
             <!-- Modal Body -->
             <div class="modal-body">
-                <form class="form-horizontal" role="form" action="/object/add" method="post">
+                <form class="form-horizontal" role="form" action="/resource/add" method="post">
                     <div class="form-group">
-                        <label  class="col-sm-4 control-label" for="name">Name</label>
+                        <label  class="col-sm-4 control-label" for="adaptationId">Adaptation ID</label>
                         <div class="col-sm-8">
-                            <input class="form-control" id="name" name="name" placeholder="Name"/>
+                            <input class="form-control" id="adaptationId" name="adaptation.id" placeholder="Adaptation ID"/>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-4 control-label" for="presentation" >Presentation</label>
+                        <label class="col-sm-4 control-label" for="adaptationRelease">Adaptation Release</label>
                         <div class="col-sm-8">
-                            <input class="form-control" id="presentation" name="presentation" placeholder="Presentation"/>
+                            <input class="form-control" id="adaptationRelease" name="adaptation.release" placeholder="Adaptation Release"/>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-4 control-label" for="nameInOMeS" >Name In OMeS</label>
+                        <label class="col-sm-4 control-label" for="svnRoot" >SVN Root URL</label>
                         <div class="col-sm-8">
-                            <textarea class="form-control" id="nameInOMeS" name="nameInOMeS" placeholder="Name In OMeS"></textarea>
+                            <input class="form-control" id="svnRoot" name="svnRoot" placeholder="SVN Root URL"/>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-4 control-label" for="transient" >Is Transient Object</label>
+                        <label class="col-sm-4 control-label" for="svnUser" >SVN User</label>
                         <div class="col-sm-8">
-                            <input type="checkbox" id="transient" name="transient"/>
+                            <input class="form-control" id="svnUser" name="svnUser" placeholder="SVN User"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="svnPassword" >SVN Password</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" type="password" id="svnPassword" name="svnPassword" placeholder="SVN Password"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="sourcePath" >Resource Path</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" id="sourcePath" name="sourcePath" placeholder="Resource Path"/>
                         </div>
                     </div>
                     <div class="form-group">

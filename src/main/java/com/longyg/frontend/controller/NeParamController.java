@@ -2,8 +2,8 @@ package com.longyg.frontend.controller;
 
 import com.longyg.backend.ars.tpl.Variable;
 import com.longyg.backend.ars.tpl.VariablesRepository;
-import com.longyg.frontend.model.ne.NERepository;
-import com.longyg.frontend.model.ne.NetworkElement;
+import com.longyg.frontend.model.ne.NeReleaseRepository;
+import com.longyg.frontend.model.ne.NeRelease;
 import com.longyg.frontend.model.param.NeParam;
 import com.longyg.frontend.model.param.NeParamRepository;
 import org.apache.log4j.Logger;
@@ -19,14 +19,14 @@ import java.util.*;
 public class NeParamController {
     private static final Logger LOG = Logger.getLogger(NeParamController.class);
     @Autowired
-    private NERepository neRepository;
+    private NeReleaseRepository neRepository;
 
     @Autowired
     private NeParamRepository neParamRepository;
 
 
     @RequestMapping("/param")
-    public ModelAndView list(@ModelAttribute NetworkElement ne) {
+    public ModelAndView list(@ModelAttribute NeRelease ne) {
         LOG.info("Entering list() method...");
         NeParam neParam = neParamRepository.findByNe(ne);
         Map<String, Object> params = new HashMap<>();
@@ -36,8 +36,8 @@ public class NeParamController {
     }
 
     @RequestMapping(value = "/param/add", method = RequestMethod.GET)
-    public ModelAndView add(@ModelAttribute NetworkElement ne) {
-        List<NetworkElement> neList = neRepository.findAll();
+    public ModelAndView add(@ModelAttribute NeRelease ne) {
+        List<NeRelease> neList = neRepository.findAll();
         List<Variable> paramList = VariablesRepository.getVariables();
         Map<String, Object> params = new HashMap<>();
         params.put("currentNe", ne);
@@ -52,7 +52,7 @@ public class NeParamController {
         LOG.info("Entering save() method...");
         String neType = request.getParameter("neType");
         String neVersion = request.getParameter("neVersion");
-        NetworkElement ne = new NetworkElement(neType, neVersion);
+        NeRelease ne = new NeRelease(neType, neVersion);
         NeParam neParam = new NeParam();
         neParam.setNe(ne);
 

@@ -1,6 +1,6 @@
 package com.longyg.frontend.model.ars.us;
 
-import com.longyg.frontend.model.ne.NetworkElement;
+import com.longyg.frontend.model.ne.NeRelease;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -11,7 +11,7 @@ import java.util.List;
 public class UserStorySpec {
     @Id
     private String id;
-    private NetworkElement ne;
+    private NeRelease ne;
     private Title title;
     private List<AdapInfo> adapInfos = new ArrayList<>();
     private List<UserStory> userStories = new ArrayList<>();
@@ -24,11 +24,11 @@ public class UserStorySpec {
         this.id = id;
     }
 
-    public NetworkElement getNe() {
+    public NeRelease getNe() {
         return ne;
     }
 
-    public void setNe(NetworkElement ne) {
+    public void setNe(NeRelease ne) {
         this.ne = ne;
     }
 

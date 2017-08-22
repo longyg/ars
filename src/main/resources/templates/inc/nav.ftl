@@ -8,7 +8,16 @@
                 </div>
                 <div>
                     <ul class="nav navbar-nav">
-                        <li><a href="/ne"><span class="glyphicon glyphicon-phone"></span> NE</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <span class="glyphicon glyphicon-phone"></span> NE
+                                <b class="caret"></b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/netype"><span class="glyphicon glyphicon-link"></span> NE Type</a></li>
+                                <li><a href="/nerelease"><span class="glyphicon glyphicon-tasks"></span> NE Release</a></li>
+                            </ul>
+                        </li>
                         <li><a href="#"><span class="glyphicon glyphicon-book"></span> ARS</a></li>
                         <li class="dropdown active">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">

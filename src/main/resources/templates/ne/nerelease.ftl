@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <title>Network Element</title>
+    <title>NE Release</title>
 </head>
 <body>
 
@@ -16,7 +16,7 @@
     <div class="row">
         <div class="col-md-1"></div>
         <div class="col-md-10">
-            <div><h3>Network Elements</h3></div>
+            <div><h3>NE Release</h3></div>
             <div style="margin:10px">
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createNEFromModal">
                     <span class="glyphicon glyphicon-plus-sign"></span> Add
@@ -32,19 +32,13 @@
                 </tr>
                 </thead>
                 <tbody>
-                    <#list neList as ne>
+                    <#list neReleaseList as neRelease>
                     <tr>
-                        <td>${ne.neType}</td>
-                        <td>${ne.neVersion}</td>
-                        <td>${ne.remarks}</td>
+                        <td>${neRelease.neType}</td>
+                        <td>${neRelease.neVersion}</td>
+                        <td>${neRelease.remarks}</td>
                         <td>
-                            <a class="btn btn-sm btn-primary" href="/param?neType=${ne.neType}&neVersion=${ne.neVersion}">
-                                <span class="glyphicon glyphicon-cog"></span> Parameters
-                            </a>
-                            <a class="btn btn-sm btn-info" href="/ars?neType=${ne.neType}&neVersion=${ne.neVersion}">
-                                <span class="glyphicon glyphicon-book"></span> ARS
-                            </a>
-                            <a class="btn btn-sm btn-danger" href="/ne/delete?neType=${ne.neType}&neVersion=${ne.neVersion}">
+                            <a class="btn btn-sm btn-danger" href="/nerelease/delete?id=${neRelease.id}">
                                 <span class="glyphicon glyphicon-remove-sign"></span> Delete
                             </a>
                         </td>
@@ -71,18 +65,23 @@
                     <span class="sr-only">Close</span>
                 </button>
                 <h4 class="modal-title" id="myModalLabel">
-                    Add Network Element
+                    Add NE Release
                 </h4>
             </div>
 
             <!-- Modal Body -->
             <div class="modal-body">
 
-                <form class="form-horizontal" role="form" action="/ne/add" method="post">
+                <form class="form-horizontal" role="form" action="/nerelease/add" method="post">
                     <div class="form-group">
                         <label  class="col-sm-2 control-label" for="neType">NE Type</label>
                         <div class="col-sm-10">
-                            <input class="form-control" id="neType" name="neType" placeholder="NE Type"/>
+                            <!--<input class="form-control" id="neType" name="neType" placeholder="NE Type"/>-->
+                            <select class="form-control" name="neType" id="neType">
+                                <#list neTypeList as neType>
+                                    <option value="${neType.name}">${neType.name}</option>
+                                </#list>
+                            </select>
                         </div>
                     </div>
                     <div class="form-group">

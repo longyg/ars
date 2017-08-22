@@ -1,7 +1,7 @@
 package com.longyg.frontend.model.param;
 
 import com.longyg.backend.ars.tpl.Variable;
-import com.longyg.frontend.model.ne.NetworkElement;
+import com.longyg.frontend.model.ne.NeRelease;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -12,7 +12,7 @@ public class NeParam {
     @Id
     private String id;
     private int v;
-    private NetworkElement ne;
+    private NeRelease ne;
     private List<Variable> variables = new ArrayList<>();
 
     public String getId() {
@@ -31,11 +31,11 @@ public class NeParam {
         this.v = v;
     }
 
-    public NetworkElement getNe() {
+    public NeRelease getNe() {
         return ne;
     }
 
-    public void setNe(NetworkElement ne) {
+    public void setNe(NeRelease ne) {
         this.ne = ne;
     }
 

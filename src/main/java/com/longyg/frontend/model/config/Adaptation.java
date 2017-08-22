@@ -1,22 +1,22 @@
 package com.longyg.frontend.model.config;
 
 public class Adaptation {
-    private String adaptationId;
-    private String adaptationRelease;
+    private String id;
+    private String release;
 
-    public String getAdaptationId() {
-        return adaptationId;
+    public String getId() {
+        return id;
     }
 
-    public void setAdaptationId(String adaptationId) {
-        this.adaptationId = adaptationId;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public String getAdaptationRelease() {
-        return adaptationRelease;
+    public String getRelease() {
+        return release;
     }
 
-    public void setAdaptationRelease(String adaptationRelease) {
-        this.adaptationRelease = adaptationRelease;
+    public void setRelease(String release) {
+        this.release = release;
     }
 }

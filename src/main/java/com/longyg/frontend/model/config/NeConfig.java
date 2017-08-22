@@ -1,22 +1,22 @@
 package com.longyg.frontend.model.config;
 
 import com.longyg.frontend.model.iface.InterfaceObject;
-import com.longyg.frontend.model.ne.NetworkElement;
+import com.longyg.frontend.model.ne.NeRelease;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class NeConfig {
-    private NetworkElement ne;
+    private NeRelease ne;
 
     private List<InterfaceObject> interfaceObjects = new ArrayList<>();
     private ParentObject parentObject;
 
-    public NetworkElement getNe() {
+    public NeRelease getNe() {
         return ne;
     }
 
-    public void setNe(NetworkElement ne) {
+    public void setNe(NeRelease ne) {
         this.ne = ne;
     }
 

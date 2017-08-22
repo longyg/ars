@@ -1,5 +1,7 @@
 package com.longyg.frontend.controller;
 
+import com.longyg.frontend.model.config.AdaptationResource;
+import com.longyg.frontend.model.config.AdaptationResourceRepository;
 import com.longyg.frontend.model.iface.InterfaceObject;
 import com.longyg.frontend.model.iface.InterfaceRepository;
 import com.longyg.frontend.model.object.GlobalObject;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashMap;
@@ -23,10 +26,13 @@ public class ConfigController {
     @Autowired
     private ObjectRepository objectRepository;
 
+    @Autowired
+    private AdaptationResourceRepository adaptationResourceRepository;
+
     @RequestMapping("/interface")
     public ModelAndView listInterface() {
         List<InterfaceObject> interfaceList = interfaceRepository.findAll();
-        Map<String, Object> params = new HashMap<String, Object>();
+        Map<String, Object> params = new HashMap<>();
         params.put("interfaceList", interfaceList);
         return new ModelAndView("config/interface", params);
     }
@@ -55,7 +61,7 @@ public class ConfigController {
     @RequestMapping("/object")
     public ModelAndView listObject() {
         List<GlobalObject> objectList = objectRepository.findAll();
-        Map<String, Object> params = new HashMap<String, Object>();
+        Map<String, Object> params = new HashMap<>();
         params.put("objectList", objectList);
         return new ModelAndView("config/object", params);
     }
@@ -79,5 +85,25 @@ public class ConfigController {
             objectRepository.delete(addo);
         }
         return "redirect:/object";
+    }
+
+    @RequestMapping("/resource")
+    public ModelAndView listResource() {
+        List<AdaptationResource> adaptationResources = adaptationResourceRepository.findAll();
+        Map<String, Object> params = new HashMap<>();
+        params.put("adaptationResources", adaptationResources);
+        return new ModelAndView("config/resource", params);
+    }
+
+    @RequestMapping(value = "/resource/add", method = RequestMethod.POST)
+    public String addResource(@ModelAttribute AdaptationResource resource) {
+        adaptationResourceRepository.save(resource);
+        return "redirect:/resource";
+    }
+
+    @RequestMapping(value = "/resource/delete")
+    public String deleteResource(@RequestParam String id) {
+        adaptationResourceRepository.deleteById(id);
+        return "redirect:/resource";
     }
 }

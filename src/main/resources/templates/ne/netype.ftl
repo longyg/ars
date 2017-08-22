@@ -41,7 +41,7 @@
                         <td>${neType.agentClass}</td>
                         <td>${neType.description}</td>
                         <td>
-                            <#list neType.adaptations as adap>
+                            <#list neType.adaptList as adap>
                                 <ul>
                                     <li>${adap}</li>
                                 </ul>
