@@ -43,7 +43,7 @@
                             <#list usSpec.adapInfos as adapInfo>
                             <tr>
                                 <td>${adapInfo.name}</td>
-                                <td>${adapInfo.value}</td>
+                                <td>${adapInfo.htmlValue}</td>
                             </tr>
                             </#list>
                         </tbody>
@@ -52,7 +52,7 @@
                 <div>
                     <h3>User Stories</h3>
                     <#list usSpec.userStories as userstory>
-                        <h4>${userstory.value}</h4>
+                        <h4>${userstory.htmlValue}</h4>
                         <table class="table table-bordered" style="table-layout: fixed">
                             <thead>
                             <tr>
@@ -75,22 +75,22 @@
                                     </td>
                                     <td>
                                         <#if subTask.name??>
-                                            ${subTask.name.value}
+                                            ${subTask.name.htmlValue}
                                         </#if>
                                     </td>
                                     <td>
                                         <#if subTask.description??>
-                                            ${subTask.description.value}
+                                            ${subTask.description.htmlValue}
                                         </#if>
                                     </td>
                                     <td>
                                         <#if subTask.rationale??>
-                                            ${subTask.rationale.value}
+                                            ${subTask.rationale.htmlValue}
                                         </#if>
                                     </td>
                                     <td>
                                         <#if subTask.issue??>
-                                            ${subTask.issue.value}
+                                            ${subTask.issue.htmlValue}
                                         </#if>
                                         </td>
                                     </tr>

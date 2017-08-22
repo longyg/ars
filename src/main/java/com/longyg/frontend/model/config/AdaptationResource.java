@@ -1,36 +1,72 @@
 package com.longyg.frontend.model.config;
 
 import com.longyg.frontend.model.ne.NetworkElement;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Document(collection = "adaptations")
 public class AdaptationResource {
-    private NetworkElement ne;
-    private SvnConfig svnConfig;
-    private List<String> svnResources = new ArrayList<>();
+    @Id
+    private String id;
 
-    public NetworkElement getNe() {
-        return ne;
+    private Adaptation adaptation;
+
+    private String svnUser;
+
+    private String svnPassword;
+
+    private String svnRoot;
+
+    private String sourcePath;
+
+    public String getId() {
+        return id;
     }
 
-    public void setNe(NetworkElement ne) {
-        this.ne = ne;
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public SvnConfig getSvnConfig() {
-        return svnConfig;
+    public Adaptation getAdaptation() {
+        return adaptation;
     }
 
-    public void setSvnConfig(SvnConfig svnConfig) {
-        this.svnConfig = svnConfig;
+    public void setAdaptation(Adaptation adaptation) {
+        this.adaptation = adaptation;
     }
 
-    public List<String> getSvnResources() {
-        return svnResources;
+    public String getSvnUser() {
+        return svnUser;
     }
 
-    public void setSvnResources(List<String> svnResources) {
-        this.svnResources = svnResources;
+    public void setSvnUser(String svnUser) {
+        this.svnUser = svnUser;
+    }
+
+    public String getSvnPassword() {
+        return svnPassword;
+    }
+
+    public void setSvnPassword(String svnPassword) {
+        this.svnPassword = svnPassword;
+    }
+
+    public String getSvnRoot() {
+        return svnRoot;
+    }
+
+    public void setSvnRoot(String svnRoot) {
+        this.svnRoot = svnRoot;
+    }
+
+    public String getSourcePath() {
+        return sourcePath;
+    }
+
+    public void setSourcePath(String sourcePath) {
+        this.sourcePath = sourcePath;
     }
 }

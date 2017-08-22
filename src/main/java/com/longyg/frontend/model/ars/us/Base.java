@@ -1,9 +1,12 @@
 package com.longyg.frontend.model.ars.us;
 
+import com.longyg.frontend.Utils.HtmlUtils;
+
 public class Base {
     private String value;
     private int row;
     private int col;
+    private String htmlValue;
 
     public Base() {
     }
@@ -36,5 +39,12 @@ public class Base {
 
     public void setCol(int col) {
         this.col = col;
+    }
+
+    public String getHtmlValue() {
+        if (null != value) {
+            return HtmlUtils.txtToHtml(value);
+        }
+        return null;
     }
 }
