@@ -4,6 +4,7 @@ import com.longyg.backend.TemplateRepository;
 import com.longyg.backend.ars.tpl.*;
 import com.longyg.backend.ars.tpl.definition.userstory.Info;
 import com.longyg.backend.ars.tpl.definition.userstory.US;
+import com.longyg.frontend.model.ne.NeRelease;
 import com.longyg.frontend.model.param.NeParam;
 import org.springframework.stereotype.Component;
 
@@ -21,7 +22,10 @@ public class UsBuilder {
 
         UserStorySpec usSpec = new UserStorySpec();
 
-        usSpec.setNe(neParam.getNe());
+        NeRelease neRelease = new NeRelease();
+        neRelease.setNeType(neParam.getNeType());
+        neRelease.setNeVersion(neParam.getNeVersion());
+        usSpec.setNe(neRelease);
 
         usSpec.setTitle(createTitle());
 

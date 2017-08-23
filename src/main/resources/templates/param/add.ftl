@@ -20,44 +20,28 @@
 
             <form class="form-horizontal" role="form" action="/param/save" method="post">
                 <div class="form-group">
-                    <label  class="col-sm-2 control-label" for="neType">NE Type</label>
-                    <div class="col-sm-10">
-                        <select class="form-control" id="neType" name="neType">
-                            <#list allNes as ne>
-                                <#if ne.neType == currentNe.neType>
-                                    <option value="${ne.neType}" selected>${ne.neType}</option>
-                                <#else>
-                                    <option value="${ne.neType}">${ne.neType}</option>
-                                </#if>
-                            </#list>
-                        </select>
+                    <label  class="col-sm-4 control-label" for="neType">NE Type</label>
+                    <div class="col-sm-8">
+                        <input class="form-control" id="neType" placeholder="${neRelease.neType}" disabled/>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-2 control-label" for="neVersion" >NE Version</label>
-                    <div class="col-sm-10">
-                        <select class="form-control" id="neVersion" name="neVersion">
-                            <#list allNes as ne>
-                                <#if ne.neVersion == currentNe.neVersion>
-                                    <option value="${ne.neVersion}" selected>${ne.neVersion}</option>
-                                <#else>
-                                    <option value="${ne.neVersion}">${ne.neVersion}</option>
-                                </#if>
-                            </#list>
-                        </select>
+                    <label class="col-sm-4 control-label" for="neVersion" >NE Version</label>
+                    <div class="col-sm-8">
+                        <input class="form-control" id="neVersion" placeholder="${neRelease.neVersion}" disabled/>
                     </div>
                 </div>
                 <#list paramList as param>
                     <div class="form-group">
-                        <label class="col-sm-2 control-label" for="${param.name}" >${param.name}</label>
-                        <div class="col-sm-10">
+                        <label class="col-sm-4 control-label" for="${param.name}" >${param.name}</label>
+                        <div class="col-sm-8">
                             <input class="form-control" id="${param.name}" name="${param.name}" placeholder="${param.name}" />
                         </div>
                     </div>
                 </#list>
 
                 <div class="form-group">
-                    <div class="col-sm-offset-2 col-sm-10">
+                    <div class="col-sm-offset-4 col-sm-8">
                         <button type="submit" class="btn btn-primary">Save</button>
                     </div>
                 </div>

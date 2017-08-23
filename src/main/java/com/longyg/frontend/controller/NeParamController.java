@@ -4,6 +4,8 @@ import com.longyg.backend.ars.tpl.Variable;
 import com.longyg.backend.ars.tpl.VariablesRepository;
 import com.longyg.frontend.model.ne.NeReleaseRepository;
 import com.longyg.frontend.model.ne.NeRelease;
+import com.longyg.frontend.model.ne.NeType;
+import com.longyg.frontend.model.ne.NeTypeRepository;
 import com.longyg.frontend.model.param.NeParam;
 import com.longyg.frontend.model.param.NeParamRepository;
 import org.apache.log4j.Logger;
@@ -24,24 +26,58 @@ public class NeParamController {
     @Autowired
     private NeParamRepository neParamRepository;
 
+    @Autowired
+    private NeReleaseRepository neReleaseRepository;
+
+    @Autowired
+    private NeTypeRepository neTypeRepository;
 
     @RequestMapping("/param")
-    public ModelAndView list(@ModelAttribute NeRelease ne) {
-        LOG.info("Entering list() method...");
-        NeParam neParam = neParamRepository.findByNe(ne);
+    public ModelAndView list(HttpServletRequest request) {
+        List<NeRelease> neReleaseList = new ArrayList<>();
+        List<NeParam> neParamList = new ArrayList<>();
+
+        String neTypeId = request.getParameter("neTypeId");
+        if (null != neTypeId && !"".equals(neTypeId)) {
+            Optional<NeType> neTypeOpt = neTypeRepository.findById(neTypeId);
+            if (neTypeOpt.isPresent()) {
+                NeType neType = neTypeOpt.get();
+                neReleaseList = neReleaseRepository.findByNeType(neType.getName());
+            }
+        }
+
+        String neRelId = request.getParameter("neRelId");
+        if (null != neRelId && !"".equals(neRelId)) {
+            Optional<NeRelease> neRelOpt = neReleaseRepository.findById(neRelId);
+            if (neRelOpt.isPresent()) {
+                NeRelease neRelease = neRelOpt.get();
+                neParamList = neParamRepository.findByNeRelease(neRelease.getNeType(), neRelease.getNeVersion());
+            }
+        }
+        List<NeType> allNeTypeList = neTypeRepository.findAll();
+
         Map<String, Object> params = new HashMap<>();
-        params.put("ne", ne);
-        params.put("neParam", neParam);
+        params.put("neTypeId", neTypeId);
+        params.put("neRelId", neRelId);
+        params.put("neParamList", neParamList);
+        params.put("neReleaseList", neReleaseList);
+        params.put("allNeTypeList", allNeTypeList);
         return new ModelAndView("param/list", params);
     }
 
     @RequestMapping(value = "/param/add", method = RequestMethod.GET)
-    public ModelAndView add(@ModelAttribute NeRelease ne) {
-        List<NeRelease> neList = neRepository.findAll();
+    public ModelAndView add(@RequestParam String neRelId) {
+        NeRelease neRelease = null;
+        if (null != neRelId && !"".equals(neRelId)) {
+            Optional<NeRelease> neRelOpt = neReleaseRepository.findById(neRelId);
+            if (neRelOpt.isPresent()) {
+                neRelease = neRelOpt.get();
+            }
+        }
         List<Variable> paramList = VariablesRepository.getVariables();
+
         Map<String, Object> params = new HashMap<>();
-        params.put("currentNe", ne);
-        params.put("allNes", neList);
+        params.put("neRelease", neRelease);
         params.put("paramList", paramList);
 
         return new ModelAndView("param/add", params);
@@ -52,9 +88,9 @@ public class NeParamController {
         LOG.info("Entering save() method...");
         String neType = request.getParameter("neType");
         String neVersion = request.getParameter("neVersion");
-        NeRelease ne = new NeRelease(neType, neVersion);
         NeParam neParam = new NeParam();
-        neParam.setNe(ne);
+        neParam.setNeType(neType);
+        neParam.setNeVersion(neVersion);
 
         List<Variable> variables = new ArrayList<>();
         Enumeration parameterNames = request.getParameterNames();

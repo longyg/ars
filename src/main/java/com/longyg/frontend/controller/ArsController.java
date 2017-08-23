@@ -39,9 +39,9 @@ public class ArsController {
 
     @RequestMapping("/ars/create")
     public String createUs(@ModelAttribute NeRelease ne) {
-        NeParam neParam = neParamRepository.findByNe(ne);
-        UserStorySpec usSpec = usBuilder.create(neParam);
-        usRepository.save(usSpec);
+//        NeParam neParam = neParamRepository.findByNe(ne);
+//        UserStorySpec usSpec = usBuilder.create(neParam);
+//        usRepository.save(usSpec);
         return "redirect:/ars?neType=" + ne.getNeType() + "&neVersion=" + ne.getNeVersion();
     }
 }

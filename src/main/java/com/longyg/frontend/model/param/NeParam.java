@@ -11,8 +11,9 @@ import java.util.List;
 public class NeParam {
     @Id
     private String id;
+    private String neType;
+    private String neVersion;
     private int v;
-    private NeRelease ne;
     private List<Variable> variables = new ArrayList<>();
 
     public String getId() {
@@ -31,12 +32,20 @@ public class NeParam {
         this.v = v;
     }
 
-    public NeRelease getNe() {
-        return ne;
+    public String getNeType() {
+        return neType;
     }
 
-    public void setNe(NeRelease ne) {
-        this.ne = ne;
+    public void setNeType(String neType) {
+        this.neType = neType;
+    }
+
+    public String getNeVersion() {
+        return neVersion;
+    }
+
+    public void setNeVersion(String neVersion) {
+        this.neVersion = neVersion;
     }
 
     public List<Variable> getVariables() {
