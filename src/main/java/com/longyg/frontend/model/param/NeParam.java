@@ -1,7 +1,6 @@
 package com.longyg.frontend.model.param;
 
 import com.longyg.backend.ars.tpl.Variable;
-import com.longyg.frontend.model.ne.NeRelease;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 

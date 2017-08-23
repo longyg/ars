@@ -19,16 +19,18 @@
             <div><h3>Add parameters</h3></div>
 
             <form class="form-horizontal" role="form" action="/param/save" method="post">
+                <input type="hidden" name="neTypeId" value="${neTypeId}" />
+                <input type="hidden" name="neRelId" value="${neRelId}" />
                 <div class="form-group">
                     <label  class="col-sm-4 control-label" for="neType">NE Type</label>
                     <div class="col-sm-8">
-                        <input class="form-control" id="neType" placeholder="${neRelease.neType}" disabled/>
+                        <input class="form-control" id="neType" name="neType" placeholder="${neRelease.neType}" value="${neRelease.neType}" readonly unselectable="on"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-4 control-label" for="neVersion" >NE Version</label>
                     <div class="col-sm-8">
-                        <input class="form-control" id="neVersion" placeholder="${neRelease.neVersion}" disabled/>
+                        <input class="form-control" id="neVersion" name="neVersion" placeholder="${neRelease.neVersion}" value="${neRelease.neVersion}" readonly unselectable="on"/>
                     </div>
                 </div>
                 <#list paramList as param>

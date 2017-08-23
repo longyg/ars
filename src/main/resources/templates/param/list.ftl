@@ -17,24 +17,25 @@
         <div class="col-md-1"></div>
         <div class="col-md-10">
             <div><h3>Parameters</h3></div>
-            <form class="form-horizontal" role="form" action="/param" method="post">
-                <label class="col-md-3 control-label" for="name">NE Type</label>
-                <div class="col-md-3">
-                    <select class="form-control" id="neTypeSelect" name="neType">
-                        <option value="">--Select--</option>
-                        <#list allNeTypeList as type>
-                            <#if neTypeId?? && type.id == neTypeId>
-                                <option value="${type.id}" selected>${type.name}</option>
-                            <#else>
-                                <option value="${type.id}">${type.name}</option>
-                            </#if>
-                        </#list>
-                    </select>
-                </div>
-                <label class="col-md-3 control-label" for="name">NE Version</label>
-                <div class="col-md-3">
-                    <select class="form-control" id="neVersionSelect" name="neVersion">
-                        <option value="">--Select--</option>
+            <form class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-1 control-label" for="neTypeSelect">NE Type</label>
+                    <div class="col-sm-1">
+                        <select class="form-control" id="neTypeSelect" name="neType">
+                            <option value="">--Select--</option>
+                            <#list allNeTypeList as type>
+                                <#if neTypeId?? && type.id == neTypeId>
+                                    <option value="${type.id}" selected>${type.name}</option>
+                                <#else>
+                                    <option value="${type.id}">${type.name}</option>
+                                </#if>
+                            </#list>
+                        </select>
+                    </div>
+                    <label class="col-sm-1 control-label" for="neVersionSelect">NE Version</label>
+                    <div class="col-sm-1">
+                        <select class="form-control" id="neVersionSelect" name="neVersion">
+                            <option value="">--Select--</option>
                         <#list neReleaseList as neRel>
                             <#if neRelId?? && neRel.id == neRelId>
                                 <option value="${neRel.id}" selected>${neRel.neVersion}</option>
@@ -42,17 +43,20 @@
                                 <option value="${neRel.id}">${neRel.neVersion}</option>
                             </#if>
                         </#list>
-                    </select>
+                        </select>
+                    </div>
+                    <#if neRelId?? && "" != neRelId>
+                        <div class="col-sm-1">
+                            <a class="btn btn-primary" href="/param/add?neTypeId=${neTypeId}&neRelId=${neRelId}">
+                                <span class="glyphicon glyphicon-plus-sign"></span> Add
+                            </a>
+                        </div>
+                    </#if>
                 </div>
             </form>
+
             <label class="col-md-12"></label>
-            <#if neRelId?? && "" != neRelId>
-                <div style="margin:10px">
-                    <a class="btn btn-primary" href="/param/add?neRelId=${neRelId}">
-                        <span class="glyphicon glyphicon-plus-sign"></span> Add
-                    </a>
-                </div>
-            </#if>
+
             <table class="table table-bordered">
                 <thead>
                 <tr>
@@ -67,7 +71,7 @@
                     <tr>
                         <td>${neParam.neType}</td>
                         <td>${neParam.neVersion}</td>
-                        <td>${neParam.v}</td>
+                        <td>v${neParam.v}</td>
                         <td>
                             <a class="btn btn-sm btn-info" href="/param/view?id=${neParam.id}">
                                 <span class="glyphicon glyphicon-edit"></span> View Details

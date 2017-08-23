@@ -14,8 +14,8 @@
                                 <b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="/netype"><span class="glyphicon glyphicon-link"></span> NE Type</a></li>
-                                <li><a href="/nerelease"><span class="glyphicon glyphicon-tasks"></span> NE Release</a></li>
+                                <li><a href="/netype"><span class="glyphicon glyphicon-tag"></span> NE Type</a></li>
+                                <li><a href="/nerelease"><span class="glyphicon glyphicon-th-list"></span> NE Release</a></li>
                             </ul>
                         </li>
                         <li><a href="#"><span class="glyphicon glyphicon-book"></span> ARS</a></li>
@@ -27,6 +27,7 @@
                             <ul class="dropdown-menu">
                                 <li class="active"><a href="/interface"><span class="glyphicon glyphicon-link"></span> Interface Objects</a></li>
                                 <li><a href="/object"><span class="glyphicon glyphicon-tasks"></span> Global Objects</a></li>
+                                <li><a href="/param"><span class="glyphicon glyphicon-tags"></span> Parameters</a></li>
                             </ul>
                         </li>
                     </ul>
