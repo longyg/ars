@@ -18,7 +18,7 @@
                                 <li><a href="/nerelease"><span class="glyphicon glyphicon-th-list"></span> NE Release</a></li>
                             </ul>
                         </li>
-                        <li><a href="#"><span class="glyphicon glyphicon-book"></span> ARS</a></li>
+
                         <li class="dropdown active">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <span class="glyphicon glyphicon-cog"></span> Config
@@ -27,9 +27,12 @@
                             <ul class="dropdown-menu">
                                 <li class="active"><a href="/interface"><span class="glyphicon glyphicon-link"></span> Interface Objects</a></li>
                                 <li><a href="/object"><span class="glyphicon glyphicon-tasks"></span> Global Objects</a></li>
+                                <li><a href="/resource"><span class="glyphicon glyphicon-leaf"></span> Resources</a></li>
                                 <li><a href="/param"><span class="glyphicon glyphicon-tags"></span> Parameters</a></li>
                             </ul>
                         </li>
+
+                        <li><a href="/ars"><span class="glyphicon glyphicon-book"></span> ARS</a></li>
                     </ul>
                 </div>
             </div>
