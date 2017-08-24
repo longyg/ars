@@ -111,6 +111,48 @@ public class NeParamController {
         return new ModelAndView("param/view", params);
     }
 
+    @RequestMapping("/param/edit")
+    public ModelAndView edit(@RequestParam String id, @RequestParam String neTypeId, @RequestParam String neRelId) {
+        Optional<NeParam> neParam = neParamRepository.findById(id);
+        Map<String, Object> params = new HashMap<>();
+        params.put("neParam", neParam.get());
+        params.put("neTypeId", neTypeId);
+        params.put("neRelId", neRelId);
+        params.put("id", id);
+        return new ModelAndView("param/edit", params);
+    }
+
+    @RequestMapping("/param/update")
+    public String update(HttpServletRequest request) {
+        String id = request.getParameter("id");
+        Optional<NeParam> neParamOpt = neParamRepository.findById(id);
+        NeParam neParam = neParamOpt.get();
+        if (null != neParam) {
+            Enumeration parameterNames = request.getParameterNames();
+            while (parameterNames.hasMoreElements()) {
+                String paramName = (String) parameterNames.nextElement();
+                String paramValue = request.getParameter(paramName);
+                for (Variable variable : neParam.getVariables()) {
+                    if (variable.getName().equals(paramName)) {
+                        variable.setValue(paramValue);
+                    }
+                }
+            }
+            neParamRepository.save(neParam);
+        }
+
+        String neTypeId = request.getParameter("neTypeId");
+        String neRelId = request.getParameter("neRelId");
+
+        return "redirect:/param?neTypeId=" + neTypeId + "&neRelId=" + neRelId;
+    }
+
+    @RequestMapping("/param/delete")
+    public String delete(@RequestParam String id, @RequestParam String neTypeId, @RequestParam String neRelId) {
+        neParamRepository.deleteById(id);
+        return "redirect:/param?neTypeId=" + neTypeId + "&neRelId=" + neRelId;
+    }
+
     private List<NeParam> findNeParamListByNeRelId(String neRelId) {
         List<NeParam> neParamList = new ArrayList<>();
         if (null != neRelId && !"".equals(neRelId)) {

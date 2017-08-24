@@ -17,28 +17,29 @@
     <div class="row">
         <div class="col-md-3"></div>
         <div class="col-md-6">
-            <div><h3>Add parameters</h3></div>
+            <div><h3>Edit parameters</h3></div>
 
-            <form class="form-horizontal" role="form" action="/param/save" method="post">
+            <form class="form-horizontal" id="paramEditForm" role="form" action="/param/update" method="post">
+                <input type="hidden" name="id" value="${id}" />
                 <input type="hidden" name="neTypeId" value="${neTypeId}" />
                 <input type="hidden" name="neRelId" value="${neRelId}" />
                 <div class="form-group">
                     <label  class="col-sm-4 control-label" for="neType">NE Type</label>
                     <div class="col-sm-8">
-                        <input class="form-control" id="neType" name="neType" placeholder="${neRelease.neType}" value="${neRelease.neType}" readonly unselectable="on"/>
+                        <input class="form-control" id="neType" name="neType" placeholder="${neParam.neType}" value="${neParam.neType}" readonly unselectable="on"/>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-4 control-label" for="neVersion" >NE Version</label>
                     <div class="col-sm-8">
-                        <input class="form-control" id="neVersion" name="neVersion" placeholder="${neRelease.neVersion}" value="${neRelease.neVersion}" readonly unselectable="on"/>
+                        <input class="form-control" id="neVersion" name="neVersion" placeholder="${neParam.neVersion}" value="${neParam.neVersion}" readonly unselectable="on"/>
                     </div>
                 </div>
-                <#list paramList as param>
+                <#list neParam.variables as variable>
                     <div class="form-group">
-                        <label class="col-sm-4 control-label" for="${param.name}" >${param.name}</label>
+                        <label class="col-sm-4 control-label" for="${variable.name}" >${variable.name}</label>
                         <div class="col-sm-8">
-                            <input class="form-control" id="${param.name}" name="${param.name}" placeholder="${param.name}" />
+                            <input class="form-control" id="${variable.name}" name="${variable.name}" value="${variable.value}" />
                         </div>
                     </div>
                 </#list>
@@ -46,6 +47,7 @@
                 <div class="form-group">
                     <div class="col-sm-offset-4 col-sm-8">
                         <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="submit" id="saveAsNewBtn" class="btn btn-primary">Save As New</button>
                     </div>
                 </div>
             </form>
@@ -59,5 +61,6 @@
 
 <script src="/js/jquery-1.9.1.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
+<script src="/js/paramEditForm.js"></script>
 </body>
 </html>

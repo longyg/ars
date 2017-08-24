@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/css/ars.css" rel="stylesheet">
     <title>Parameters</title>
 </head>
 <body>
@@ -20,7 +21,7 @@
             <form class="form-horizontal">
                 <div class="form-group">
                     <label class="col-sm-1 control-label" for="neTypeSelect">NE Type</label>
-                    <div class="col-sm-1">
+                    <div class="col-sm-2">
                         <select class="form-control" id="neTypeSelect" name="neType">
                             <option value="">--Select--</option>
                             <#list allNeTypeList as type>
@@ -33,7 +34,7 @@
                         </select>
                     </div>
                     <label class="col-sm-1 control-label" for="neVersionSelect">NE Version</label>
-                    <div class="col-sm-1">
+                    <div class="col-sm-2">
                         <select class="form-control" id="neVersionSelect" name="neVersion">
                             <option value="">--Select--</option>
                         <#list neReleaseList as neRel>
@@ -73,13 +74,13 @@
                         <td>${neParam.neVersion}</td>
                         <td>v${neParam.v}</td>
                         <td>
-                            <a class="btn btn-sm btn-info" href="/param/view?id=${neParam.id}">
-                                <span class="glyphicon glyphicon-edit"></span> View Details
+                            <a class="btn btn-sm btn-success" href="/param/view?id=${neParam.id}">
+                                <span class="glyphicon glyphicon-eye-open"></span> View Details
                             </a>
-                            <a class="btn btn-sm btn-info" href="/param/delete?id=${neParam.id}">
+                            <a class="btn btn-sm btn-info" href="/param/edit?id=${neParam.id}&neTypeId=${neTypeId}&neRelId=${neRelId}">
                                 <span class="glyphicon glyphicon-edit"></span> Edit
                             </a>
-                            <a class="btn btn-sm btn-danger" href="/param/delete?id=${neParam.id}">
+                            <a class="btn btn-sm btn-danger" href="/param/delete?id=${neParam.id}&neTypeId=${neTypeId}&neRelId=${neRelId}">
                                 <span class="glyphicon glyphicon-remove-sign"></span> Delete
                             </a>
                         </td>
