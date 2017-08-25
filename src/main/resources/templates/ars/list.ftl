@@ -80,8 +80,8 @@
                                 <a class="btn btn-sm btn-success" href="/ars/viewAlarm?id=${neArs.ars.alarm}">
                                     <span class="glyphicon glyphicon-eye-open"></span> Alarm
                                 </a>
-                            <#else>
-                                <a class="btn btn-sm btn-success" href="/ars/create?neTypeId=${neTypeId}&neRelId=${neArs.neRelease.id}">
+                            <#elseif neArs.arsConfig??>
+                                <a id="arsCreateBtn" class="btn btn-sm btn-success" href="/ars/create?neTypeId=${neTypeId}&neRelId=${neArs.neRelease.id}">
                                     <span class="glyphicon glyphicon-eye-open"></span> Generate
                                 </a>
                             </#if>

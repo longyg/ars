@@ -1,26 +1,28 @@
 package com.longyg.frontend.controller;
 
+import com.longyg.backend.ars.generator.ArsGenerator;
 import com.longyg.frontend.model.ars.*;
-import com.longyg.frontend.model.ars.us.UsBuilder;
 import com.longyg.frontend.model.ars.us.UsRepository;
 import com.longyg.frontend.model.ars.us.UserStorySpec;
 import com.longyg.frontend.model.ne.NeRelease;
 import com.longyg.frontend.model.ne.NeReleaseRepository;
 import com.longyg.frontend.model.ne.NeType;
 import com.longyg.frontend.model.ne.NeTypeRepository;
-import com.longyg.frontend.model.param.NeParam;
-import com.longyg.frontend.model.param.NeParamRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
+import java.util.logging.Logger;
 
 @Controller
 public class ArsController {
+    private static final Logger LOG = Logger.getLogger(ArsController.class.getName());
+
     @Autowired
     private UsRepository usRepository;
 
@@ -35,6 +37,9 @@ public class ArsController {
 
     @Autowired
     private ArsConfigRepository arsConfigRepository;
+
+    @Autowired
+    private ArsGenerator arsGenerator;
 
     @RequestMapping("/ars")
     public ModelAndView list(HttpServletRequest request) {
@@ -78,11 +83,18 @@ public class ArsController {
     }
 
     @RequestMapping("/ars/create")
-    public String createUs(@ModelAttribute NeRelease ne) {
-//        NeParam neParam = neParamRepository.findByNe(ne);
-//        UserStorySpec usSpec = usBuilder.create(neParam);
-//        usRepository.save(usSpec);
-        return "redirect:/ars?neType=" + ne.getNeType() + "&neVersion=" + ne.getNeVersion();
+    public String createUs(@RequestParam String neTypeId, @RequestParam String neRelId) {
+        ArsConfig arsConfig = findArsConfig(neRelId);
+        if (null != arsConfig)
+        {
+            arsGenerator.generateAndSave(arsConfig);
+        }
+        else
+        {
+            LOG.severe("ARS config is null, can't generate ARS!");
+        }
+
+        return "redirect:/ars?neTypeId=" + neTypeId;
     }
 
     private List<NeRelease> findNeReleaseByNeTypeId(String neTypeId) {
@@ -96,4 +108,17 @@ public class ArsController {
         }
         return neReleaseList;
     }
+
+    private ArsConfig findArsConfig(String neRelId) {
+        if (null != neRelId && !"".equals(neRelId)) {
+            Optional<NeRelease> neRelOpt = neReleaseRepository.findById(neRelId);
+            if (neRelOpt.isPresent()) {
+                NeRelease neRelease = neRelOpt.get();
+                return arsConfigRepository.findByNeTypeAndRelease(neRelease.getNeType(), neRelease.getNeVersion());
+            }
+        }
+        return null;
+    }
+
+
 }
