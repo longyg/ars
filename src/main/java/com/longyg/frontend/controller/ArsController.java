@@ -1,21 +1,23 @@
 package com.longyg.frontend.controller;
 
+import com.longyg.backend.adaptation.main.ResourceRepository;
 import com.longyg.backend.ars.generator.ArsGenerator;
 import com.longyg.frontend.model.ars.*;
 import com.longyg.frontend.model.ars.us.UsRepository;
 import com.longyg.frontend.model.ars.us.UserStorySpec;
+import com.longyg.frontend.model.config.AdaptationResource;
+import com.longyg.frontend.model.config.AdaptationResourceRepository;
 import com.longyg.frontend.model.ne.NeRelease;
 import com.longyg.frontend.model.ne.NeReleaseRepository;
 import com.longyg.frontend.model.ne.NeType;
 import com.longyg.frontend.model.ne.NeTypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.swing.text.html.Option;
 import java.util.*;
 import java.util.logging.Logger;
 
@@ -37,6 +39,9 @@ public class ArsController {
 
     @Autowired
     private ArsConfigRepository arsConfigRepository;
+
+    @Autowired
+    private AdaptationResourceRepository resourceRepository;
 
     @Autowired
     private ArsGenerator arsGenerator;
@@ -95,6 +100,46 @@ public class ArsController {
         }
 
         return "redirect:/ars?neTypeId=" + neTypeId;
+    }
+
+    @RequestMapping("/ars/addConfig")
+    public ModelAndView addConfig(@RequestParam String neTypeId, @RequestParam String neRelId) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("neTypeId", neTypeId);
+        params.put("neRelId", neRelId);
+
+        Optional<NeType> neTypeOpt = neTypeRepository.findById(neTypeId);
+        if (neTypeOpt.isPresent()) {
+            NeType neType = neTypeOpt.get();
+            params.put("neType", neType);
+        }
+
+        Optional<NeRelease> neRelOpt = neReleaseRepository.findById(neRelId);
+        if (neRelOpt.isPresent()) {
+            NeRelease neRelease = neRelOpt.get();
+            params.put("neRelease", neRelease);
+        } else {
+            LOG.severe("Can't find NE release with id: " + neRelId);
+        }
+
+        List<AdaptationResource> resources = resourceRepository.findAll();
+
+        return new ModelAndView("ars/addConfig", params);
+    }
+
+    @RequestMapping(value = "/getAdapVersions", method = RequestMethod.POST)
+    @ResponseBody
+    public List<String> getAdaptationReleases(@RequestParam String adaptationId) {
+        List<String> releases = new ArrayList<>();
+        List<AdaptationResource> resources = resourceRepository.findAll();
+
+        for (AdaptationResource src : resources) {
+            if (src.getAdaptation().getId().equals(adaptationId)) {
+                releases.add(src.getAdaptation().getRelease());
+            }
+        }
+
+        return releases;
     }
 
     private List<NeRelease> findNeReleaseByNeTypeId(String neTypeId) {

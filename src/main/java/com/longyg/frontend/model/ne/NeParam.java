@@ -1,4 +1,4 @@
-package com.longyg.frontend.model.param;
+package com.longyg.frontend.model.ne;
 
 import com.longyg.backend.ars.tpl.Variable;
 import org.springframework.data.annotation.Id;

@@ -1,7 +1,5 @@
 package com.longyg.frontend.model.config;
 
-import com.longyg.frontend.model.object.GlobalObject;
-
 public class ParentObject {
     private GlobalObject object;
     private ParentObject parentObject;

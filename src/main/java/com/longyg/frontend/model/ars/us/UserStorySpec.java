@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.ArrayList;
 import java.util.List;
 
-@Document(collection = "ars")
+@Document(collection = "us")
 public class UserStorySpec {
     @Id
     private String id;

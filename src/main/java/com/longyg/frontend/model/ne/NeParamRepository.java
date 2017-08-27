@@ -1,6 +1,5 @@
-package com.longyg.frontend.model.param;
+package com.longyg.frontend.model.ne;
 
-import com.longyg.frontend.model.ne.NeRelease;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 

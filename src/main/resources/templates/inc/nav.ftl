@@ -16,6 +16,7 @@
                             <ul class="dropdown-menu">
                                 <li><a href="/netype"><span class="glyphicon glyphicon-tag"></span> NE Type</a></li>
                                 <li><a href="/nerelease"><span class="glyphicon glyphicon-th-list"></span> NE Release</a></li>
+                                <li><a href="/neif"><span class="glyphicon glyphicon-link"></span> NE Interface</a></li>
                             </ul>
                         </li>
 

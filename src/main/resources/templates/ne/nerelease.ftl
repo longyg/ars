@@ -77,7 +77,6 @@
                     <div class="form-group">
                         <label  class="col-sm-2 control-label" for="neType">NE Type</label>
                         <div class="col-sm-10">
-                            <!--<input class="form-control" id="neType" name="neType" placeholder="NE Type"/>-->
                             <select class="form-control" name="neType" id="neType">
                                 <#list neTypeList as neType>
                                     <option value="${neType.name}">${neType.name}</option>

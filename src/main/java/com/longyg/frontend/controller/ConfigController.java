@@ -2,10 +2,10 @@ package com.longyg.frontend.controller;
 
 import com.longyg.frontend.model.config.AdaptationResource;
 import com.longyg.frontend.model.config.AdaptationResourceRepository;
-import com.longyg.frontend.model.iface.InterfaceObject;
-import com.longyg.frontend.model.iface.InterfaceRepository;
-import com.longyg.frontend.model.object.GlobalObject;
-import com.longyg.frontend.model.object.ObjectRepository;
+import com.longyg.frontend.model.config.InterfaceObject;
+import com.longyg.frontend.model.config.InterfaceRepository;
+import com.longyg.frontend.model.config.GlobalObject;
+import com.longyg.frontend.model.config.ObjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;

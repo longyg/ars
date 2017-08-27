@@ -1,4 +1,4 @@
-package com.longyg.frontend.model.iface;
+package com.longyg.frontend.model.config;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
 

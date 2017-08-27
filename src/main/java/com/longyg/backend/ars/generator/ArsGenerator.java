@@ -5,10 +5,8 @@ import com.longyg.frontend.model.ars.ArsConfig;
 import com.longyg.frontend.model.ars.ArsRepository;
 import com.longyg.frontend.model.config.AdaptationResource;
 import com.longyg.frontend.model.config.AdaptationResourceRepository;
-import com.longyg.frontend.model.iface.InterfaceObject;
-import com.longyg.frontend.model.iface.InterfaceRepository;
-import com.longyg.frontend.model.param.NeParam;
-import com.longyg.frontend.model.param.NeParamRepository;
+import com.longyg.frontend.model.config.InterfaceObject;
+import com.longyg.frontend.model.config.InterfaceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -25,10 +23,6 @@ public class ArsGenerator {
 
     @Autowired
     private InterfaceRepository interfaceRepository;
-
-    @Autowired
-    private NeParamRepository neParamRepository;
-
     @Autowired
     private AdaptationResourceRepository resourceRepository;
 

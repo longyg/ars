@@ -57,9 +57,12 @@
                                 <a class="btn btn-sm btn-success" href="/ars/viewConfig?id=${neArs.arsConfig.id}">
                                     <span class="glyphicon glyphicon-eye-open"></span> View
                                 </a>
+                                <a class="btn btn-sm btn-success" href="/ars/editConfig?id=${neArs.arsConfig.id}">
+                                    <span class="glyphicon glyphicon-eye-open"></span> Edit
+                                </a>
                             <#else>
-                                <a class="btn btn-sm btn-success" href="/ars/addConfig?neTypeId=${neTypeId}&neRelId=${neArs.neRelease.id}">
-                                    <span class="glyphicon glyphicon-eye-open"></span> Add
+                                <a class="btn btn-sm btn-primary" href="/ars/addConfig?neTypeId=${neTypeId}&neRelId=${neArs.neRelease.id}">
+                                    <span class="glyphicon glyphicon-plus"></span> Add
                                 </a>
                             </#if>
                         </td>
@@ -84,6 +87,8 @@
                                 <a id="arsCreateBtn" class="btn btn-sm btn-success" href="/ars/create?neTypeId=${neTypeId}&neRelId=${neArs.neRelease.id}">
                                     <span class="glyphicon glyphicon-eye-open"></span> Generate
                                 </a>
+                            <#else>
+                                <p class="text-danger"><span class="glyphicon glyphicon-warning-sign"></span> ARS is not available!</p>
                             </#if>
                         </td>
                     </tr>
