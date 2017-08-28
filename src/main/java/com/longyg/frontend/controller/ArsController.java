@@ -5,12 +5,14 @@ import com.longyg.backend.ars.generator.ArsGenerator;
 import com.longyg.frontend.model.ars.*;
 import com.longyg.frontend.model.ars.us.UsRepository;
 import com.longyg.frontend.model.ars.us.UserStorySpec;
+import com.longyg.frontend.model.config.Adaptation;
 import com.longyg.frontend.model.config.AdaptationResource;
 import com.longyg.frontend.model.config.AdaptationResourceRepository;
 import com.longyg.frontend.model.ne.NeRelease;
 import com.longyg.frontend.model.ne.NeReleaseRepository;
 import com.longyg.frontend.model.ne.NeType;
 import com.longyg.frontend.model.ne.NeTypeRepository;
+import com.longyg.frontend.model.response.AjaxResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -108,21 +110,35 @@ public class ArsController {
         params.put("neTypeId", neTypeId);
         params.put("neRelId", neRelId);
 
+        NeType neType = null;
         Optional<NeType> neTypeOpt = neTypeRepository.findById(neTypeId);
         if (neTypeOpt.isPresent()) {
-            NeType neType = neTypeOpt.get();
+            neType = neTypeOpt.get();
             params.put("neType", neType);
         }
 
+        NeRelease neRelease = null;
         Optional<NeRelease> neRelOpt = neReleaseRepository.findById(neRelId);
         if (neRelOpt.isPresent()) {
-            NeRelease neRelease = neRelOpt.get();
+            neRelease = neRelOpt.get();
             params.put("neRelease", neRelease);
         } else {
             LOG.severe("Can't find NE release with id: " + neRelId);
         }
 
-        List<AdaptationResource> resources = resourceRepository.findAll();
+        List<AdaptationResource> supportedResources = new ArrayList<>();
+        if (null != neRelease) {
+            ArsConfig arsConfig = arsConfigRepository.findByNeTypeAndRelease(neRelease.getNeType(), neRelease.getNeVersion());
+            if (null != arsConfig) {
+                for (String srcId : arsConfig.getResources()) {
+                    Optional<AdaptationResource> opt = resourceRepository.findById(srcId);
+                    if (opt.isPresent()) {
+                        supportedResources.add(opt.get());
+                    }
+                }
+            }
+        }
+        params.put("supportedResources", supportedResources);
 
         return new ModelAndView("ars/addConfig", params);
     }
@@ -140,6 +156,54 @@ public class ArsController {
         }
 
         return releases;
+    }
+
+    @RequestMapping(value = "/ars/addResource", method = RequestMethod.POST)
+    @ResponseBody
+    public AjaxResponse addArsResource(@RequestParam String neTypeId, @RequestParam String neRelId,
+                                       @RequestParam String adaptationId, @RequestParam String adaptationRelease) {
+        LOG.info("neTypeId: " + neTypeId);
+        LOG.info("neRelId: " + neRelId);
+        LOG.info("adaptationId: " + adaptationId);
+        LOG.info("adaptationRelease: " + adaptationRelease);
+        NeRelease neRelease = null;
+        Optional<NeRelease> neRelOpt = neReleaseRepository.findById(neRelId);
+        if (neRelOpt.isPresent()) {
+            neRelease = neRelOpt.get();
+        } else {
+            LOG.severe("Can't find NE release with id: " + neRelId);
+        }
+
+        ArsConfig arsConfig = null;
+        if (null != neRelease) {
+            arsConfig = arsConfigRepository.findByNeTypeAndRelease(neRelease.getNeType(), neRelease.getNeVersion());
+        }
+
+        if (arsConfig == null) {
+            arsConfig = new ArsConfig();
+            if (neRelease != null) {
+                arsConfig.setNeType(neRelease.getNeType());
+                arsConfig.setNeVersion(neRelease.getNeVersion());
+            }
+        }
+
+        AdaptationResource addResource = null;
+        List<AdaptationResource> resources = resourceRepository.findAll();
+        for (AdaptationResource src : resources) {
+            if (src.getAdaptation().getId().equals(adaptationId) && src.getAdaptation().getRelease().equals(adaptationRelease)) {
+                boolean success = arsConfig.addResource(src.getId());
+                if (success) {
+                    addResource = src;
+                }
+                break;
+            }
+        }
+        arsConfigRepository.save(arsConfig);
+
+        AjaxResponse response = new AjaxResponse();
+        response.setStatus("ok");
+        response.setData(addResource.getAdaptation());
+        return response;
     }
 
     private List<NeRelease> findNeReleaseByNeTypeId(String neTypeId) {

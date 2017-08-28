@@ -72,4 +72,12 @@ public class ArsConfig {
     public void setResources(List<String> resources) {
         this.resources = resources;
     }
+
+    public boolean addResource(String srcId) {
+        if (!resources.contains(srcId)) {
+            resources.add(srcId);
+            return true;
+        }
+        return false;
+    }
 }

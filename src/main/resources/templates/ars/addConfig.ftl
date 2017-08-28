@@ -38,6 +38,7 @@
                         <input class="form-control" id="neVersion" name="neVersion" placeholder="${neRelease.neVersion}" value="${neRelease.neVersion}" readonly unselectable="on"/>
                     </div>
                 </div>
+
                 <h2>Resources</h2>
                 <div class="form-group">
                     <label class="col-sm-4 control-label" for="adapIdSelect" >Adaptation ID</label>
@@ -60,6 +61,33 @@
                             <option>--Select--</option>
                         </select>
                     </div>
+                </div>
+
+                <div class="form-group" id="srcAddBtnDiv">
+                    <div class="col-sm-offset-4 col-sm-8">
+                        <button id="srcAddBtn" class="btn btn-primary">Add</button>
+                    </div>
+                </div>
+
+                <div class="form-group" id="srcTable">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>Adaptation ID</th>
+                            <th>Adaptation Version</th>
+                            <th>Operations</th>
+                        </tr>
+                        </thead>
+                        <tbody id="srcTableBody">
+                        <#list supportedResources as src>
+                            <tr>
+                                <td>${src.adaptation.id}</td>
+                                <td>${src.adaptation.release}</td>
+                                <td>Delete</td>
+                            </tr>
+                        </#list>
+                        </tbody>
+                    </table>
                 </div>
 
                 <div class="form-group">
