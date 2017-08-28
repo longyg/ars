@@ -18,8 +18,7 @@
         <div class="col-md-3"></div>
         <div class="col-md-6">
             <div><h3>Add ARS Config</h3></div>
-
-            <form class="form-horizontal" role="form" action="/ars/saveConfig" method="post">
+            <form class="form-horizontal" role="form">
                 <#if neTypeId??>
                 <input type="hidden" name="neTypeId" value="${neTypeId}" />
                 </#if>
@@ -38,8 +37,41 @@
                         <input class="form-control" id="neVersion" name="neVersion" placeholder="${neRelease.neVersion}" value="${neRelease.neVersion}" readonly unselectable="on"/>
                     </div>
                 </div>
+                <h4>Interfaces</h4>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label" for="interfaceSelect" >Interfaces</label>
+                    <div class="col-sm-8">
+                        <select class="form-control" name="interface" id="interfaceSelect">
+                            <option value="">--Select--</option>
+                            <#list selectableInterfaces as iface>
+                                <option value="${iface.id}">${iface.name}</option>
+                            </#list>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group" id="ifaceTable">
+                    <label class="col-sm-4 control-label" for="interfaceSelect" >Selected Interfaces</label>
+                    <div class="col-sm-8">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Operations</th>
+                            </tr>
+                            </thead>
+                            <tbody id="ifaceTableBody">
+                            <#list supportedInterfaces as iface>
+                            <tr>
+                                <td>${iface.name}</td>
+                                <td>Delete</td>
+                            </tr>
+                            </#list>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
 
-                <h2>Resources</h2>
+                <h4>Resources</h4>
                 <div class="form-group">
                     <label class="col-sm-4 control-label" for="adapIdSelect" >Adaptation ID</label>
                     <div class="col-sm-8">
@@ -70,24 +102,27 @@
                 </div>
 
                 <div class="form-group" id="srcTable">
-                    <table class="table table-bordered">
-                        <thead>
-                        <tr>
-                            <th>Adaptation ID</th>
-                            <th>Adaptation Version</th>
-                            <th>Operations</th>
-                        </tr>
-                        </thead>
-                        <tbody id="srcTableBody">
-                        <#list supportedResources as src>
+                    <label class="col-sm-4 control-label" for="interfaceSelect" >Selected Resources</label>
+                    <div class="col-sm-8">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th>Adaptation ID</th>
+                                <th>Adaptation Version</th>
+                                <th>Operations</th>
+                            </tr>
+                            </thead>
+                            <tbody id="srcTableBody">
+                            <#list supportedResources as src>
                             <tr>
                                 <td>${src.adaptation.id}</td>
                                 <td>${src.adaptation.release}</td>
                                 <td>Delete</td>
                             </tr>
-                        </#list>
-                        </tbody>
-                    </table>
+                            </#list>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
 
                 <div class="form-group">
@@ -96,7 +131,6 @@
                     </div>
                 </div>
             </form>
-
         </div>
         <div class="col-md-3"></div>
     </div>

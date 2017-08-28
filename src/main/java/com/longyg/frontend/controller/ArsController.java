@@ -8,11 +8,16 @@ import com.longyg.frontend.model.ars.us.UserStorySpec;
 import com.longyg.frontend.model.config.Adaptation;
 import com.longyg.frontend.model.config.AdaptationResource;
 import com.longyg.frontend.model.config.AdaptationResourceRepository;
+import com.longyg.frontend.model.config.InterfaceObject;
 import com.longyg.frontend.model.ne.NeRelease;
 import com.longyg.frontend.model.ne.NeReleaseRepository;
 import com.longyg.frontend.model.ne.NeType;
 import com.longyg.frontend.model.ne.NeTypeRepository;
 import com.longyg.frontend.model.response.AjaxResponse;
+import com.longyg.frontend.service.ArsService;
+import com.longyg.frontend.service.ConfigService;
+import com.longyg.frontend.service.NeService;
+import org.apache.xmlbeans.impl.xb.xmlconfig.Extensionconfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -44,6 +49,15 @@ public class ArsController {
 
     @Autowired
     private AdaptationResourceRepository resourceRepository;
+
+    @Autowired
+    private NeService neService;
+
+    @Autowired
+    private ArsService arsService;
+
+    @Autowired
+    private ConfigService configService;
 
     @Autowired
     private ArsGenerator arsGenerator;
@@ -110,34 +124,55 @@ public class ArsController {
         params.put("neTypeId", neTypeId);
         params.put("neRelId", neRelId);
 
-        NeType neType = null;
-        Optional<NeType> neTypeOpt = neTypeRepository.findById(neTypeId);
-        if (neTypeOpt.isPresent()) {
-            neType = neTypeOpt.get();
-            params.put("neType", neType);
+        NeType neType = neService.findNeType(neTypeId);
+        params.put("neType", neType);
+
+        NeRelease neRelease = neService.findRelease(neRelId);
+        params.put("neRelease", neRelease);
+
+        if (null == neType || null == neRelease) {
+            LOG.severe("NE Type or NE release is null");
+            return null;
         }
 
-        NeRelease neRelease = null;
-        Optional<NeRelease> neRelOpt = neReleaseRepository.findById(neRelId);
-        if (neRelOpt.isPresent()) {
-            neRelease = neRelOpt.get();
-            params.put("neRelease", neRelease);
-        } else {
-            LOG.severe("Can't find NE release with id: " + neRelId);
-        }
-
-        List<AdaptationResource> supportedResources = new ArrayList<>();
-        if (null != neRelease) {
-            ArsConfig arsConfig = arsConfigRepository.findByNeTypeAndRelease(neRelease.getNeType(), neRelease.getNeVersion());
-            if (null != arsConfig) {
-                for (String srcId : arsConfig.getResources()) {
-                    Optional<AdaptationResource> opt = resourceRepository.findById(srcId);
-                    if (opt.isPresent()) {
-                        supportedResources.add(opt.get());
-                    }
+        ArsConfig arsConfig = arsService.findArsConfig(neRelease);
+        List<InterfaceObject> interfaces = configService.findInterfaces();
+        List<InterfaceObject> supportedInterfaces = new ArrayList<>();
+        if (null != arsConfig) {
+            for (String ifId : arsConfig.getInterfaces()) {
+                InterfaceObject iface = configService.findInterface(ifId);
+                if (null != iface) {
+                    supportedInterfaces.add(iface);
                 }
             }
         }
+        params.put("supportedInterfaces", supportedInterfaces);
+
+        List<InterfaceObject> selectableInterfaces = new ArrayList<>();
+        for (InterfaceObject ifo : interfaces) {
+            boolean supported = false;
+            for (InterfaceObject ifObj : supportedInterfaces) {
+                if (ifo.getId().equals(ifObj.getId())) {
+                    supported = true;
+                    break;
+                }
+            }
+            if (!supported) {
+                selectableInterfaces.add(ifo);
+            }
+        }
+        params.put("selectableInterfaces", selectableInterfaces);
+
+        List<AdaptationResource> supportedResources = new ArrayList<>();
+        if (null != arsConfig) {
+            for (String srcId : arsConfig.getResources()) {
+                AdaptationResource resource = configService.findResource(srcId);
+                if (null != resource) {
+                    supportedResources.add(resource);
+                }
+            }
+        }
+
         params.put("supportedResources", supportedResources);
 
         return new ModelAndView("ars/addConfig", params);
@@ -201,8 +236,12 @@ public class ArsController {
         arsConfigRepository.save(arsConfig);
 
         AjaxResponse response = new AjaxResponse();
-        response.setStatus("ok");
-        response.setData(addResource.getAdaptation());
+        if (null != addResource) {
+            response.setStatus("ok");
+            response.setData(addResource.getAdaptation());
+        } else {
+            response.setStatus("nok");
+        }
         return response;
     }
 
