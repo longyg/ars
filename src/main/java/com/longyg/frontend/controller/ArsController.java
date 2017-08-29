@@ -118,8 +118,8 @@ public class ArsController {
         return "redirect:/ars?neTypeId=" + neTypeId;
     }
 
-    @RequestMapping("/ars/addConfig")
-    public ModelAndView addConfig(@RequestParam String neTypeId, @RequestParam String neRelId) {
+    @RequestMapping("/ars/setConfig")
+    public ModelAndView setConfig(@RequestParam String neTypeId, @RequestParam String neRelId) {
         Map<String, Object> params = new HashMap<>();
         params.put("neTypeId", neTypeId);
         params.put("neRelId", neRelId);
@@ -197,23 +197,8 @@ public class ArsController {
     @ResponseBody
     public AjaxResponse addArsResource(@RequestParam String neTypeId, @RequestParam String neRelId,
                                        @RequestParam String adaptationId, @RequestParam String adaptationRelease) {
-        LOG.info("neTypeId: " + neTypeId);
-        LOG.info("neRelId: " + neRelId);
-        LOG.info("adaptationId: " + adaptationId);
-        LOG.info("adaptationRelease: " + adaptationRelease);
-        NeRelease neRelease = null;
-        Optional<NeRelease> neRelOpt = neReleaseRepository.findById(neRelId);
-        if (neRelOpt.isPresent()) {
-            neRelease = neRelOpt.get();
-        } else {
-            LOG.severe("Can't find NE release with id: " + neRelId);
-        }
-
-        ArsConfig arsConfig = null;
-        if (null != neRelease) {
-            arsConfig = arsConfigRepository.findByNeTypeAndRelease(neRelease.getNeType(), neRelease.getNeVersion());
-        }
-
+        NeRelease neRelease = neService.findRelease(neRelId);
+        ArsConfig arsConfig = arsService.findArsConfig(neRelease);
         if (arsConfig == null) {
             arsConfig = new ArsConfig();
             if (neRelease != null) {
@@ -223,7 +208,7 @@ public class ArsController {
         }
 
         AdaptationResource addResource = null;
-        List<AdaptationResource> resources = resourceRepository.findAll();
+        List<AdaptationResource> resources = configService.findResources();
         for (AdaptationResource src : resources) {
             if (src.getAdaptation().getId().equals(adaptationId) && src.getAdaptation().getRelease().equals(adaptationRelease)) {
                 boolean success = arsConfig.addResource(src.getId());
@@ -233,12 +218,48 @@ public class ArsController {
                 break;
             }
         }
-        arsConfigRepository.save(arsConfig);
+        arsService.saveConfig(arsConfig);
 
         AjaxResponse response = new AjaxResponse();
         if (null != addResource) {
             response.setStatus("ok");
             response.setData(addResource.getAdaptation());
+        } else {
+            response.setStatus("nok");
+        }
+        return response;
+    }
+
+    @RequestMapping("/ars/addInterface")
+    @ResponseBody
+    public AjaxResponse addInterface(@RequestParam String neTypeId, @RequestParam String neRelId, @RequestParam String interfaceId) {
+        NeRelease neRelease = neService.findRelease(neRelId);
+        ArsConfig arsConfig = arsService.findArsConfig(neRelease);
+        if (arsConfig == null) {
+            arsConfig = new ArsConfig();
+            if (neRelease != null) {
+                arsConfig.setNeType(neRelease.getNeType());
+                arsConfig.setNeVersion(neRelease.getNeVersion());
+            }
+        }
+        InterfaceObject addInterface = null;
+        List<InterfaceObject> interfaces = configService.findInterfaces();
+        for (InterfaceObject ifo : interfaces) {
+            if (ifo.getId().equals(interfaceId)) {
+                boolean success = arsConfig.addInterface(interfaceId);
+                if (success) {
+                    addInterface = ifo;
+                }
+                break;
+            }
+        }
+        arsService.saveConfig(arsConfig);
+
+        AjaxResponse response = new AjaxResponse();
+        if (null != addInterface) {
+            response.setStatus("ok");
+            response.setData(addInterface);
+            LOG.info(response.getData().toString());
         } else {
             response.setStatus("nok");
         }

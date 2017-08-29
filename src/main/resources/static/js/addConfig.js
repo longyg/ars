@@ -1,5 +1,6 @@
 $(document).ready(function() {
     $("#srcAddBtnDiv").hide();
+    $("#ifaceAddBtnDiv").hide();
 
    $("#adapIdSelect").change(function(e) {
        $("#srcAddBtnDiv").hide();
@@ -65,4 +66,38 @@ $(document).ready(function() {
            }
        });
    });
+
+    $("#interfaceSelect").change(function(e) {
+        $this = $(e.target);
+        if ("" != $this.val()) {
+            $("#ifaceAddBtnDiv").show();
+        } else {
+            $("#ifaceAddBtnDiv").hide();
+        }
+    });
+
+    $("#ifaceAddBtn").click(function(e) {
+        e.preventDefault();
+        if ($("#interfaceSelect").val() == "") {
+            alert("Please select interface");
+        }
+        $.ajax({
+            type: "post",
+            url: "/ars/addInterface",
+            data: {
+                neTypeId: $("input[name='neTypeId']").val(),
+                neRelId: $("input[name='neRelId']").val(),
+                interfaceId: $("#interfaceSelect").val()
+            },
+            success: function(data, status) {
+                if (data.status == "ok") {
+                    var iface = data.data;
+                    $("#ifaceTableBody").append("<tr>\n" +
+                        "                            <td>" + iface.name + "</td>\n" +
+                        "                            <td>Delete</td>\n" +
+                        "                          </tr>")
+                }
+            }
+        });
+    });
 });

@@ -80,4 +80,12 @@ public class ArsConfig {
         }
         return false;
     }
+
+    public boolean addInterface(String ifId) {
+        if (!interfaces.contains(ifId)) {
+            interfaces.add(ifId);
+            return true;
+        }
+        return false;
+    }
 }

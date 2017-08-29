@@ -37,20 +37,28 @@
                         <input class="form-control" id="neVersion" name="neVersion" placeholder="${neRelease.neVersion}" value="${neRelease.neVersion}" readonly unselectable="on"/>
                     </div>
                 </div>
+                <hr/>
                 <h4>Interfaces</h4>
                 <div class="form-group">
                     <label class="col-sm-4 control-label" for="interfaceSelect" >Interfaces</label>
                     <div class="col-sm-8">
-                        <select class="form-control" name="interface" id="interfaceSelect">
-                            <option value="">--Select--</option>
-                            <#list selectableInterfaces as iface>
-                                <option value="${iface.id}">${iface.name}</option>
-                            </#list>
-                        </select>
+                        <div class="row form-group">
+                            <div class="col-sm-5">
+                                <select class="form-control" name="interface" id="interfaceSelect">
+                                    <option value="">--Select--</option>
+                                    <#list selectableInterfaces as iface>
+                                        <option value="${iface.id}">${iface.name}</option>
+                                    </#list>
+                                </select>
+                            </div>
+                            <div class="col-sm-3" id="ifaceAddBtnDiv">
+                                <button id="ifaceAddBtn" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span></button>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group" id="ifaceTable">
-                    <label class="col-sm-4 control-label" for="interfaceSelect" >Selected Interfaces</label>
+                    <label class="col-sm-4 control-label">Selected Interfaces</label>
                     <div class="col-sm-8">
                         <table class="table table-bordered">
                             <thead>
@@ -70,39 +78,46 @@
                         </table>
                     </div>
                 </div>
-
+                <hr/>
                 <h4>Resources</h4>
                 <div class="form-group">
                     <label class="col-sm-4 control-label" for="adapIdSelect" >Adaptation ID</label>
                     <div class="col-sm-8">
-                        <select class="form-control" name="adaptationId" id="adapIdSelect">
-                            <option value="">--Select--</option>
-                            <#if neType??>
-                                <#list neType.adaptList as adapId>
-                                    <option value="${adapId}">${adapId}</option>
-                                </#list>
-                            </#if>
-                        </select>
+                        <div class="row form-group">
+                            <div class="col-sm-5">
+                                <select class="form-control" name="adaptationId" id="adapIdSelect">
+                                    <option value="">--Select--</option>
+                                    <#if neType??>
+                                        <#list neType.adaptList as adapId>
+                                            <option value="${adapId}">${adapId}</option>
+                                        </#list>
+                                    </#if>
+                                </select>
+                            </div>
+                            <div class="col-sm-3">
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-sm-4 control-label" for="adapVersionSelect" >Adaptation Version</label>
                     <div class="col-sm-8">
-                        <select class="form-control" name="adaptationRelease" id="adapVersionSelect">
-                            <option>--Select--</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="form-group" id="srcAddBtnDiv">
-                    <div class="col-sm-offset-4 col-sm-8">
-                        <button id="srcAddBtn" class="btn btn-primary">Add</button>
+                        <div class="row form-group">
+                            <div class="col-sm-5">
+                                <select class="form-control" name="adaptationRelease" id="adapVersionSelect">
+                                    <option>--Select--</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-3" id="srcAddBtnDiv">
+                                <button id="srcAddBtn" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span></button>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
                 <div class="form-group" id="srcTable">
-                    <label class="col-sm-4 control-label" for="interfaceSelect" >Selected Resources</label>
+                    <label class="col-sm-4 control-label">Selected Resources</label>
                     <div class="col-sm-8">
                         <table class="table table-bordered">
                             <thead>
@@ -122,12 +137,6 @@
                             </#list>
                             </tbody>
                         </table>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="col-sm-offset-4 col-sm-8">
-                        <button type="submit" class="btn btn-primary">Save</button>
                     </div>
                 </div>
             </form>

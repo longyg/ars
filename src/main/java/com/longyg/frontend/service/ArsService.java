@@ -17,4 +17,8 @@ public class ArsService {
         }
         return arsConfigRepository.findByNeTypeAndRelease(neRelease.getNeType(), neRelease.getNeVersion());
     }
+
+    public ArsConfig saveConfig(ArsConfig arsConfig) {
+        return arsConfigRepository.save(arsConfig);
+    }
 }

@@ -29,6 +29,10 @@ public class ConfigService {
         return null;
     }
 
+    public List<AdaptationResource> findResources() {
+        return resourceRepository.findAll();
+    }
+
     public List<InterfaceObject> findInterfaces() {
         return interfaceRepository.findAll();
     }
