@@ -9,6 +9,8 @@ import com.longyg.frontend.model.ars.us.*;
 import com.longyg.frontend.model.ne.NeRelease;
 import com.longyg.frontend.model.ne.NeParam;
 import com.longyg.frontend.model.ne.NeParamRepository;
+import com.longyg.frontend.service.ArsService;
+import com.longyg.frontend.service.NeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -27,10 +29,10 @@ public class UsGenerator {
     private NeParam neParam;
 
     @Autowired
-    private NeParamRepository neParamRepository;
+    private NeService neService;
 
     @Autowired
-    private UsRepository usRepository;
+    private ArsService arsService;
 
     public String generateAndSave(ArsConfig config) {
         this.config = config;
@@ -55,17 +57,14 @@ public class UsGenerator {
 
         usSpec.setUserStories(createUs());
 
-        usSpec = usRepository.save(usSpec);
+        usSpec = arsService.saveUs(usSpec);
 
         return usSpec.getId();
     }
 
     private NeParam getNeParam() {
         if (config.getNeParamId() != null) {
-            Optional<NeParam> opt = neParamRepository.findById(config.getNeParamId());
-            if (opt.isPresent()) {
-                return opt.get();
-            }
+            return neService.findParam(config.getNeParamId());
         }
         return null;
     }

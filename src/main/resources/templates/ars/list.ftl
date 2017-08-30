@@ -83,7 +83,7 @@
                             <#elseif neArs.arsConfig??>
                                 <p class="text-danger"><span class="glyphicon glyphicon-warning-sign"></span> ARS is not available!</p>
                                 <a id="arsCreateBtn" class="btn btn-sm btn-primary" href="/ars/create?neTypeId=${neTypeId}&neRelId=${neArs.neRelease.id}">
-                                    <span class="glyphicon glyphicon-plus"></span> Click to Generate
+                                    <span class="glyphicon glyphicon-plus"></span> Click to create
                                 </a>
                             <#else>
                                 <p class="text-danger"><span class="glyphicon glyphicon-warning-sign"></span> ARS is not available!</p>
