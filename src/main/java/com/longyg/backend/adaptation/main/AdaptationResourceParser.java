@@ -2,7 +2,11 @@ package com.longyg.backend.adaptation.main;
 
 import com.longyg.backend.adaptation.common.ManualCloseZipInputStream;
 import com.longyg.backend.adaptation.common.Parser;
+import com.longyg.backend.adaptation.fm.FmAdaptation;
+import com.longyg.backend.adaptation.fm.FmPackageParser;
 import com.longyg.backend.adaptation.fm.ManZipParser;
+import com.longyg.backend.adaptation.pm.PmAdaptation;
+import com.longyg.backend.adaptation.pm.PmbPackageParser;
 import com.longyg.backend.adaptation.pm.PmbZipParser;
 import com.longyg.frontend.model.config.AdaptationResource;
 import org.apache.log4j.Logger;
@@ -36,7 +40,6 @@ public class AdaptationResourceParser {
         InputStream inputstream = new FileInputStream(resource.getLocalPath());
         ManualCloseZipInputStream zin = new ManualCloseZipInputStream(inputstream);
         ZipEntry entry = null;
-        Parser parser;
         try {
             while ((entry = zin.getNextEntry()) != null)
             {
@@ -46,14 +49,16 @@ public class AdaptationResourceParser {
                 if (name.contains(".pmb"))
                 {
                     LOG.debug("Parsing pmb zip: " + name);
-                    parser = new PmbZipParser();
-                    parser.parse(zin);
+                    PmbPackageParser parser = new PmbPackageParser();
+                    PmAdaptation pmAdaptation = parser.parse(zin);
+                    adaptationRepository.addPmAdaptation(pmAdaptation.getAdapRelease(), pmAdaptation);
                 }
                 else if (name.contains(".man"))
                 {
                     LOG.debug("Parsing man zip: " + name);
-                    parser = new ManZipParser();
-                    parser.parse(zin);
+                    FmPackageParser parser = new FmPackageParser();
+                    FmAdaptation fmAdaptation = parser.parse(zin);
+                    adaptationRepository.addFmAdaptation(fmAdaptation.getAdapRelease(), fmAdaptation);
                 }
             }
         } catch (IOException e) {

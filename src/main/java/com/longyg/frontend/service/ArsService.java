@@ -1,7 +1,9 @@
 package com.longyg.frontend.service;
 
+import com.longyg.frontend.model.ars.ARS;
 import com.longyg.frontend.model.ars.ArsConfig;
 import com.longyg.frontend.model.ars.ArsConfigRepository;
+import com.longyg.frontend.model.ars.ArsRepository;
 import com.longyg.frontend.model.ars.om.ObjectModelSpec;
 import com.longyg.frontend.model.ars.om.OmRepository;
 import com.longyg.frontend.model.ars.us.UsRepository;
@@ -22,6 +24,9 @@ public class ArsService {
     @Autowired
     private OmRepository omRepository;
 
+    @Autowired
+    private ArsRepository arsRepository;
+
     public ArsConfig findArsConfig(NeRelease neRelease) {
         if (null == neRelease) {
             return null;
@@ -31,6 +36,10 @@ public class ArsService {
 
     public ArsConfig saveConfig(ArsConfig arsConfig) {
         return arsConfigRepository.save(arsConfig);
+    }
+
+    public ARS saveArs(ARS ars) {
+        return arsRepository.save(ars);
     }
 
     public UserStorySpec saveUs(UserStorySpec usSpec) {

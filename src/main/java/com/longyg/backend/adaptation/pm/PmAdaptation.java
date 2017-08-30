@@ -26,10 +26,6 @@ public class PmAdaptation {
         }
     }
 
-    public void buildTopology() {
-
-    }
-
     public String getAdapId() {
         return adapId;
     }

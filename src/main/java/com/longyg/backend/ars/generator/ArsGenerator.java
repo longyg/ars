@@ -1,5 +1,8 @@
 package com.longyg.backend.ars.generator;
 
+import com.longyg.backend.adaptation.main.AdaptationRepository;
+import com.longyg.backend.adaptation.main.AdaptationResourceParser;
+import com.longyg.backend.adaptation.svn.SvnDownloader;
 import com.longyg.frontend.model.ars.ARS;
 import com.longyg.frontend.model.ars.ArsConfig;
 import com.longyg.frontend.model.ars.ArsRepository;
@@ -7,9 +10,12 @@ import com.longyg.frontend.model.config.AdaptationResource;
 import com.longyg.frontend.model.config.AdaptationResourceRepository;
 import com.longyg.frontend.model.config.InterfaceObject;
 import com.longyg.frontend.model.config.InterfaceRepository;
+import com.longyg.frontend.service.ArsService;
+import com.longyg.frontend.service.ConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -22,12 +28,10 @@ public class ArsGenerator {
     private ArsConfig config;
 
     @Autowired
-    private InterfaceRepository interfaceRepository;
-    @Autowired
-    private AdaptationResourceRepository resourceRepository;
+    private ArsService arsService;
 
     @Autowired
-    private ArsRepository arsRepository;
+    private ConfigService configService;
 
     @Autowired
     private UsGenerator usGenerator;
@@ -44,11 +48,18 @@ public class ArsGenerator {
     @Autowired
     private AlarmGenerator alarmGenerator;
 
-    public ARS generateAndSave(ArsConfig config) {
+    @Autowired
+    private AdaptationResourceParser resourceParser;
+
+    private AdaptationRepository adaptationRepository;
+
+    public ARS generateAndSave(ArsConfig config) throws Exception {
         this.config = config;
 
+        initAdaptationRepository();
+
         String usId = usGenerator.generateAndSave(config);
-        String omId = omGenerator.generateAndSave(config);
+        String omId = omGenerator.generateAndSave(config, adaptationRepository);
         String pmDlId = pmDataLoadGenerator.generateAndSave(config);
         String counterId = counterGenerator.generateAndSave(config);
         String alarmId = alarmGenerator.generateAndSave(config);
@@ -62,15 +73,29 @@ public class ArsGenerator {
         ars.setCounter(counterId);
         ars.setAlarm(alarmId);
 
-        return arsRepository.save(ars);
+        return arsService.saveArs(ars);
+    }
+
+    private void initAdaptationRepository() throws Exception {
+        List<String> resources = config.getResources();
+
+        List<AdaptationResource> resourceList = new ArrayList<>();
+        for (String srcId : resources) {
+            AdaptationResource src = configService.findResource(srcId);
+            downloadAndSave(src);
+
+            resourceList.add(src);
+        }
+        adaptationRepository = new AdaptationRepository();
+        resourceParser.parse(adaptationRepository, resourceList);
     }
 
     private List<InterfaceObject> getInterfaces() {
         List<InterfaceObject> list = new ArrayList<>();
         for (String ifId : config.getInterfaces()) {
-            Optional<InterfaceObject> ifaceOpt = interfaceRepository.findById(ifId);
-            if (ifaceOpt.isPresent()) {
-                list.add(ifaceOpt.get());
+            InterfaceObject ifo = configService.findInterface(ifId);
+            if (null != ifo) {
+                list.add(ifo);
             } else {
                 LOG.severe("There is no interface object with id: " + ifId);
             }
@@ -78,17 +103,30 @@ public class ArsGenerator {
         return list;
     }
 
-
-
     private List<AdaptationResource> getResources() {
         List<AdaptationResource> resources = new ArrayList<>();
 
         for (String srcId : config.getResources()) {
-            Optional<AdaptationResource> opt = resourceRepository.findById(srcId);
-            if (opt.isPresent()) {
-                resources.add(opt.get());
+            AdaptationResource resource = configService.findResource(srcId);
+            if (null != resource) {
+                resources.add(resource);
             }
         }
         return resources;
+    }
+
+    private void downloadAndSave(AdaptationResource src) throws Exception {
+        // If the file already exists, no need to download
+        if (src.getLocalPath() != null) {
+            File localFile = new File(src.getLocalPath());
+            if (localFile.exists())
+                return;
+        }
+
+        SvnDownloader downloader = new SvnDownloader();
+        downloader.download(src);
+
+        // Save to DB for the local file path
+        configService.saveResource(src);
     }
 }

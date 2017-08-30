@@ -108,7 +108,11 @@ public class ArsController {
         ArsConfig arsConfig = findArsConfig(neRelId);
         if (null != arsConfig)
         {
-            arsGenerator.generateAndSave(arsConfig);
+            try {
+                arsGenerator.generateAndSave(arsConfig);
+            } catch (Exception e) {
+                LOG.severe("Exception while generating ARS: " + e);
+            }
         }
         else
         {
