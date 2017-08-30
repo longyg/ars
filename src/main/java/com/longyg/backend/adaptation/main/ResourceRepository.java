@@ -16,7 +16,7 @@ public class ResourceRepository {
     private static final Logger LOG = Logger.getLogger(ResourceRepository.class);
     private static final String ROOT_DOWNLOAD_FOLDER = "resources";
 
-    private static List<Resource> resources = new ArrayList<Resource>();
+    private static List<Resource> resources = new ArrayList<>();
     private static ConfigRepository configRepository = ConfigRepository.getInstance();
 
     public static List<Resource> getResources() {

@@ -18,6 +18,8 @@ public class AdaptationResource {
 
     private String sourcePath;
 
+    private String localPath;
+
     public String getId() {
         return id;
     }
@@ -64,5 +66,13 @@ public class AdaptationResource {
 
     public void setSourcePath(String sourcePath) {
         this.sourcePath = sourcePath;
+    }
+
+    public String getLocalPath() {
+        return localPath;
+    }
+
+    public void setLocalPath(String localPath) {
+        this.localPath = localPath;
     }
 }

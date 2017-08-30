@@ -7,7 +7,7 @@ import java.util.Map;
  * Created by ylong on 2/14/2017.
  */
 public class PmRepository {
-    private static Map<String, PmAdaptation> pmAdaptations = new HashMap<String, PmAdaptation>();
+    private static Map<String, PmAdaptation> pmAdaptations = new HashMap<>();
 
     public static Map<String, PmAdaptation> getPmAdaptations() {
         return pmAdaptations;

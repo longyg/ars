@@ -1,18 +1,17 @@
-package com.longyg.backend.adaptation.topology;
+package com.longyg.frontend.model.ars.om;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import com.longyg.backend.adaptation.topology.ClassType;
+import com.longyg.backend.adaptation.topology.PmbObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by ylong on 2/15/2017.
- */
-@Document(collection = "objects")
-public class PmbObject implements Comparable<PmbObject> {
-    @Id
-    private String id;
+public class ObjectClassInfo {
+    private int row;
+    private int topColumn;
+    private String neType;
+    private String neVersion;
+    private String adaptationId;
     private String name;
     private String nameInOmes;
     private boolean isTransient;
@@ -35,66 +34,47 @@ public class PmbObject implements Comparable<PmbObject> {
     private int avgNePerNet;
     private boolean mocrNeeded;
     private String comment;
-    private List<String> supporteredVersions = new ArrayList<>();
-    private List<String> dimensions = new ArrayList<>();
-    private List<PmbObject> childObjects = new ArrayList<>();
-    private List<PmbObject> parentObjects = new ArrayList<>();
+    private List<String> supporteredVersions = new ArrayList<String>();
+    private List<String> dimensions = new ArrayList<String>();
 
-    public void addSupportedVersion(String version) {
-        if (!supporteredVersions.contains(version)) {
-            supporteredVersions.add(version);
-        }
+    public int getRow() {
+        return row;
     }
 
-    public void addDimension(String dimension) {
-        if (!dimensions.contains(dimension)) {
-            dimensions.add(dimension);
-        }
+    public void setRow(int row) {
+        this.row = row;
     }
 
-    public void addParentObject(PmbObject parent) {
-        if (!parentObjects.contains(parent)) {
-            parentObjects.add(parent);
-        }
+    public int getTopColumn() {
+        return topColumn;
     }
 
-    public void addChildObject(PmbObject child) {
-        if (!childObjects.contains(child)) {
-            childObjects.add(child);
-        }
+    public void setTopColumn(int topColumn) {
+        this.topColumn = topColumn;
     }
 
-    @Override
-    public String toString() {
-        return "PmbObject{" +
-                "name='" + name + '\'' +
-                ", supporteredVersions=" + supporteredVersions +
-                ", childObjects=" + childObjects +
-                '}';
+    public String getNeType() {
+        return neType;
     }
 
-    public String getId() {
-        return id;
+    public void setNeType(String neType) {
+        this.neType = neType;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getNeVersion() {
+        return neVersion;
     }
 
-    public boolean isMeasuredObject() {
-        return isMeasuredObject;
+    public void setNeVersion(String neVersion) {
+        this.neVersion = neVersion;
     }
 
-    public void setMeasuredObject(boolean measuredObject) {
-        isMeasuredObject = measuredObject;
+    public String getAdaptationId() {
+        return adaptationId;
     }
 
-    public List<String> getDimensions() {
-        return dimensions;
-    }
-
-    public void setDimensions(List<String> dimensions) {
-        this.dimensions = dimensions;
+    public void setAdaptationId(String adaptationId) {
+        this.adaptationId = adaptationId;
     }
 
     public String getName() {
@@ -135,6 +115,14 @@ public class PmbObject implements Comparable<PmbObject> {
 
     public void setAlarmingObject(boolean alarmingObject) {
         isAlarmingObject = alarmingObject;
+    }
+
+    public boolean isMeasuredObject() {
+        return isMeasuredObject;
+    }
+
+    public void setMeasuredObject(boolean measuredObject) {
+        isMeasuredObject = measuredObject;
     }
 
     public boolean isCmObject() {
@@ -233,26 +221,6 @@ public class PmbObject implements Comparable<PmbObject> {
         this.maxPerNE = maxPerNE;
     }
 
-    public boolean isMocrNeeded() {
-        return mocrNeeded;
-    }
-
-    public void setMocrNeeded(boolean mocrNeeded) {
-        this.mocrNeeded = mocrNeeded;
-    }
-
-    public List<String> getSupporteredVersions() {
-        return supporteredVersions;
-    }
-
-    public List<String> getSupportedVersions() {
-        return supporteredVersions;
-    }
-
-    public void setSupporteredVersions(List<String> supporteredVersions) {
-        this.supporteredVersions = supporteredVersions;
-    }
-
     public int getMaxNePerNet() {
         return maxNePerNet;
     }
@@ -269,6 +237,14 @@ public class PmbObject implements Comparable<PmbObject> {
         this.avgNePerNet = avgNePerNet;
     }
 
+    public boolean isMocrNeeded() {
+        return mocrNeeded;
+    }
+
+    public void setMocrNeeded(boolean mocrNeeded) {
+        this.mocrNeeded = mocrNeeded;
+    }
+
     public String getComment() {
         return comment;
     }
@@ -277,39 +253,19 @@ public class PmbObject implements Comparable<PmbObject> {
         this.comment = comment;
     }
 
-    public List<PmbObject> getChildObjects() {
-        return childObjects;
+    public List<String> getSupporteredVersions() {
+        return supporteredVersions;
     }
 
-    public void setChildObjects(List<PmbObject> childObjects) {
-        this.childObjects = childObjects;
+    public void setSupporteredVersions(List<String> supporteredVersions) {
+        this.supporteredVersions = supporteredVersions;
     }
 
-    public List<PmbObject> getParentObjects() {
-        return parentObjects;
+    public List<String> getDimensions() {
+        return dimensions;
     }
 
-    public void setParentObjects(List<PmbObject> parentObjects) {
-        this.parentObjects = parentObjects;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        PmbObject pmbObject = (PmbObject) o;
-
-        return name.equals(pmbObject.name);
-
-    }
-
-    @Override
-    public int hashCode() {
-        return name.hashCode();
-    }
-
-    public int compareTo(PmbObject o) {
-        return this.getNameInOmes().compareTo(o.getName());
+    public void setDimensions(List<String> dimensions) {
+        this.dimensions = dimensions;
     }
 }

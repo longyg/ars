@@ -33,6 +33,10 @@ public class ConfigService {
         return resourceRepository.findAll();
     }
 
+    public AdaptationResource saveResource(AdaptationResource resource) {
+        return resourceRepository.save(resource);
+    }
+
     public List<InterfaceObject> findInterfaces() {
         return interfaceRepository.findAll();
     }
