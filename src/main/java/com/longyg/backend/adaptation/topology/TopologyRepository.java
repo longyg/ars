@@ -15,10 +15,10 @@ public class TopologyRepository {
     private static final Logger LOG = Logger.getLogger(TopologyRepository.class);
     private static TopologyRepository INSTANCE;
 
-    private List<PmbObject> allReleaseObjects = new ArrayList<PmbObject>();
+    private List<PmbObject> allReleaseObjects = new ArrayList<>();
 
     private int maxLevel = 0;
-    private List<PmbObject> rootObjects = new ArrayList<PmbObject>();
+    private List<PmbObject> rootObjects = new ArrayList<>();
 
     public static TopologyRepository getInstance() {
         if (null == INSTANCE) {

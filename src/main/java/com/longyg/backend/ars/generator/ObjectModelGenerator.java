@@ -6,6 +6,7 @@ import com.longyg.backend.adaptation.main.AdaptationResourceParser;
 import com.longyg.backend.adaptation.main.ResourceParser;
 import com.longyg.backend.adaptation.pm.PmRepository;
 import com.longyg.backend.adaptation.svn.SvnDownloader;
+import com.longyg.backend.adaptation.topology.PmbObjectRepository;
 import com.longyg.frontend.model.ars.ArsConfig;
 import com.longyg.frontend.model.ars.om.ObjectModelSpec;
 import com.longyg.frontend.model.config.AdaptationResource;
@@ -32,6 +33,9 @@ public class ObjectModelGenerator {
     public String generateAndSave(ArsConfig config, AdaptationRepository adaptationRepository) throws Exception {
         this.config = config;
         this.adaptationRepository = adaptationRepository;
+
+        PmbObjectRepository pmbObjectRepository = new PmbObjectRepository();
+        pmbObjectRepository.init();
 
         ObjectModelSpec spec = generate();
         spec = arsService.saveObjectModel(spec);

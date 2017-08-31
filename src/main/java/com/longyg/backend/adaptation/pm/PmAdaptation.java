@@ -11,8 +11,8 @@ public class PmAdaptation {
     private String adapRelease;
     private String presentation;
 
-    private List<ObjectClass> objectClasses = new ArrayList<ObjectClass>();
-    private List<Measurement> measurements = new ArrayList<Measurement>();
+    private List<ObjectClass> objectClasses = new ArrayList<>();
+    private List<Measurement> measurements = new ArrayList<>();
 
     public void addObjectClass(ObjectClass objectClass) {
         if (!objectClasses.contains(objectClass)) {
@@ -64,6 +64,24 @@ public class PmAdaptation {
 
     public void setMeasurements(List<Measurement> measurements) {
         this.measurements = measurements;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        PmAdaptation that = (PmAdaptation) o;
+
+        if (adapId != null ? !adapId.equals(that.adapId) : that.adapId != null) return false;
+        return adapRelease != null ? adapRelease.equals(that.adapRelease) : that.adapRelease == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = adapId != null ? adapId.hashCode() : 0;
+        result = 31 * result + (adapRelease != null ? adapRelease.hashCode() : 0);
+        return result;
     }
 
     @Override

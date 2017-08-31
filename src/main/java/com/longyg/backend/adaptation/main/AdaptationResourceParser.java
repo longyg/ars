@@ -51,14 +51,14 @@ public class AdaptationResourceParser {
                     LOG.debug("Parsing pmb zip: " + name);
                     PmbPackageParser parser = new PmbPackageParser();
                     PmAdaptation pmAdaptation = parser.parse(zin);
-                    adaptationRepository.addPmAdaptation(pmAdaptation.getAdapRelease(), pmAdaptation);
+                    adaptationRepository.addPmAdaptation(pmAdaptation.getAdapId(), pmAdaptation);
                 }
                 else if (name.contains(".man"))
                 {
                     LOG.debug("Parsing man zip: " + name);
                     FmPackageParser parser = new FmPackageParser();
                     FmAdaptation fmAdaptation = parser.parse(zin);
-                    adaptationRepository.addFmAdaptation(fmAdaptation.getAdapRelease(), fmAdaptation);
+                    adaptationRepository.addFmAdaptation(fmAdaptation.getAdapId(), fmAdaptation);
                 }
             }
         } catch (IOException e) {
