@@ -9,6 +9,7 @@ import com.longyg.backend.adaptation.svn.SvnDownloader;
 import com.longyg.backend.adaptation.topology.PmbObject;
 import com.longyg.backend.adaptation.topology.PmbObjectRepository;
 import com.longyg.frontend.model.ars.ArsConfig;
+import com.longyg.frontend.model.ars.om.ObjectClassInfo;
 import com.longyg.frontend.model.ars.om.ObjectModelSpec;
 import com.longyg.frontend.model.config.AdaptationResource;
 import com.longyg.frontend.service.ArsService;
@@ -54,16 +55,36 @@ public class ObjectModelGenerator {
 
         TreeSet<String> adaptationIds = findAdaptationIdsFromResource();
 
-        adaptationIds.stream().forEach(adaptationId -> {
-            if (pmbObjectRepository.getAllReleaseObjects().containsKey(adaptationId)) {
+        List<PmbObject> primaryObjects = pmbObjectRepository.getAllReleaseObjects().get(adaptationIds.first());
 
-                List<PmbObject> rootObjects = getRootObjects(adaptationId);
-
+        int i = 0;
+        for (String adaptationId : adaptationIds) {
+            if (!pmbObjectRepository.getAllReleaseObjects().containsKey(adaptationId)) {
+                continue;
+            }
+            List<PmbObject> rootObjects = getRootObjects(adaptationId);
+            if (i == 0) {
                 rootObjects.stream().forEach(rootObject -> {
+                    ObjectClassInfo oci = new ObjectClassInfo();
+                    oci.setName(rootObject.getName());
+                    oci.setAdaptationId(adaptationId);
+                    oci.setAlarmingObject(rootObject.isAlarmingObject());
+                    oci.setAvg(rootObject.getAvg());
+                    oci.setAvgNePerNet(rootObject.getAvgNePerNet());
+                    oci.setAvgPerNet(rootObject.getAvgPerNet());
+                    oci.setClassType(rootObject.getClassType());
+                    oci.setCmObject(rootObject.isCmObject());
 
                 });
 
+            } else {
+
             }
+            i++;
+        }
+
+        adaptationIds.stream().forEach(adaptationId -> {
+
         });
 
         spec = arsService.saveObjectModel(spec);
@@ -84,7 +105,6 @@ public class ObjectModelGenerator {
     private TreeSet<String> findAdaptationIdsFromResource() {
         TreeSet<String> adaptations = new TreeSet<>();
         List<String> resources = config.getResources();
-        List<AdaptationResource> adapSrcs = new ArrayList<>();
         resources.stream().forEach(srcId -> {
             AdaptationResource resource = configService.findResource(srcId);
             if (null != resource) {
