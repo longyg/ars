@@ -13,6 +13,10 @@ public class ObjectModelSpec {
     @Id
     private String id;
 
+    private String neType;
+
+    private String neVersion;
+
     private Map<String, TreeSet<ObjectClassInfo>> ociMap = new HashMap<>();
 
     public String getId() {

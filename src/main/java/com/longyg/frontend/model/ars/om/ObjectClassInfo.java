@@ -1,7 +1,6 @@
 package com.longyg.frontend.model.ars.om;
 
 import com.longyg.backend.adaptation.topology.ClassType;
-import com.longyg.backend.adaptation.topology.PmbObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,8 +8,6 @@ import java.util.List;
 public class ObjectClassInfo {
     private int row;
     private int topColumn;
-    private String neType;
-    private String neVersion;
     private String adaptationId;
     private String name;
     private String nameInOmes;
@@ -51,22 +48,6 @@ public class ObjectClassInfo {
 
     public void setTopColumn(int topColumn) {
         this.topColumn = topColumn;
-    }
-
-    public String getNeType() {
-        return neType;
-    }
-
-    public void setNeType(String neType) {
-        this.neType = neType;
-    }
-
-    public String getNeVersion() {
-        return neVersion;
-    }
-
-    public void setNeVersion(String neVersion) {
-        this.neVersion = neVersion;
     }
 
     public String getAdaptationId() {

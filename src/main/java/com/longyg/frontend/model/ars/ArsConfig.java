@@ -4,7 +4,9 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Document(collection = "arsconfig")
 public class ArsConfig {
@@ -13,7 +15,7 @@ public class ArsConfig {
     private String neType;
     private String neVersion;
     private List<String> interfaces = new ArrayList<>();
-    private String parent;
+    private Map<String, String> parents = new HashMap<String, String>();
     private String neParamId;
     private List<String> resources = new ArrayList<>();
 
@@ -49,12 +51,12 @@ public class ArsConfig {
         this.interfaces = interfaces;
     }
 
-    public String getParent() {
-        return parent;
+    public Map<String, String> getParents() {
+        return parents;
     }
 
-    public void setParent(String parent) {
-        this.parent = parent;
+    public void setParents(Map<String, String> parents) {
+        this.parents = parents;
     }
 
     public String getNeParamId() {
