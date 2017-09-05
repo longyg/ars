@@ -3,6 +3,7 @@ package com.longyg.backend.adaptation.topology;
 import com.longyg.backend.adaptation.main.AdaptationRepository;
 import com.longyg.backend.adaptation.pm.*;
 import com.longyg.frontend.model.ars.ArsConfig;
+import com.longyg.frontend.model.config.GlobalObject;
 import org.apache.log4j.Logger;
 
 import java.util.*;
@@ -18,6 +19,8 @@ public class PmbObjectRepository {
 
     private ArsConfig config;
 
+    private List<GlobalObject> globalObjects;
+
     public Map<String, List<PmbObject>> getAllReleaseObjects() {
         return allReleaseObjects;
     }
@@ -26,9 +29,10 @@ public class PmbObjectRepository {
         this.allReleaseObjects = allReleaseObjects;
     }
 
-    public PmbObjectRepository(AdaptationRepository adaptationRepository, ArsConfig config) {
+    public PmbObjectRepository(AdaptationRepository adaptationRepository, ArsConfig config, List<GlobalObject> globalObjects) {
         this.adaptationRepository = adaptationRepository;
         this.config = config;
+        this.globalObjects = globalObjects;
     }
 
     public void init() throws Exception {
@@ -36,7 +40,7 @@ public class PmbObjectRepository {
         addParentObject();
     }
 
-    private void addParentObject() {
+    private void addParentObject() throws Exception {
         for (Map.Entry<String, List<PmbObject>> entry : allReleaseObjects.entrySet()) {
             String adaptationId = entry.getKey();
 
@@ -46,8 +50,16 @@ public class PmbObjectRepository {
                     List<PmbObject> rootObjects = getRootObjects(adaptationId);
 
                     String lastClass = getLastClass(parent);
+                    GlobalObject globalObject = findGlobalObjectByName(lastClass);
+                    if (null == globalObject) {
+                        throw new Exception("Parent Object class '" + lastClass + "' is not defined.");
+                    }
                     PmbObject pmbObject = new PmbObject();
                     pmbObject.setName(lastClass);
+                    pmbObject.setNameInOmes(globalObject.getNameInOMeS());
+                    pmbObject.setPresentation(globalObject.getPresentation());
+                    pmbObject.setTransient(globalObject.isTransient());
+
                     addPmbObjectToList(adaptationId, pmbObject);
 
                     String parentHierarchy = getParentHierarchy(parent);
@@ -63,6 +75,15 @@ public class PmbObjectRepository {
         }
     }
 
+    private GlobalObject findGlobalObjectByName(String name) {
+        for (GlobalObject globalObject : globalObjects) {
+            if (globalObject.getName().equals(name)) {
+                return globalObject;
+            }
+        }
+        return null;
+    }
+
     private void addPmbObjectToList(String adaptationId, PmbObject pmbObject) {
         if (allReleaseObjects.containsKey(adaptationId)) {
             List<PmbObject> pmbObjects = allReleaseObjects.get(adaptationId);
@@ -76,13 +97,22 @@ public class PmbObjectRepository {
 
     private void createPmbObjectsFromParentHierarchy(String adaptationId,
                                                      PmbObject childObject,
-                                                     String hierarchy) {
+                                                     String hierarchy) throws Exception{
         if (null == hierarchy || "".equals(hierarchy)) {
             return;
         }
         String lastClass = getLastClass(hierarchy);
+
+        GlobalObject globalObject = findGlobalObjectByName(lastClass);
+        if (null == globalObject) {
+            throw new Exception("Parent Object class '" + lastClass + "' is not defined.");
+        }
+
         PmbObject pmbObject = new PmbObject();
         pmbObject.setName(lastClass);
+        pmbObject.setNameInOmes(globalObject.getNameInOMeS());
+        pmbObject.setPresentation(globalObject.getPresentation());
+        pmbObject.setTransient(globalObject.isTransient());
 
         if (null != childObject) {
             pmbObject.addChildObject(childObject);

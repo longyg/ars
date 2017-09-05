@@ -15,7 +15,7 @@ public class ArsConfig {
     private String neType;
     private String neVersion;
     private List<String> interfaces = new ArrayList<>();
-    private Map<String, String> parents = new HashMap<String, String>();
+    private Map<String, String> parents = new HashMap<>();
     private String neParamId;
     private List<String> resources = new ArrayList<>();
 

@@ -67,28 +67,11 @@ public class ObjectModelSheetGenerator {
     }
 
     private void setObjectAttributes(HSSFRow hssfRow, PmbObject pmbObject) {
-        setCellValue(hssfRow, 8, pmbObject.isAlarmingObject() ? "A" : "");
         setCellValue(hssfRow, 9, pmbObject.isMeasuredObject() ? "M" : "");
-        setCellValue(hssfRow, 10, pmbObject.isCmObject() ? "C" : "");
-        setCellValue(hssfRow, 11, pmbObject.isHasIcon() ? "X" : "");
-        setCellValue(hssfRow, 12, pmbObject.isHasGuiLuanch() ? "X" : "");
-        setCellValue(hssfRow, 13, pmbObject.getTgppObject());
-        setCellValue(hssfRow, 14, pmbObject.getIntVersion());
-        setCellValue(hssfRow, 15, (null == pmbObject.getClassType()) ? "" : pmbObject.getClassType().toString());
-        setCellValue(hssfRow, 16, pmbObject.getMin());
-        setCellValue(hssfRow, 17, pmbObject.getMax());
-        setCellValue(hssfRow, 18, pmbObject.getAvg());
-        setCellValue(hssfRow, 19, pmbObject.getAvgPerNet());
-        setCellValue(hssfRow, 20, pmbObject.getMaxPerNet());
-        setCellValue(hssfRow, 21, pmbObject.getMaxPerNE());
-        setCellValue(hssfRow, 22, pmbObject.getMaxNePerNet());
-        setCellValue(hssfRow, 23, pmbObject.getAvgNePerNet());
-        setCellValue(hssfRow, 24, pmbObject.isMocrNeeded() ? "X" : "");
         setCellValue(hssfRow, 25, listToString(pmbObject.getSupportedVersions()));
         setCellValue(hssfRow, 26, pmbObject.isTransient() ? "Transient" : "MO");
         setCellValue(hssfRow, 27, pmbObject.getPresentation());
         setCellValue(hssfRow, 28, pmbObject.getNameInOmes());
-        setCellValue(hssfRow, 29, pmbObject.getComment());
     }
 
 

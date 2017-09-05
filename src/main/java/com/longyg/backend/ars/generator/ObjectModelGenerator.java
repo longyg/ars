@@ -9,6 +9,7 @@ import com.longyg.frontend.model.ars.ArsConfig;
 import com.longyg.frontend.model.ars.om.ObjectClassInfo;
 import com.longyg.frontend.model.ars.om.ObjectModelSpec;
 import com.longyg.frontend.model.config.AdaptationResource;
+import com.longyg.frontend.model.config.GlobalObject;
 import com.longyg.frontend.service.ArsService;
 import com.longyg.frontend.service.ConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +44,8 @@ public class ObjectModelGenerator {
     }
 
     private void initRepository() throws Exception {
-        pmbObjectRepository = new PmbObjectRepository(adaptationRepository, config);
+        List<GlobalObject> globalObjects = configService.findGlobalObjects();
+        pmbObjectRepository = new PmbObjectRepository(adaptationRepository, config, globalObjects);
         pmbObjectRepository.init();
     }
 
@@ -68,38 +70,42 @@ public class ObjectModelGenerator {
             if (i == 0) {
                 for (PmbObject rootObject : rootObjects) {
                     addPrimaryOci(spec, adaptationId, rootObject, row, column);
-
                     addPrimaryChildOci(spec, adaptationId, rootObject, row, column);
-
                     row.increase();
                 }
 
             } else {
-                boolean isPrimaryExisting = false;
                 for (PmbObject rootObject : rootObjects) {
                     if (!primaryObjects.contains(rootObject)) {
                         addPrimaryOci(spec, adaptationId, rootObject, row, column);
-
                         addPrimaryChildOci(spec, adaptationId, rootObject, row, column);
-
                         row.increase();
                     } else {
-                        isPrimaryExisting = true;
+                        checkForChildObjects(spec, adaptationId, rootObject, primaryObjects, row, column, true);
                     }
                 }
             }
             i++;
         }
 
-        adaptationIds.stream().forEach(adaptationId -> {
-
-        });
-
         spec = arsService.saveObjectModel(spec);
         return spec;
     }
 
-
+    private void checkForChildObjects(ObjectModelSpec spec, String adaptationId, PmbObject parentObject, List<PmbObject> primaryObjects, IntHolder row, IntHolder column, boolean isParenTopExist) {
+        List<PmbObject> childObjects = parentObject.getChildObjects();
+        Collections.sort(childObjects);
+        column.increase();
+        for (PmbObject childObject : childObjects) {
+            if (!primaryObjects.contains(childObject)) {
+                row.increase();
+                addPrimaryOci(spec, adaptationId, childObject, row, column);
+                addPrimaryChildOci(spec, adaptationId, childObject, row, column);
+            } else if (isParenTopExist) {
+                checkForChildObjects(spec, adaptationId, childObject, primaryObjects, row, column, true);
+            }
+        }
+    }
 
     private void addPrimaryChildOci(ObjectModelSpec spec, String adaptationId, PmbObject parentObject, IntHolder row, IntHolder column) {
         List<PmbObject> childObjects = parentObject.getChildObjects();

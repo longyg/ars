@@ -1,9 +1,6 @@
 package com.longyg.frontend.service;
 
-import com.longyg.frontend.model.config.AdaptationResource;
-import com.longyg.frontend.model.config.AdaptationResourceRepository;
-import com.longyg.frontend.model.config.InterfaceObject;
-import com.longyg.frontend.model.config.InterfaceRepository;
+import com.longyg.frontend.model.config.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +15,9 @@ public class ConfigService {
 
     @Autowired
     private InterfaceRepository interfaceRepository;
+
+    @Autowired
+    private ObjectRepository objectRepository;
 
     public AdaptationResource findResource(String id) {
         if (null == id) {
@@ -51,5 +51,9 @@ public class ConfigService {
             return opt.get();
         }
         return null;
+    }
+
+    public List<GlobalObject> findGlobalObjects() {
+        return objectRepository.findAll();
     }
 }
