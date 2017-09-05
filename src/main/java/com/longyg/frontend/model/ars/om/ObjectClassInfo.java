@@ -7,7 +7,7 @@ import java.util.List;
 
 public class ObjectClassInfo {
     private int row;
-    private int topColumn;
+    private int column;
     private String adaptationId;
     private String name;
     private String nameInOmes;
@@ -42,12 +42,12 @@ public class ObjectClassInfo {
         this.row = row;
     }
 
-    public int getTopColumn() {
-        return topColumn;
+    public int getColumn() {
+        return column;
     }
 
-    public void setTopColumn(int topColumn) {
-        this.topColumn = topColumn;
+    public void setColumn(int column) {
+        this.column = column;
     }
 
     public String getAdaptationId() {
