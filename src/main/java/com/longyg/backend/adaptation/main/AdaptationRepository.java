@@ -19,7 +19,7 @@ public class AdaptationRepository {
     }
 
     public void addPmAdaptation(String adaptationId, PmAdaptation pmAdaptation) {
-        if (!pmAdaptations.containsKey(adaptationId)) {
+        if (pmAdaptations.containsKey(adaptationId)) {
             List<PmAdaptation> adapList = pmAdaptations.get(adaptationId);
             if (!adapList.contains(pmAdaptation)) {
                 adapList.add(pmAdaptation);
@@ -36,7 +36,7 @@ public class AdaptationRepository {
     }
 
     public void addFmAdaptation(String adaptationId, FmAdaptation fmAdaptation) {
-        if (!fmAdaptations.containsKey(adaptationId)) {
+        if (fmAdaptations.containsKey(adaptationId)) {
             List<FmAdaptation> adapList = fmAdaptations.get(adaptationId);
             if (!adapList.contains(fmAdaptation)) {
                 adapList.add(fmAdaptation);

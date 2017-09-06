@@ -60,18 +60,19 @@ public class ArsGenerator {
 
         String usId = usGenerator.generateAndSave(config);
         String omId = omGenerator.generateAndSave(config, adaptationRepository);
-        String pmDlId = pmDataLoadGenerator.generateAndSave(config);
-        String counterId = counterGenerator.generateAndSave(config);
-        String alarmId = alarmGenerator.generateAndSave(config);
+
+//        String pmDlId = pmDataLoadGenerator.generateAndSave(config);
+//        String counterId = counterGenerator.generateAndSave(config);
+//        String alarmId = alarmGenerator.generateAndSave(config);
 
         ARS ars = new ARS();
         ars.setNeType(config.getNeType());
         ars.setNeVersion(config.getNeVersion());
         ars.setUserStory(usId);
         ars.setObjectModel(omId);
-        ars.setPmDataLoad(pmDlId);
-        ars.setCounter(counterId);
-        ars.setAlarm(alarmId);
+//        ars.setPmDataLoad(pmDlId);
+//        ars.setCounter(counterId);
+//        ars.setAlarm(alarmId);
 
         return arsService.saveArs(ars);
     }

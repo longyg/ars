@@ -111,7 +111,8 @@ public class ArsController {
             try {
                 arsGenerator.generateAndSave(arsConfig);
             } catch (Exception e) {
-                LOG.severe("Exception while generating ARS: " + e);
+                LOG.severe("Exception while generating ARS: ");
+                e.printStackTrace();
             }
         }
         else
