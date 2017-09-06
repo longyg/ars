@@ -5,7 +5,7 @@ import com.longyg.backend.adaptation.topology.ClassType;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ObjectClassInfo {
+public class ObjectClassInfo implements Comparable {
     private int row;
     private int column;
     private String adaptationId;
@@ -248,5 +248,10 @@ public class ObjectClassInfo {
 
     public void setDimensions(List<String> dimensions) {
         this.dimensions = dimensions;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        return this.row - ((ObjectClassInfo) o).getRow();
     }
 }

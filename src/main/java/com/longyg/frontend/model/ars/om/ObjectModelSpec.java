@@ -1,7 +1,5 @@
 package com.longyg.frontend.model.ars.om;
 
-import com.longyg.backend.adaptation.pm.ObjectClass;
-import com.longyg.backend.adaptation.pm.PmAdaptation;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -35,7 +33,7 @@ public class ObjectModelSpec {
     }
 
     public void addObjectClassInfo(String adaptationId, ObjectClassInfo oci) {
-        if (!ociMap.containsKey(adaptationId)) {
+        if (ociMap.containsKey(adaptationId)) {
             TreeSet<ObjectClassInfo> ociSet = ociMap.get(adaptationId);
             if (!ociSet.contains(oci)) {
                 ociSet.add(oci);

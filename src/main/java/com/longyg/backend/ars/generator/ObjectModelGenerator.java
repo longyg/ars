@@ -19,9 +19,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.TreeSet;
+import java.util.logging.Logger;
 
 @Component
 public class ObjectModelGenerator {
+    private static final Logger LOG = Logger.getLogger(ObjectModelGenerator.class.getName());
     @Autowired
     private ArsService arsService;
     @Autowired
@@ -53,6 +55,7 @@ public class ObjectModelGenerator {
         ObjectModelSpec spec = new ObjectModelSpec();
 
         TreeSet<String> adaptationIds = findAdaptationIdsFromResource();
+        LOG.info("===> " + pmbObjectRepository.getAllReleaseObjects().get(adaptationIds.first()));
 
         List<PmbObject> primaryObjects = pmbObjectRepository.getAllReleaseObjects().get(adaptationIds.first());
 

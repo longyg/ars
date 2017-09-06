@@ -65,21 +65,31 @@
                         </td>
                         <td>
                             <#if neArs.ars??>
+                                <#if neArs.ars.userStory??>
                                 <a class="btn btn-sm btn-success" href="/ars/viewUs?id=${neArs.ars.userStory}">
                                     <span class="glyphicon glyphicon-eye-open"></span> User Story
                                 </a>
+                                </#if>
+                                <#if neArs.ars.objectModel??>
                                 <a class="btn btn-sm btn-success" href="/ars/viewOm?id=${neArs.ars.objectModel}">
                                     <span class="glyphicon glyphicon-eye-open"></span> Object Model
                                 </a>
+                                </#if>
+                                <#if neArs.ars.pmDataLoad??>
                                 <a class="btn btn-sm btn-success" href="/ars/viewPmDL?id=${neArs.ars.pmDataLoad}">
                                     <span class="glyphicon glyphicon-eye-open"></span> PM Data Load
                                 </a>
+                                </#if>
+                                <#if neArs.ars.counter??>
                                 <a class="btn btn-sm btn-success" href="/ars/viewCounter?id=${neArs.ars.counter}">
                                     <span class="glyphicon glyphicon-eye-open"></span> Counter
                                 </a>
+                                </#if>
+                                <#if neArs.ars.alarm??>
                                 <a class="btn btn-sm btn-success" href="/ars/viewAlarm?id=${neArs.ars.alarm}">
                                     <span class="glyphicon glyphicon-eye-open"></span> Alarm
                                 </a>
+                                </#if>
                             <#elseif neArs.arsConfig??>
                                 <p class="text-danger"><span class="glyphicon glyphicon-warning-sign"></span> ARS is not available!</p>
                                 <a id="arsCreateBtn" class="btn btn-sm btn-primary" href="/ars/create?neTypeId=${neTypeId}&neRelId=${neArs.neRelease.id}">
