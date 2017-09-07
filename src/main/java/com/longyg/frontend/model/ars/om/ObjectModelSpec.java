@@ -33,15 +33,16 @@ public class ObjectModelSpec {
     }
 
     public void addObjectClassInfo(String adaptationId, ObjectClassInfo oci) {
-        if (ociMap.containsKey(adaptationId)) {
-            TreeSet<ObjectClassInfo> ociSet = ociMap.get(adaptationId);
+        String adapId = adaptationId.replaceAll("\\.", "_");
+        if (ociMap.containsKey(adapId)) {
+            TreeSet<ObjectClassInfo> ociSet = ociMap.get(adapId);
             if (!ociSet.contains(oci)) {
                 ociSet.add(oci);
             }
         } else {
             TreeSet<ObjectClassInfo> ociSet = new TreeSet<>();
             ociSet.add(oci);
-            ociMap.put(adaptationId, ociSet);
+            ociMap.put(adapId, ociSet);
         }
     }
 }

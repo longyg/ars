@@ -11,6 +11,10 @@ public class IntHolder {
         this.number++;
     }
 
+    public void decrease() {
+        this.number--;
+    }
+
     public int get() {
         return this.number;
     }

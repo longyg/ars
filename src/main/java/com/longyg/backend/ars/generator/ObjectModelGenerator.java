@@ -55,7 +55,6 @@ public class ObjectModelGenerator {
         ObjectModelSpec spec = new ObjectModelSpec();
 
         TreeSet<String> adaptationIds = findAdaptationIdsFromResource();
-        LOG.info("===> " + pmbObjectRepository.getAllReleaseObjects().get(adaptationIds.first()));
 
         List<PmbObject> primaryObjects = pmbObjectRepository.getAllReleaseObjects().get(adaptationIds.first());
 
@@ -65,20 +64,22 @@ public class ObjectModelGenerator {
             if (!pmbObjectRepository.getAllReleaseObjects().containsKey(adaptationId)) {
                 continue;
             }
-            IntHolder column = new IntHolder(0);
             List<PmbObject> rootObjects = getRootObjects(adaptationId);
 
             Collections.sort(rootObjects);
 
             if (i == 0) {
                 for (PmbObject rootObject : rootObjects) {
+                    IntHolder column = new IntHolder(0);
                     addPrimaryOci(spec, adaptationId, rootObject, row, column);
+                    column.increase();
                     addPrimaryChildOci(spec, adaptationId, rootObject, row, column);
                     row.increase();
                 }
 
             } else {
                 for (PmbObject rootObject : rootObjects) {
+                    IntHolder column = new IntHolder(0);
                     if (!primaryObjects.contains(rootObject)) {
                         addPrimaryOci(spec, adaptationId, rootObject, row, column);
                         addPrimaryChildOci(spec, adaptationId, rootObject, row, column);
@@ -112,19 +113,22 @@ public class ObjectModelGenerator {
 
     private void addPrimaryChildOci(ObjectModelSpec spec, String adaptationId, PmbObject parentObject, IntHolder row, IntHolder column) {
         List<PmbObject> childObjects = parentObject.getChildObjects();
-        Collections.sort(childObjects);
-        column.increase();
-        for (PmbObject childObject : childObjects) {
-            row.increase();
-            addPrimaryOci(spec, adaptationId, childObject, row, column);
-            addPrimaryChildOci(spec, adaptationId, childObject, row, column);
+        if (null != childObjects && childObjects.size() > 0) {
+            Collections.sort(childObjects);
+            column.increase();
+            IntHolder col = new IntHolder(column.get());
+            for (PmbObject childObject : childObjects) {
+                row.increase();
+                addPrimaryOci(spec, adaptationId, childObject, row, col);
+                addPrimaryChildOci(spec, adaptationId, childObject, row, col);
+            }
         }
     }
 
     private void addPrimaryOci(ObjectModelSpec spec, String adaptationId, PmbObject pmbObject, IntHolder row, IntHolder column) {
         ObjectClassInfo oci = new ObjectClassInfo();
         oci.setRow(row.get());
-        oci.setColumn(row.get());
+        oci.setColumn(column.get());
         oci.setName(pmbObject.getName());
         oci.setAdaptationId(adaptationId);
         oci.setNameInOmes(pmbObject.getNameInOmes());
