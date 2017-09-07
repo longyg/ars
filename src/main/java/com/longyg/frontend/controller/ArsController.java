@@ -3,6 +3,7 @@ package com.longyg.frontend.controller;
 import com.longyg.backend.adaptation.main.ResourceRepository;
 import com.longyg.backend.ars.generator.ArsGenerator;
 import com.longyg.frontend.model.ars.*;
+import com.longyg.frontend.model.ars.om.ObjectModelSpec;
 import com.longyg.frontend.model.ars.us.UsRepository;
 import com.longyg.frontend.model.ars.us.UserStorySpec;
 import com.longyg.frontend.model.config.Adaptation;
@@ -121,6 +122,18 @@ public class ArsController {
         }
 
         return "redirect:/ars?neTypeId=" + neTypeId;
+    }
+
+    @RequestMapping("/ars/viewOm")
+    public ModelAndView viewObjectModel(@RequestParam String id, @RequestParam String neTypeId) {
+        Map<String, Object> params = new HashMap<>();
+
+        ObjectModelSpec spec = arsService.findOm(id);
+
+        params.put("spec", spec);
+        params.put("neTypeId", neTypeId);
+
+        return new ModelAndView("ars/viewOm", params);
     }
 
     @RequestMapping("/ars/setConfig")

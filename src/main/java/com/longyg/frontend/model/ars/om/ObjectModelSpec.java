@@ -24,6 +24,22 @@ public class ObjectModelSpec {
         this.id = id;
     }
 
+    public String getNeType() {
+        return neType;
+    }
+
+    public void setNeType(String neType) {
+        this.neType = neType;
+    }
+
+    public String getNeVersion() {
+        return neVersion;
+    }
+
+    public void setNeVersion(String neVersion) {
+        this.neVersion = neVersion;
+    }
+
     public Map<String, TreeSet<ObjectClassInfo>> getOciMap() {
         return ociMap;
     }

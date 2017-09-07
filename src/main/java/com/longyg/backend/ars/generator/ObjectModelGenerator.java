@@ -53,6 +53,8 @@ public class ObjectModelGenerator {
 
     private ObjectModelSpec generateAndSave() {
         ObjectModelSpec spec = new ObjectModelSpec();
+        spec.setNeType(config.getNeType());
+        spec.setNeVersion(config.getNeVersion());
 
         TreeSet<String> adaptationIds = findAdaptationIdsFromResource();
 
@@ -72,7 +74,6 @@ public class ObjectModelGenerator {
                 for (PmbObject rootObject : rootObjects) {
                     IntHolder column = new IntHolder(0);
                     addPrimaryOci(spec, adaptationId, rootObject, row, column);
-                    column.increase();
                     addPrimaryChildOci(spec, adaptationId, rootObject, row, column);
                     row.increase();
                 }
@@ -116,12 +117,12 @@ public class ObjectModelGenerator {
         if (null != childObjects && childObjects.size() > 0) {
             Collections.sort(childObjects);
             column.increase();
-            IntHolder col = new IntHolder(column.get());
             for (PmbObject childObject : childObjects) {
                 row.increase();
-                addPrimaryOci(spec, adaptationId, childObject, row, col);
-                addPrimaryChildOci(spec, adaptationId, childObject, row, col);
+                addPrimaryOci(spec, adaptationId, childObject, row, column);
+                addPrimaryChildOci(spec, adaptationId, childObject, row, column);
             }
+            column.decrease();
         }
     }
 

@@ -13,6 +13,8 @@ import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
+
 @Component
 public class ArsService {
     @Autowired
@@ -48,5 +50,16 @@ public class ArsService {
 
     public ObjectModelSpec saveObjectModel(ObjectModelSpec omSpec) {
         return omRepository.save(omSpec);
+    }
+
+    public ObjectModelSpec findOm(String id) {
+        if (null == id) {
+            return null;
+        }
+        Optional<ObjectModelSpec> opt = omRepository.findById(id);
+        if (opt.isPresent()) {
+            return opt.get();
+        }
+        return null;
     }
 }

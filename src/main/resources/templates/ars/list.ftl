@@ -71,7 +71,7 @@
                                 </a>
                                 </#if>
                                 <#if neArs.ars.objectModel??>
-                                <a class="btn btn-sm btn-success" href="/ars/viewOm?id=${neArs.ars.objectModel}">
+                                <a class="btn btn-sm btn-success" href="/ars/viewOm?id=${neArs.ars.objectModel}&neTypeId=${neTypeId}">
                                     <span class="glyphicon glyphicon-eye-open"></span> Object Model
                                 </a>
                                 </#if>
