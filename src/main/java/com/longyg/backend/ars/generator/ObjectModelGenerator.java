@@ -136,6 +136,7 @@ public class ObjectModelGenerator {
         oci.setMeasuredObject(pmbObject.isMeasuredObject());
         oci.setPresentation(pmbObject.getPresentation());
         oci.setTransient(pmbObject.isTransient());
+        oci.setSupporteredVersions(pmbObject.getSupporteredVersions());
 
         spec.addObjectClassInfo(adaptationId, oci);
     }

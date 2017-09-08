@@ -25,6 +25,7 @@
                     <th style="width:200px;">Topology</th>
                     <th>Adaptation ID</th>
                     <th>Name In OMeS</th>
+                    <th>Supported Releases</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -40,8 +41,13 @@
                                 </#if>
                             </#list>
                         </td>
-                        <td style="width:120px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">${oci.adaptationId}</td>
-                        <td style="padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">${oci.nameInOmes}</td>
+                        <td style="width:150px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">${oci.adaptationId}</td>
+                        <td style="width:150px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">${oci.nameInOmes}</td>
+                        <td style="padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">
+                        <#list oci.supporteredVersions as version>
+                            ${version},
+                        </#list>
+                        </td>
                     </tr>
                     </#list>
                 </#list>
