@@ -10,15 +10,14 @@ import com.longyg.frontend.model.ars.om.ObjectClassInfo;
 import com.longyg.frontend.model.ars.om.ObjectModelSpec;
 import com.longyg.frontend.model.config.AdaptationResource;
 import com.longyg.frontend.model.config.GlobalObject;
+import com.longyg.frontend.model.ne.NeType;
 import com.longyg.frontend.service.ArsService;
 import com.longyg.frontend.service.ConfigService;
+import com.longyg.frontend.service.NeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.logging.Logger;
 
 @Component
@@ -28,6 +27,9 @@ public class ObjectModelGenerator {
     private ArsService arsService;
     @Autowired
     private ConfigService configService;
+
+    @Autowired
+    private NeService neService;
 
     private ArsConfig config;
 
@@ -56,13 +58,17 @@ public class ObjectModelGenerator {
         spec.setNeType(config.getNeType());
         spec.setNeVersion(config.getNeVersion());
 
-        TreeSet<String> adaptationIds = findAdaptationIdsFromResource();
+        NeType neType = neService.findNeTypeByName(config.getNeType());
+        List<String> adaptationIds = neType.getAdaptSet();
 
-        List<PmbObject> primaryObjects = pmbObjectRepository.getAllReleaseObjects().get(adaptationIds.first());
+        LOG.info("=====> primary adaptation ID: " + adaptationIds.get(0));
+
+        List<PmbObject> primaryObjects = pmbObjectRepository.getAllReleaseObjects().get(adaptationIds.get(0));
 
         int i = 0;
         IntHolder row = new IntHolder(TemplateRepository.getObjectModelTplDef().getStartRow());
         for (String adaptationId : adaptationIds) {
+            LOG.info("=====> Adaptation ID: " + adaptationId);
             if (!pmbObjectRepository.getAllReleaseObjects().containsKey(adaptationId)) {
                 continue;
             }
@@ -77,7 +83,6 @@ public class ObjectModelGenerator {
                     addPrimaryChildOci(spec, adaptationId, rootObject, row, column);
                     row.increase();
                 }
-
             } else {
                 for (PmbObject rootObject : rootObjects) {
                     IntHolder column = new IntHolder(0);
@@ -164,6 +169,7 @@ public class ObjectModelGenerator {
                 }
             }
         });
+
         return adaptations;
     }
 }

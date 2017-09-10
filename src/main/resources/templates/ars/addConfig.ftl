@@ -88,7 +88,7 @@
                                 <select class="form-control" name="adaptationId" id="adapIdSelect">
                                     <option value="">--Select--</option>
                                     <#if neType??>
-                                        <#list neType.adaptList as adapId>
+                                        <#list neType.adaptSet as adapId>
                                             <option value="${adapId}">${adapId}</option>
                                         </#list>
                                     </#if>
@@ -128,6 +128,66 @@
                             </tr>
                             </thead>
                             <tbody id="srcTableBody">
+                            <#list supportedResources as src>
+                            <tr>
+                                <td>${src.adaptation.id}</td>
+                                <td>${src.adaptation.release}</td>
+                                <td>Delete</td>
+                            </tr>
+                            </#list>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <hr/>
+                <h4>Parent Hierarchy</h4>
+                <div class="form-group">
+                    <label class="col-sm-4 control-label" for="parentAdapIdSelect" >Adaptation ID</label>
+                    <div class="col-sm-8">
+                        <div class="row form-group">
+                            <div class="col-sm-5">
+                                <select class="form-control" name="parentAdapId" id="parentAdapIdSelect">
+                                    <option value="">--Select--</option>
+                                <#if neType??>
+                                    <#list neType.adaptSet as adapId>
+                                        <option value="${adapId}">${adapId}</option>
+                                    </#list>
+                                </#if>
+                                </select>
+                            </div>
+                            <div class="col-sm-3">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-4 control-label" for="parent" >Parent Hierarchy</label>
+                    <div class="col-sm-8">
+                        <div class="row form-group">
+                            <div class="col-sm-5">
+                                <input class="form-control" name="parent" id="parent" />
+                            </div>
+                            <div class="col-sm-3" id="parentAddBtnDiv">
+                                <button id="parentAddBtn" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group" id="parentTable">
+                    <label class="col-sm-4 control-label">Parent Setting</label>
+                    <div class="col-sm-8">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th>Adaptation ID</th>
+                                <th>Parent Hierarchy</th>
+                                <th>Operations</th>
+                            </tr>
+                            </thead>
+                            <tbody id="parentTableBody">
                             <#list supportedResources as src>
                             <tr>
                                 <td>${src.adaptation.id}</td>

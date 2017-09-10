@@ -90,4 +90,13 @@ public class ArsConfig {
         }
         return false;
     }
+
+    public boolean addParent(String adaptationId, String parent) {
+        String adapId = adaptationId.replaceAll("\\.", "_");
+        if (!parents.containsKey(adapId)) {
+            parents.put(adapId, parent);
+            return true;
+        }
+        return false;
+    }
 }

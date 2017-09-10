@@ -42,7 +42,7 @@
                         <td>${neType.agentClass}</td>
                         <td>${neType.description}</td>
                         <td>
-                            <#list neType.adaptList as adap>
+                            <#list neType.adaptSet as adap>
                                 <ul>
                                     <li>${adap}</li>
                                 </ul>

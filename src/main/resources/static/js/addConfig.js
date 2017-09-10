@@ -1,6 +1,7 @@
 $(document).ready(function() {
     $("#srcAddBtnDiv").hide();
     $("#ifaceAddBtnDiv").hide();
+    $("#parentAddBtnDiv").hide();
 
    $("#adapIdSelect").change(function(e) {
        $("#srcAddBtnDiv").hide();
@@ -94,6 +95,44 @@ $(document).ready(function() {
                     var iface = data.data;
                     $("#ifaceTableBody").append("<tr>\n" +
                         "                            <td>" + iface.name + "</td>\n" +
+                        "                            <td>Delete</td>\n" +
+                        "                          </tr>")
+                }
+            }
+        });
+    });
+
+    $("#parentAdapIdSelect").change(function(e) {
+        $this = $(e.target);
+        if ("" != $this.val()) {
+            $("#parentAddBtnDiv").show();
+        } else {
+            $("#parentAddBtnDiv").hide();
+        }
+    });
+
+    $("#parentAddBtn").click(function(e) {
+        e.preventDefault();
+        if ($("#parentAdapIdSelect").val() == "") {
+            alert("Please select adaptation id");
+        }
+        if ($("#parent").val() == "") {
+            alert("Please input parent hierarchy");
+        }
+        $.ajax({
+            type: "post",
+            url: "/ars/addParent",
+            data: {
+                neTypeId: $("input[name='neTypeId']").val(),
+                neRelId: $("input[name='neRelId']").val(),
+                adaptationId: $("#parentAdapIdSelect").val(),
+                parent: $("#parent").val()
+            },
+            success: function(data, status) {
+                if (data.status == "ok") {
+                    $("#parentTableBody").append("<tr>\n" +
+                        "                            <td>" + $("#parentAdapIdSelect").val() + "</td>\n" +
+                        "                            <td>" + $("#parent").val() + "</td>\n" +
                         "                            <td>Delete</td>\n" +
                         "                          </tr>")
                 }

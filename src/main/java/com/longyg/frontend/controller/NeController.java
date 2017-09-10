@@ -4,7 +4,6 @@ import com.longyg.frontend.model.config.InterfaceObject;
 import com.longyg.frontend.model.config.InterfaceRepository;
 import com.longyg.frontend.model.ne.*;
 import com.longyg.frontend.service.NeService;
-import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -15,10 +14,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
+import java.util.logging.Logger;
 
 @Controller
 public class NeController {
-    private static final Logger LOG = Logger.getLogger(NeController.class);
+    private static final Logger LOG = Logger.getLogger(NeController.class.getName());
 
     @Autowired
     private NeService neService;
@@ -38,7 +38,11 @@ public class NeController {
 
     @RequestMapping(value = "/netype/add", method = RequestMethod.POST)
     public String addNeType(@RequestParam("adaptations") String[] adaptations, @ModelAttribute NeType neType) {
-        neType.setAdaptList(Arrays.asList(adaptations));
+        List<String> adaptSet = new ArrayList<>();
+        for (String adaptation : adaptations) {
+            adaptSet.add(adaptation);
+        }
+        neType.setAdaptSet(adaptSet);
         neService.saveNeType(neType);
         return "redirect:/netype";
     }

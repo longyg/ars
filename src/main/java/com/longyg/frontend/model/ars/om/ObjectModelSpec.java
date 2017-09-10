@@ -14,7 +14,7 @@ public class ObjectModelSpec {
 
     private String neVersion;
 
-    private Map<String, TreeSet<ObjectClassInfo>> ociMap = new HashMap<>();
+    private Map<String, List<ObjectClassInfo>> ociMap = new HashMap<>();
 
     public String getId() {
         return id;
@@ -40,23 +40,23 @@ public class ObjectModelSpec {
         this.neVersion = neVersion;
     }
 
-    public Map<String, TreeSet<ObjectClassInfo>> getOciMap() {
+    public Map<String, List<ObjectClassInfo>> getOciMap() {
         return ociMap;
     }
 
-    public void setOciMap(Map<String, TreeSet<ObjectClassInfo>> ociMap) {
+    public void setOciMap(Map<String, List<ObjectClassInfo>> ociMap) {
         this.ociMap = ociMap;
     }
 
     public void addObjectClassInfo(String adaptationId, ObjectClassInfo oci) {
         String adapId = adaptationId.replaceAll("\\.", "_");
         if (ociMap.containsKey(adapId)) {
-            TreeSet<ObjectClassInfo> ociSet = ociMap.get(adapId);
+            List<ObjectClassInfo> ociSet = ociMap.get(adapId);
             if (!ociSet.contains(oci)) {
                 ociSet.add(oci);
             }
         } else {
-            TreeSet<ObjectClassInfo> ociSet = new TreeSet<>();
+            List<ObjectClassInfo> ociSet = new ArrayList<>();
             ociSet.add(oci);
             ociMap.put(adapId, ociSet);
         }

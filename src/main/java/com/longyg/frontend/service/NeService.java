@@ -43,6 +43,10 @@ public class NeService {
         return neType;
     }
 
+    public NeType findNeTypeByName(String name) {
+        return neTypeRepository.findByName(name);
+    }
+
     public NeType saveNeType(NeType neType) {
         if (null == neType) {
             return null;

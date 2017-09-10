@@ -5,6 +5,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TreeSet;
 
 @Document(collection = "netype")
 public class NeType {
@@ -14,7 +15,7 @@ public class NeType {
     private String presentation;
     private String description;
     private String agentClass;
-    private List<String> adaptList = new ArrayList<>();
+    private List<String> adaptSet = new ArrayList<>();
 
     public String getId() {
         return id;
@@ -56,11 +57,11 @@ public class NeType {
         this.agentClass = agentClass;
     }
 
-    public List<String> getAdaptList() {
-        return adaptList;
+    public List<String> getAdaptSet() {
+        return adaptSet;
     }
 
-    public void setAdaptList(List<String> adaptList) {
-        this.adaptList = adaptList;
+    public void setAdaptSet(List<String> adaptSet) {
+        this.adaptSet = adaptSet;
     }
 }

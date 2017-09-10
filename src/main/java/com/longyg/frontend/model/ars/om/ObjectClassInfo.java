@@ -33,6 +33,7 @@ public class ObjectClassInfo implements Comparable {
     private String comment;
     private List<String> supporteredVersions = new ArrayList<String>();
     private List<String> dimensions = new ArrayList<String>();
+    private String supportedReleases;
 
     public int getRow() {
         return row;
@@ -240,6 +241,20 @@ public class ObjectClassInfo implements Comparable {
 
     public void setSupporteredVersions(List<String> supporteredVersions) {
         this.supporteredVersions = supporteredVersions;
+    }
+
+    public String getSupportedReleases() {
+        if (null == supporteredVersions || supporteredVersions.size() < 1) {
+            return "";
+        }
+        StringBuilder sb = new StringBuilder();
+        for (String version : supporteredVersions) {
+            sb.append(version).append(", ");
+        }
+        sb.deleteCharAt(sb.length() - 1);
+        sb.deleteCharAt(sb.length() - 1);
+        this.supportedReleases = sb.toString();
+        return supportedReleases;
     }
 
     public List<String> getDimensions() {

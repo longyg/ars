@@ -128,10 +128,19 @@ public class ArsController {
     public ModelAndView viewObjectModel(@RequestParam String id, @RequestParam String neTypeId) {
         Map<String, Object> params = new HashMap<>();
 
+        NeType neType = neService.findNeType(neTypeId);
         ObjectModelSpec spec = arsService.findOm(id);
+
+        List<String> adaps = new ArrayList<>();
+        for (String adaptationId : neType.getAdaptSet()) {
+            String adap = adaptationId.replaceAll("\\.", "_");
+            adaps.add(adap);
+        }
+        neType.setAdaptSet(adaps);
 
         params.put("spec", spec);
         params.put("neTypeId", neTypeId);
+        params.put("neType", neType);
 
         return new ModelAndView("ars/viewOm", params);
     }
@@ -215,15 +224,7 @@ public class ArsController {
     @ResponseBody
     public AjaxResponse addArsResource(@RequestParam String neTypeId, @RequestParam String neRelId,
                                        @RequestParam String adaptationId, @RequestParam String adaptationRelease) {
-        NeRelease neRelease = neService.findRelease(neRelId);
-        ArsConfig arsConfig = arsService.findArsConfig(neRelease);
-        if (arsConfig == null) {
-            arsConfig = new ArsConfig();
-            if (neRelease != null) {
-                arsConfig.setNeType(neRelease.getNeType());
-                arsConfig.setNeVersion(neRelease.getNeVersion());
-            }
-        }
+        ArsConfig arsConfig = findOrCreateArsConfig(neRelId);
 
         AdaptationResource addResource = null;
         List<AdaptationResource> resources = configService.findResources();
@@ -250,16 +251,10 @@ public class ArsController {
 
     @RequestMapping("/ars/addInterface")
     @ResponseBody
-    public AjaxResponse addInterface(@RequestParam String neTypeId, @RequestParam String neRelId, @RequestParam String interfaceId) {
-        NeRelease neRelease = neService.findRelease(neRelId);
-        ArsConfig arsConfig = arsService.findArsConfig(neRelease);
-        if (arsConfig == null) {
-            arsConfig = new ArsConfig();
-            if (neRelease != null) {
-                arsConfig.setNeType(neRelease.getNeType());
-                arsConfig.setNeVersion(neRelease.getNeVersion());
-            }
-        }
+    public AjaxResponse addInterface(@RequestParam String neTypeId,
+                                     @RequestParam String neRelId, @RequestParam String interfaceId) {
+        ArsConfig arsConfig = findOrCreateArsConfig(neRelId);
+
         InterfaceObject addInterface = null;
         List<InterfaceObject> interfaces = configService.findInterfaces();
         for (InterfaceObject ifo : interfaces) {
@@ -282,6 +277,37 @@ public class ArsController {
             response.setStatus("nok");
         }
         return response;
+    }
+
+    @RequestMapping("/ars/addParent")
+    @ResponseBody
+    public AjaxResponse addParent(@RequestParam String neTypeId, @RequestParam String neRelId,
+                                  @RequestParam String adaptationId, @RequestParam String parent) {
+        ArsConfig arsConfig = findOrCreateArsConfig(neRelId);
+
+        boolean flag = arsConfig.addParent(adaptationId, parent);
+
+        AjaxResponse response = new AjaxResponse();
+        if (flag) {
+            arsService.saveConfig(arsConfig);
+            response.setStatus("ok");
+        } else {
+            response.setStatus("nok");
+        }
+        return response;
+    }
+
+    private ArsConfig findOrCreateArsConfig(String neRelId) {
+        NeRelease neRelease = neService.findRelease(neRelId);
+        ArsConfig arsConfig = arsService.findArsConfig(neRelease);
+        if (arsConfig == null) {
+            arsConfig = new ArsConfig();
+            if (neRelease != null) {
+                arsConfig.setNeType(neRelease.getNeType());
+                arsConfig.setNeVersion(neRelease.getNeVersion());
+            }
+        }
+        return arsConfig;
     }
 
     private List<NeRelease> findNeReleaseByNeTypeId(String neTypeId) {

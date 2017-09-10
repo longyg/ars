@@ -41,13 +41,14 @@ public class PmbObjectRepository {
     }
 
     private void addParentObject() throws Exception {
+        Map<String, List<PmbObject>> rootObjectMap = getRootObjects();
         for (Map.Entry<String, List<PmbObject>> entry : allReleaseObjects.entrySet()) {
             String adaptationId = entry.getKey();
-
-            if (config.getParents().containsKey(adaptationId)) {
-                String parent =  config.getParents().get(adaptationId);
+            String adapId = adaptationId.replaceAll("\\.", "_");
+            if (config.getParents().containsKey(adapId)) {
+                String parent =  config.getParents().get(adapId);
                 if (null != parent) {
-                    List<PmbObject> rootObjects = getRootObjects(adaptationId);
+                    List<PmbObject> rootObjects = rootObjectMap.get(adaptationId);
 
                     String lastClass = getLastClass(parent);
                     GlobalObject globalObject = findGlobalObjectByName(lastClass);
@@ -68,7 +69,7 @@ public class PmbObjectRepository {
                         rootObject.addParentObject(pmbObject);
                         pmbObject.addChildObject(rootObject);
 
-                        createPmbObjectsFromParentHierarchy(adaptationId, rootObject, parentHierarchy);
+                        createPmbObjectsFromParentHierarchy(adaptationId, pmbObject, parentHierarchy);
                     }
                 }
             }
@@ -124,18 +125,19 @@ public class PmbObjectRepository {
         createPmbObjectsFromParentHierarchy(adaptationId, pmbObject, parentHierarchy);
     }
 
-    private List<PmbObject> getRootObjects(String adaptationId) {
-        List<PmbObject> rootObjects = new ArrayList<>();
+    public Map<String, List<PmbObject>> getRootObjects() {
+        Map<String, List<PmbObject>> rootObjectMap = new HashMap<String, List<PmbObject>>();
         for (Map.Entry<String, List<PmbObject>> entry : allReleaseObjects.entrySet()) {
-            if (adaptationId.equals(entry.getKey())) {
-                for (PmbObject pmbObject : entry.getValue()) {
-                    if (pmbObject.getParentObjects().size() < 1) {
-                        rootObjects.add(pmbObject);
-                    }
+            String adaptationId = entry.getKey();
+            List<PmbObject> rootObjects = new ArrayList<>();
+            for (PmbObject pmbObject : entry.getValue()) {
+                if (pmbObject.getParentObjects().size() < 1) {
+                    rootObjects.add(pmbObject);
                 }
             }
+            rootObjectMap.put(adaptationId, rootObjects);
         }
-        return rootObjects;
+        return rootObjectMap;
     }
 
     private void createPmbObjectFromPmb() throws Exception {

@@ -23,14 +23,27 @@
                 <thead>
                 <tr>
                     <th style="width:200px;">Topology</th>
+                    <th style="width:20px;">
+                        <span style="transform:rotate(-90deg);line-height: 10px;text-align: center;margin:0px">Alarming</span>
+                    </th>
+                    <th style="width:20px;">Measured</th>
+                    <th style="width:20px;">Configured</th>
+                    <th style="width:20px;">Icon</th>
+                    <th style="width:20px;">GUI launch</th>
+                    <th style="width:60px;">3GPP NRM object</th>
+                    <th style="width:30px;">Integration Version</th>
+                    <th style="width:40px;">Integration (NASDA) </th>
+                    <th style="width:20px;">Min</th>
+                    <th style="width:20px;">Max</th>
+                    <th style="width:20px;">Avg</th>
                     <th>Adaptation ID</th>
                     <th>Name In OMeS</th>
                     <th>Supported Releases</th>
                 </tr>
                 </thead>
                 <tbody>
-                <#list spec.ociMap?keys as key>
-                    <#list spec.ociMap[key] as oci>
+                <#list neType.adaptSet as adap>
+                    <#list spec.ociMap[adap] as oci>
                     <tr style="font-size: 8pt;">
                         <td style="width:200px;padding:0px 0px 0px 10px;margin:0px;line-height:15px;">
                             <#list 0..oci.column as i>
@@ -41,13 +54,28 @@
                                 </#if>
                             </#list>
                         </td>
+                        <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">
+                            <#if oci.alarmingObject == true>
+                                A
+                            </#if>
+                        </td>
+                        <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">
+                            <#if oci.measuredObject == true>
+                                M
+                            </#if>
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         <td style="width:150px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">${oci.adaptationId}</td>
                         <td style="width:150px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">${oci.nameInOmes}</td>
-                        <td style="padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">
-                        <#list oci.supporteredVersions as version>
-                            ${version},
-                        </#list>
-                        </td>
+                        <td style="padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">${oci.supportedReleases}</td>
                     </tr>
                     </#list>
                 </#list>
