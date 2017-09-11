@@ -6,6 +6,9 @@ import com.longyg.frontend.model.config.InterfaceObject;
 import com.longyg.frontend.model.config.InterfaceRepository;
 import com.longyg.frontend.model.config.GlobalObject;
 import com.longyg.frontend.model.config.ObjectRepository;
+import com.longyg.frontend.model.ne.NeType;
+import com.longyg.frontend.service.ConfigService;
+import com.longyg.frontend.service.NeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +32,12 @@ public class ConfigController {
 
     @Autowired
     private AdaptationResourceRepository adaptationResourceRepository;
+
+    @Autowired
+    private ConfigService configService;
+
+    @Autowired
+    private NeService neService;
 
     @RequestMapping("/interface")
     public ModelAndView listInterface() {
@@ -105,5 +115,16 @@ public class ConfigController {
     public String deleteResource(@RequestParam String id) {
         adaptationResourceRepository.deleteById(id);
         return "redirect:/resource";
+    }
+
+    @RequestMapping("/load")
+    public ModelAndView listLoad(HttpServletRequest request) {
+
+        List<NeType> allNeTypes = neService.findAllNeTypes();
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("allNeTypes", allNeTypes);
+
+        return new ModelAndView("config/objectLoad", params);
     }
 }
