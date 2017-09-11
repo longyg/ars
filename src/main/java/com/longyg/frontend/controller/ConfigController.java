@@ -119,6 +119,9 @@ public class ConfigController {
 
     @RequestMapping("/load")
     public ModelAndView listLoad(HttpServletRequest request) {
+        String neTypeId = request.getParameter("neTypeId");
+
+
 
         List<NeType> allNeTypes = neService.findAllNeTypes();
 

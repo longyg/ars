@@ -24,7 +24,7 @@
                     <div class="col-sm-2">
                         <select class="form-control" id="neTypeSelect" name="neType">
                             <option value="">--Select--</option>
-                            <#list allNeTypeList as type>
+                            <#list allNeTypes as type>
                                 <#if neTypeId?? && type.id == neTypeId>
                                     <option value="${type.id}" selected>${type.name}</option>
                                 <#else>
@@ -33,22 +33,9 @@
                             </#list>
                         </select>
                     </div>
-                    <label class="col-sm-1 control-label" for="neVersionSelect">NE Version</label>
-                    <div class="col-sm-2">
-                        <select class="form-control" id="neVersionSelect" name="neVersion">
-                            <option value="">--Select--</option>
-                        <#list neReleaseList as neRel>
-                            <#if neRelId?? && neRel.id == neRelId>
-                                <option value="${neRel.id}" selected>${neRel.neVersion}</option>
-                            <#else>
-                                <option value="${neRel.id}">${neRel.neVersion}</option>
-                            </#if>
-                        </#list>
-                        </select>
-                    </div>
-                    <#if neRelId?? && "" != neRelId>
+                    <#if neTypeId?? && "" != neTypeId>
                         <div class="col-sm-1">
-                            <a class="btn btn-primary" href="/param/add?neTypeId=${neTypeId}&neRelId=${neRelId}">
+                            <a class="btn btn-primary" href="/load/add?neTypeId=${neTypeId}">
                                 <span class="glyphicon glyphicon-plus-sign"></span> Add
                             </a>
                         </div>
