@@ -11,7 +11,7 @@ public class LoadConfig {
     @Id
     private String id;
     private String name;
-    private String neType;
+    private String neTypeId;
     private String adaptationId;
     private List<ObjectLoad> objectLoads = new ArrayList<>();
 
@@ -31,12 +31,12 @@ public class LoadConfig {
         this.name = name;
     }
 
-    public String getNeType() {
-        return neType;
+    public String getNeTypeId() {
+        return neTypeId;
     }
 
-    public void setNeType(String neType) {
-        this.neType = neType;
+    public void setNeTypeId(String neTypeId) {
+        this.neTypeId = neTypeId;
     }
 
     public String getAdaptationId() {

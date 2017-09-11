@@ -16,20 +16,20 @@
                             <ul class="dropdown-menu">
                                 <li><a href="/netype"><span class="glyphicon glyphicon-tag"></span> NE Type</a></li>
                                 <li><a href="/nerelease"><span class="glyphicon glyphicon-th-list"></span> NE Release</a></li>
-                                <li><a href="/neif"><span class="glyphicon glyphicon-link"></span> NE Interface</a></li>
                             </ul>
                         </li>
 
                         <li class="dropdown active">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <span class="glyphicon glyphicon-cog"></span> Config
+                                <span class="glyphicon glyphicon-cog"></span> Setting
                                 <b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu">
-                                <li class="active"><a href="/interface"><span class="glyphicon glyphicon-link"></span> Interface Objects</a></li>
-                                <li><a href="/object"><span class="glyphicon glyphicon-tasks"></span> Global Objects</a></li>
-                                <li><a href="/resource"><span class="glyphicon glyphicon-leaf"></span> Resources</a></li>
-                                <li><a href="/param"><span class="glyphicon glyphicon-tags"></span> Parameters</a></li>
+                                <li class="active"><a href="/interface"><span class="glyphicon glyphicon-link"></span> Interface Setting</a></li>
+                                <li><a href="/object"><span class="glyphicon glyphicon-tasks"></span> Object Setting</a></li>
+                                <li><a href="/resource"><span class="glyphicon glyphicon-leaf"></span> Resource Setting</a></li>
+                                <li><a href="/param"><span class="glyphicon glyphicon-tags"></span> Parameter Setting</a></li>
+                                <li><a href="/load"><span class="glyphicon glyphicon-tags"></span> Load Setting</a></li>
                             </ul>
                         </li>
 

@@ -1,11 +1,6 @@
 package com.longyg.frontend.controller;
 
-import com.longyg.frontend.model.config.AdaptationResource;
-import com.longyg.frontend.model.config.AdaptationResourceRepository;
-import com.longyg.frontend.model.config.InterfaceObject;
-import com.longyg.frontend.model.config.InterfaceRepository;
-import com.longyg.frontend.model.config.GlobalObject;
-import com.longyg.frontend.model.config.ObjectRepository;
+import com.longyg.frontend.model.config.*;
 import com.longyg.frontend.model.ne.NeType;
 import com.longyg.frontend.service.ConfigService;
 import com.longyg.frontend.service.NeService;
@@ -121,13 +116,26 @@ public class ConfigController {
     public ModelAndView listLoad(HttpServletRequest request) {
         String neTypeId = request.getParameter("neTypeId");
 
-
+        List<LoadConfig> loadConfigs = configService.findLoadConfigs(neTypeId);
 
         List<NeType> allNeTypes = neService.findAllNeTypes();
 
         Map<String, Object> params = new HashMap<>();
         params.put("allNeTypes", allNeTypes);
+        params.put("neTypeId", neTypeId);
+        params.put("loadConfigs", loadConfigs);
 
         return new ModelAndView("config/objectLoad", params);
+    }
+
+    @RequestMapping("/load/add")
+    public ModelAndView addLoad(@RequestParam String neTypeId) {
+        NeType neType = neService.findNeType(neTypeId);
+
+        Map<String, Object> params = new HashMap<>();
+        params.put("neTypeId", neTypeId);
+        params.put("neType", neType);
+
+        return new ModelAndView("config/addLoad", params);
     }
 }

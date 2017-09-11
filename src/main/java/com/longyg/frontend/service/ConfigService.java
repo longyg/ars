@@ -4,6 +4,7 @@ import com.longyg.frontend.model.config.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.TreeSet;
@@ -18,6 +19,9 @@ public class ConfigService {
 
     @Autowired
     private ObjectRepository objectRepository;
+
+    @Autowired
+    private LoadConfigRepository loadConfigRepository;
 
     public AdaptationResource findResource(String id) {
         if (null == id) {
@@ -55,5 +59,12 @@ public class ConfigService {
 
     public List<GlobalObject> findGlobalObjects() {
         return objectRepository.findAll();
+    }
+
+    public List<LoadConfig> findLoadConfigs(String neTypeId) {
+        if (null == neTypeId) {
+            return new ArrayList<>();
+        }
+        return loadConfigRepository.findByNeTypeId(neTypeId);
     }
 }

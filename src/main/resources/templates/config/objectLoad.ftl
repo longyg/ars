@@ -48,26 +48,22 @@
             <table class="table table-bordered">
                 <thead>
                 <tr>
-                    <th>NE Type</th>
-                    <th>NE Version</th>
-                    <th>Param Version</th>
+                    <th>Name</th>
                     <th>Operations</th>
                 </tr>
                 </thead>
                 <tbody>
-                <#list neParamList as neParam>
+                <#list loadConfigs as config>
                     <tr>
-                        <td>${neParam.neType}</td>
-                        <td>${neParam.neVersion}</td>
-                        <td>v${neParam.v}</td>
+                        <td>${config.name}</td>
                         <td>
-                            <a class="btn btn-sm btn-success" href="/param/view?id=${neParam.id}">
-                                <span class="glyphicon glyphicon-eye-open"></span> View Details
+                            <a class="btn btn-sm btn-success" href="/load/view?id=${config.id}">
+                                <span class="glyphicon glyphicon-eye-open"></span> View
                             </a>
-                            <a class="btn btn-sm btn-info" href="/param/edit?id=${neParam.id}&neTypeId=${neTypeId}&neRelId=${neRelId}">
+                            <a class="btn btn-sm btn-info" href="/load/edit?id=${config.id}&neTypeId=${neTypeId}">
                                 <span class="glyphicon glyphicon-edit"></span> Edit
                             </a>
-                            <a class="btn btn-sm btn-danger" href="/param/delete?id=${neParam.id}&neTypeId=${neTypeId}&neRelId=${neRelId}">
+                            <a class="btn btn-sm btn-danger" href="/load/delete?id=${config.id}&neTypeId=${neTypeId}">
                                 <span class="glyphicon glyphicon-remove-sign"></span> Delete
                             </a>
                         </td>
