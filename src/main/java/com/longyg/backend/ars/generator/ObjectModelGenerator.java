@@ -156,20 +156,4 @@ public class ObjectModelGenerator {
         });
         return rootObjects;
     }
-
-    private TreeSet<String> findAdaptationIdsFromResource() {
-        TreeSet<String> adaptations = new TreeSet<>();
-        List<String> resources = config.getResources();
-        resources.stream().forEach(srcId -> {
-            AdaptationResource resource = configService.findResource(srcId);
-            if (null != resource) {
-                String adaptationId = resource.getAdaptation().getId();
-                if (!adaptations.contains(adaptationId)) {
-                    adaptations.add(adaptationId);
-                }
-            }
-        });
-
-        return adaptations;
-    }
 }
