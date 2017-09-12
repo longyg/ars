@@ -1,0 +1,12 @@
+NE Type configuration
+1. Agent class
+2. Adaptations
+
+NE Type + NE Version configuration
+1. US parameters
+2. Adaptation resources
+3. Interface objects
+4. Parent hierarchy
+5. Object load
+6. Additonal alarming objects
+7. 

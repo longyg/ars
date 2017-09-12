@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.util.ArrayList;
 import java.util.List;
 
-@Document(collection = "load")
+@Document(collection = "LoadConfig")
 public class LoadConfig {
     @Id
     private String id;

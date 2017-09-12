@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -137,5 +138,30 @@ public class ConfigController {
         params.put("neType", neType);
 
         return new ModelAndView("config/addLoad", params);
+    }
+
+    @RequestMapping("/ol")
+    public ModelAndView listOl() {
+        List<ObjectLoad> olList = configService.findObjectLoads();
+        Map<String, Object> params = new HashMap<>();
+        params.put("olList", olList);
+        return new ModelAndView("config/ol", params);
+    }
+
+    @RequestMapping(value = "/ol/add", method = RequestMethod.POST)
+    public String addOl(@ModelAttribute ObjectLoad objectLoad) {
+        List<ObjectLoad> olList = configService.findObjectLoads();
+        boolean exist = false;
+        for (ObjectLoad ol : olList) {
+            if (ol.getObjectClass().equals(objectLoad.getObjectClass())
+                    && ol.getObjectNumber() == objectLoad.getObjectNumber()
+                    && ol.getRelatedObjectClass().equals(objectLoad.getRelatedObjectClass())) {
+                exist = true;
+            }
+        }
+        if (!exist) {
+            configService.saveObjectLoad(objectLoad);
+        }
+        return "redirect:/ol";
     }
 }

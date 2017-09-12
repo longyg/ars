@@ -29,7 +29,7 @@
                                 <li><a href="/object"><span class="glyphicon glyphicon-tasks"></span> Object Setting</a></li>
                                 <li><a href="/resource"><span class="glyphicon glyphicon-leaf"></span> Resource Setting</a></li>
                                 <li><a href="/param"><span class="glyphicon glyphicon-tags"></span> Parameter Setting</a></li>
-                                <li><a href="/load"><span class="glyphicon glyphicon-tags"></span> Load Setting</a></li>
+                                <li><a href="/ol"><span class="glyphicon glyphicon-tags"></span> Object Load Setting</a></li>
                             </ul>
                         </li>
 
