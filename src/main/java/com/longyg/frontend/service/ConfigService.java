@@ -21,9 +21,6 @@ public class ConfigService {
     private ObjectRepository objectRepository;
 
     @Autowired
-    private LoadConfigRepository loadConfigRepository;
-
-    @Autowired
     private ObjectLoadRepository objectLoadRepository;
 
     public AdaptationResource findResource(String id) {
@@ -64,18 +61,21 @@ public class ConfigService {
         return objectRepository.findAll();
     }
 
-    public List<LoadConfig> findLoadConfigs(String neTypeId) {
-        if (null == neTypeId) {
-            return new ArrayList<>();
-        }
-        return loadConfigRepository.findByNeTypeId(neTypeId);
-    }
-
     public List<ObjectLoad> findObjectLoads() {
         return objectLoadRepository.findAll();
     }
 
     public ObjectLoad saveObjectLoad(ObjectLoad objectLoad) {
         return objectLoadRepository.save(objectLoad);
+    }
+
+    public ObjectLoad findObjectLoad(String id) {
+        if (null == id)
+            return null;
+        Optional<ObjectLoad> opt = objectLoadRepository.findById(id);
+        if (opt.isPresent()) {
+            return opt.get();
+        }
+        return null;
     }
 }

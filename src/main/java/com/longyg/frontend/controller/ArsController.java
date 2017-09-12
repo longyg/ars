@@ -6,10 +6,7 @@ import com.longyg.frontend.model.ars.*;
 import com.longyg.frontend.model.ars.om.ObjectModelSpec;
 import com.longyg.frontend.model.ars.us.UsRepository;
 import com.longyg.frontend.model.ars.us.UserStorySpec;
-import com.longyg.frontend.model.config.Adaptation;
-import com.longyg.frontend.model.config.AdaptationResource;
-import com.longyg.frontend.model.config.AdaptationResourceRepository;
-import com.longyg.frontend.model.config.InterfaceObject;
+import com.longyg.frontend.model.config.*;
 import com.longyg.frontend.model.ne.NeRelease;
 import com.longyg.frontend.model.ne.NeReleaseRepository;
 import com.longyg.frontend.model.ne.NeType;
@@ -201,6 +198,17 @@ public class ArsController {
         }
 
         params.put("supportedResources", supportedResources);
+
+        List<String> loadIds = arsConfig.getLoadIds();
+        List<ObjectLoad> supportedLoads = new ArrayList<>();
+        for (String loadId : loadIds) {
+            ObjectLoad objectLoad = configService.findObjectLoad(loadId);
+            if (objectLoad != null) {
+                supportedLoads.add(objectLoad);
+            }
+        }
+
+        params.put("supportedLoads", supportedLoads);
 
         return new ModelAndView("ars/addConfig", params);
     }

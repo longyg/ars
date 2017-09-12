@@ -18,6 +18,7 @@ public class ArsConfig {
     private Map<String, String> parents = new HashMap<>();
     private String neParamId;
     private List<String> resources = new ArrayList<>();
+    private List<String> loadIds = new ArrayList<>();
 
     public String getId() {
         return id;
@@ -73,6 +74,14 @@ public class ArsConfig {
 
     public void setResources(List<String> resources) {
         this.resources = resources;
+    }
+
+    public List<String> getLoadIds() {
+        return loadIds;
+    }
+
+    public void setLoadIds(List<String> loadIds) {
+        this.loadIds = loadIds;
     }
 
     public boolean addResource(String srcId) {

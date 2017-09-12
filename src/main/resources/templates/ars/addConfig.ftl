@@ -26,22 +26,22 @@
                 <input type="hidden" name="neRelId" value="${neRelId}" />
                 </#if>
                 <div class="form-group">
-                    <label  class="col-sm-4 control-label" for="neType">NE Type</label>
-                    <div class="col-sm-8">
+                    <label  class="col-sm-3 control-label" for="neType">NE Type</label>
+                    <div class="col-sm-9">
                         <input class="form-control" id="neType" name="neType" placeholder="${neRelease.neType}" value="${neRelease.neType}" readonly unselectable="on"/>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-4 control-label" for="neVersion" >NE Version</label>
-                    <div class="col-sm-8">
+                    <label class="col-sm-3 control-label" for="neVersion" >NE Version</label>
+                    <div class="col-sm-9">
                         <input class="form-control" id="neVersion" name="neVersion" placeholder="${neRelease.neVersion}" value="${neRelease.neVersion}" readonly unselectable="on"/>
                     </div>
                 </div>
                 <hr/>
                 <h4>Interfaces</h4>
                 <div class="form-group">
-                    <label class="col-sm-4 control-label" for="interfaceSelect" >Interfaces</label>
-                    <div class="col-sm-8">
+                    <label class="col-sm-3 control-label" for="interfaceSelect" >Interfaces</label>
+                    <div class="col-sm-9">
                         <div class="row form-group">
                             <div class="col-sm-5">
                                 <select class="form-control" name="interface" id="interfaceSelect">
@@ -58,8 +58,8 @@
                     </div>
                 </div>
                 <div class="form-group" id="ifaceTable">
-                    <label class="col-sm-4 control-label">Selected Interfaces</label>
-                    <div class="col-sm-8">
+                    <label class="col-sm-3 control-label">Selected Interfaces</label>
+                    <div class="col-sm-9">
                         <table class="table table-bordered">
                             <thead>
                             <tr>
@@ -81,8 +81,8 @@
                 <hr/>
                 <h4>Resources</h4>
                 <div class="form-group">
-                    <label class="col-sm-4 control-label" for="adapIdSelect" >Adaptation ID</label>
-                    <div class="col-sm-8">
+                    <label class="col-sm-3 control-label" for="adapIdSelect" >Adaptation ID</label>
+                    <div class="col-sm-9">
                         <div class="row form-group">
                             <div class="col-sm-5">
                                 <select class="form-control" name="adaptationId" id="adapIdSelect">
@@ -101,8 +101,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="col-sm-4 control-label" for="adapVersionSelect" >Adaptation Version</label>
-                    <div class="col-sm-8">
+                    <label class="col-sm-3 control-label" for="adapVersionSelect" >Adaptation Version</label>
+                    <div class="col-sm-9">
                         <div class="row form-group">
                             <div class="col-sm-5">
                                 <select class="form-control" name="adaptationRelease" id="adapVersionSelect">
@@ -117,8 +117,8 @@
                 </div>
 
                 <div class="form-group" id="srcTable">
-                    <label class="col-sm-4 control-label">Selected Resources</label>
-                    <div class="col-sm-8">
+                    <label class="col-sm-3 control-label">Selected Resources</label>
+                    <div class="col-sm-9">
                         <table class="table table-bordered">
                             <thead>
                             <tr>
@@ -143,8 +143,8 @@
                 <hr/>
                 <h4>Parent Hierarchy</h4>
                 <div class="form-group">
-                    <label class="col-sm-4 control-label" for="parentAdapIdSelect" >Adaptation ID</label>
-                    <div class="col-sm-8">
+                    <label class="col-sm-3 control-label" for="parentAdapIdSelect" >Adaptation ID</label>
+                    <div class="col-sm-9">
                         <div class="row form-group">
                             <div class="col-sm-5">
                                 <select class="form-control" name="parentAdapId" id="parentAdapIdSelect">
@@ -163,8 +163,8 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="col-sm-4 control-label" for="parent" >Parent Hierarchy</label>
-                    <div class="col-sm-8">
+                    <label class="col-sm-3 control-label" for="parent" >Parent Hierarchy</label>
+                    <div class="col-sm-9">
                         <div class="row form-group">
                             <div class="col-sm-5">
                                 <input class="form-control" name="parent" id="parent" />
@@ -177,8 +177,8 @@
                 </div>
 
                 <div class="form-group" id="parentTable">
-                    <label class="col-sm-4 control-label">Parent Setting</label>
-                    <div class="col-sm-8">
+                    <label class="col-sm-3 control-label">Parent Setting</label>
+                    <div class="col-sm-9">
                         <table class="table table-bordered">
                             <thead>
                             <tr>
@@ -192,6 +192,34 @@
                             <tr>
                                 <td>${src.adaptation.id}</td>
                                 <td>${src.adaptation.release}</td>
+                                <td>Delete</td>
+                            </tr>
+                            </#list>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <hr/>
+                <h4>Object Load</h4>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Object Load Setting</label>
+                    <div class="col-sm-9">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th>Object Class</th>
+                                <th>Object Number</th>
+                                <th>Related Object Class</th>
+                                <th>Operations</th>
+                            </tr>
+                            </thead>
+                            <tbody id="olTableBody">
+                            <#list supportedLoads as load>
+                            <tr>
+                                <td>${load.objectClass}</td>
+                                <td>${load.objectNumber}</td>
+                                <td>${load.relatedObjectClass}</td>
                                 <td>Delete</td>
                             </tr>
                             </#list>

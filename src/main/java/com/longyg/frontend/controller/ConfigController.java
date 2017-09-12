@@ -113,33 +113,6 @@ public class ConfigController {
         return "redirect:/resource";
     }
 
-    @RequestMapping("/load")
-    public ModelAndView listLoad(HttpServletRequest request) {
-        String neTypeId = request.getParameter("neTypeId");
-
-        List<LoadConfig> loadConfigs = configService.findLoadConfigs(neTypeId);
-
-        List<NeType> allNeTypes = neService.findAllNeTypes();
-
-        Map<String, Object> params = new HashMap<>();
-        params.put("allNeTypes", allNeTypes);
-        params.put("neTypeId", neTypeId);
-        params.put("loadConfigs", loadConfigs);
-
-        return new ModelAndView("config/objectLoad", params);
-    }
-
-    @RequestMapping("/load/add")
-    public ModelAndView addLoad(@RequestParam String neTypeId) {
-        NeType neType = neService.findNeType(neTypeId);
-
-        Map<String, Object> params = new HashMap<>();
-        params.put("neTypeId", neTypeId);
-        params.put("neType", neType);
-
-        return new ModelAndView("config/addLoad", params);
-    }
-
     @RequestMapping("/ol")
     public ModelAndView listOl() {
         List<ObjectLoad> olList = configService.findObjectLoads();
