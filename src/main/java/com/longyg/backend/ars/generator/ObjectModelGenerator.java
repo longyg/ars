@@ -136,6 +136,11 @@ public class ObjectModelGenerator {
         oci.setRow(row.get());
         oci.setColumn(column.get());
         oci.setName(pmbObject.getName());
+        //oci.setAlarmingObject(false);
+        oci.setMeasuredObject(pmbObject.isMeasuredObject());
+        //oci.setCmObject(false);
+        //oci.setHasIcon(false);
+        //oci.setHasGuiLuanch(false);
         oci.setAdaptationId(adaptationId);
         oci.setNameInOmes(pmbObject.getNameInOmes());
         oci.setMeasuredObject(pmbObject.isMeasuredObject());
