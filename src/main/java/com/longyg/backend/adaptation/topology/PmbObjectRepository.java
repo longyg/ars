@@ -38,6 +38,12 @@ public class PmbObjectRepository {
     public void init() throws Exception {
         createPmbObjectFromPmb();
         addParentObject();
+        setObjectLoad();
+    }
+
+    private void setObjectLoad() {
+        // TODO
+
     }
 
     private void addParentObject() throws Exception {
