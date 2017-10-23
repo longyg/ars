@@ -141,6 +141,21 @@ public class ObjectModelGenerator {
         //oci.setCmObject(false);
         //oci.setHasIcon(false);
         //oci.setHasGuiLuanch(false);
+
+        // objects per Network
+        oci.setAvg(0);
+        oci.setMin(0);
+        oci.setMax(0);
+
+        // NEs per Network
+        oci.setAvgNePerNet(0);
+        oci.setMaxNePerNet(0);
+
+        oci.setAvgPerNet(0);
+        oci.setMaxPerNE(0);
+
+        oci.setMaxPerNE(0);
+
         oci.setAdaptationId(adaptationId);
         oci.setNameInOmes(pmbObject.getNameInOmes());
         oci.setMeasuredObject(pmbObject.isMeasuredObject());

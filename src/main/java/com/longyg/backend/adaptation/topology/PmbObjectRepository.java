@@ -43,7 +43,9 @@ public class PmbObjectRepository {
 
     private void setObjectLoad() {
         // TODO
+        for (Map.Entry<String, List<PmbObject>> entry : allReleaseObjects.entrySet()) {
 
+        }
     }
 
     private void addParentObject() throws Exception {
