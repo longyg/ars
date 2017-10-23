@@ -22,6 +22,8 @@ public class PmbObject implements Comparable<PmbObject> {
     private List<PmbObject> childObjects = new ArrayList<>();
     private List<PmbObject> parentObjects = new ArrayList<>();
 
+    private boolean isAdditional;
+
     public void addSupportedVersion(String version) {
         if (!supporteredVersions.contains(version)) {
             supporteredVersions.add(version);
@@ -137,6 +139,14 @@ public class PmbObject implements Comparable<PmbObject> {
 
     public void setParentObjects(List<PmbObject> parentObjects) {
         this.parentObjects = parentObjects;
+    }
+
+    public boolean isAdditional() {
+        return isAdditional;
+    }
+
+    public void setAdditional(boolean additional) {
+        isAdditional = additional;
     }
 
     @Override

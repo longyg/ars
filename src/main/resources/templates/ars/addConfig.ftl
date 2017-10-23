@@ -188,12 +188,12 @@
                             </tr>
                             </thead>
                             <tbody id="parentTableBody">
-                            <#list supportedResources as src>
-                            <tr>
-                                <td>${src.adaptation.id}</td>
-                                <td>${src.adaptation.release}</td>
-                                <td>Delete</td>
-                            </tr>
+                            <#list supportedParents as adapId, parent>
+                                <tr>
+                                    <td>${adapId}</td>
+                                    <td>${parent}</td>
+                                    <td>Delete</td>
+                                </tr>
                             </#list>
                             </tbody>
                         </table>

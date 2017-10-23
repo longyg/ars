@@ -1,6 +1,5 @@
 package com.longyg.frontend.controller;
 
-import com.longyg.backend.adaptation.main.ResourceRepository;
 import com.longyg.backend.ars.generator.ArsGenerator;
 import com.longyg.frontend.model.ars.*;
 import com.longyg.frontend.model.ars.om.ObjectModelSpec;
@@ -15,14 +14,12 @@ import com.longyg.frontend.model.response.AjaxResponse;
 import com.longyg.frontend.service.ArsService;
 import com.longyg.frontend.service.ConfigService;
 import com.longyg.frontend.service.NeService;
-import org.apache.xmlbeans.impl.xb.xmlconfig.Extensionconfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.swing.text.html.Option;
 import java.util.*;
 import java.util.logging.Logger;
 
@@ -196,18 +193,25 @@ public class ArsController {
                 }
             }
         }
-
         params.put("supportedResources", supportedResources);
 
-        List<String> loadIds = arsConfig.getLoadIds();
+        Map<String, String> supportedParents = new HashMap<>();
+        if (null != arsConfig) {
+            supportedParents = arsConfig.getParents();
+        }
+        params.put("supportedParents", supportedParents);
+
+
         List<ObjectLoad> supportedLoads = new ArrayList<>();
-        for (String loadId : loadIds) {
-            ObjectLoad objectLoad = configService.findObjectLoad(loadId);
-            if (objectLoad != null) {
-                supportedLoads.add(objectLoad);
+        if (null != arsConfig) {
+            List<String> loadIds = arsConfig.getLoadIds();
+            for (String loadId : loadIds) {
+                ObjectLoad objectLoad = configService.findObjectLoad(loadId);
+                if (objectLoad != null) {
+                    supportedLoads.add(objectLoad);
+                }
             }
         }
-
         params.put("supportedLoads", supportedLoads);
 
         return new ModelAndView("ars/addConfig", params);

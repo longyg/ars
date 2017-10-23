@@ -156,7 +156,7 @@ public class ObjectModelGenerator {
 
         oci.setMaxPerNE(0);
 
-        oci.setAdaptationId(adaptationId);
+        oci.setAdaptationId(pmbObject.isAdditional() ? "" : adaptationId);
         oci.setNameInOmes(pmbObject.getNameInOmes());
         oci.setMeasuredObject(pmbObject.isMeasuredObject());
         oci.setPresentation(pmbObject.getPresentation());

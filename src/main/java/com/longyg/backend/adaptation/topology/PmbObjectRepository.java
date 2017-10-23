@@ -64,6 +64,7 @@ public class PmbObjectRepository {
                         throw new Exception("Parent Object class '" + lastClass + "' is not defined.");
                     }
                     PmbObject pmbObject = new PmbObject();
+                    pmbObject.setAdditional(true);
                     pmbObject.setName(lastClass);
                     pmbObject.setNameInOmes(globalObject.getNameInOMeS());
                     pmbObject.setPresentation(globalObject.getPresentation());
@@ -118,6 +119,7 @@ public class PmbObjectRepository {
         }
 
         PmbObject pmbObject = new PmbObject();
+        pmbObject.setAdditional(true);
         pmbObject.setName(lastClass);
         pmbObject.setNameInOmes(globalObject.getNameInOMeS());
         pmbObject.setPresentation(globalObject.getPresentation());
