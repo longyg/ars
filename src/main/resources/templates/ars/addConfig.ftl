@@ -209,7 +209,8 @@
                             <thead>
                             <tr>
                                 <th>Object Class</th>
-                                <th>Object Number</th>
+                                <th>Max</th>
+                                <th>Avg</th>
                                 <th>Related Object Class</th>
                                 <th>Operations</th>
                             </tr>
@@ -218,7 +219,8 @@
                             <#list supportedLoads as load>
                             <tr>
                                 <td>${load.objectClass}</td>
-                                <td>${load.objectNumber}</td>
+                                <td>${load.max}</td>
+                                <td>${load.avg}</td>
                                 <td>${load.relatedObjectClass}</td>
                                 <td>Delete</td>
                             </tr>

@@ -127,7 +127,7 @@ public class ConfigController {
         boolean exist = false;
         for (ObjectLoad ol : olList) {
             if (ol.getObjectClass().equals(objectLoad.getObjectClass())
-                    && ol.getObjectNumber() == objectLoad.getObjectNumber()
+                    && ol.getMax() == objectLoad.getMax() && ol.getAvg() == objectLoad.getAvg()
                     && ol.getRelatedObjectClass().equals(objectLoad.getRelatedObjectClass())) {
                 exist = true;
             }

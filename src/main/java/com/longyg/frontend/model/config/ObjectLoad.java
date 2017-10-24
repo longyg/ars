@@ -8,7 +8,8 @@ public class ObjectLoad {
     @Id
     private String id;
     private String objectClass;
-    private int objectNumber;
+    private int max;
+    private int avg;
     private String relatedObjectClass;
 
     public String getId() {
@@ -27,12 +28,20 @@ public class ObjectLoad {
         this.objectClass = objectClass;
     }
 
-    public int getObjectNumber() {
-        return objectNumber;
+    public int getMax() {
+        return max;
     }
 
-    public void setObjectNumber(int objectNumber) {
-        this.objectNumber = objectNumber;
+    public void setMax(int max) {
+        this.max = max;
+    }
+
+    public int getAvg() {
+        return avg;
+    }
+
+    public void setAvg(int avg) {
+        this.avg = avg;
     }
 
     public String getRelatedObjectClass() {
@@ -41,5 +50,20 @@ public class ObjectLoad {
 
     public void setRelatedObjectClass(String relatedObjectClass) {
         this.relatedObjectClass = relatedObjectClass;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ObjectLoad that = (ObjectLoad) o;
+
+        return id != null ? id.equals(that.id) : that.id == null;
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
     }
 }

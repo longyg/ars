@@ -8,8 +8,8 @@ import com.longyg.frontend.Utils.IntHolder;
 import com.longyg.frontend.model.ars.ArsConfig;
 import com.longyg.frontend.model.ars.om.ObjectClassInfo;
 import com.longyg.frontend.model.ars.om.ObjectModelSpec;
-import com.longyg.frontend.model.config.AdaptationResource;
 import com.longyg.frontend.model.config.GlobalObject;
+import com.longyg.frontend.model.config.ObjectLoad;
 import com.longyg.frontend.model.ne.NeType;
 import com.longyg.frontend.service.ArsService;
 import com.longyg.frontend.service.ConfigService;
@@ -49,7 +49,8 @@ public class ObjectModelGenerator {
 
     private void initRepository() throws Exception {
         List<GlobalObject> globalObjects = configService.findGlobalObjects();
-        pmbObjectRepository = new PmbObjectRepository(adaptationRepository, config, globalObjects);
+        List<ObjectLoad> objectLoads = configService.findObjectLoads(config.getLoadIds());
+        pmbObjectRepository = new PmbObjectRepository(adaptationRepository, config, globalObjects, objectLoads);
         pmbObjectRepository.init();
     }
 

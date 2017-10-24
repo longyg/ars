@@ -4,12 +4,13 @@ import com.longyg.backend.adaptation.main.AdaptationRepository;
 import com.longyg.backend.adaptation.pm.*;
 import com.longyg.frontend.model.ars.ArsConfig;
 import com.longyg.frontend.model.config.GlobalObject;
-import org.apache.log4j.Logger;
+import com.longyg.frontend.model.config.ObjectLoad;
 
 import java.util.*;
+import java.util.logging.Logger;
 
 public class PmbObjectRepository {
-    private static final Logger LOG = Logger.getLogger(PmbObjectRepository.class);
+    private static final Logger LOG = Logger.getLogger(PmbObjectRepository.class.getName());
 
     // key: adaptation Id
     // value: all releases' object of specific adaptation id
@@ -21,6 +22,8 @@ public class PmbObjectRepository {
 
     private List<GlobalObject> globalObjects;
 
+    private List<ObjectLoad> objectLoads;
+
     public Map<String, List<PmbObject>> getAllReleaseObjects() {
         return allReleaseObjects;
     }
@@ -29,10 +32,11 @@ public class PmbObjectRepository {
         this.allReleaseObjects = allReleaseObjects;
     }
 
-    public PmbObjectRepository(AdaptationRepository adaptationRepository, ArsConfig config, List<GlobalObject> globalObjects) {
+    public PmbObjectRepository(AdaptationRepository adaptationRepository, ArsConfig config, List<GlobalObject> globalObjects, List<ObjectLoad> objectLoads) {
         this.adaptationRepository = adaptationRepository;
         this.config = config;
         this.globalObjects = globalObjects;
+        this.objectLoads = objectLoads;
     }
 
     public void init() throws Exception {
@@ -41,11 +45,73 @@ public class PmbObjectRepository {
         setObjectLoad();
     }
 
-    private void setObjectLoad() {
-        // TODO
-        for (Map.Entry<String, List<PmbObject>> entry : allReleaseObjects.entrySet()) {
-
+    private void setObjectLoad() throws Exception {
+        LOG.info("Setting object load");
+        Map<String, List<PmbObject>> rootObjectMap = getRootObjects();
+        LOG.info("Root Objects: " + rootObjectMap);
+        for (List<PmbObject> rootList : rootObjectMap.values()) {
+            LOG.info("Root Objects: " + rootList);
+            for (PmbObject root : rootList) {
+                LOG.info("Root Object: " + root.getName());
+                setObjectNumbers(root);
+                setObjectNumbersForChildObjects(root);
+            }
         }
+    }
+
+    private void setObjectNumbersForChildObjects(PmbObject parent) throws Exception {
+        for (PmbObject child : parent.getChildObjects()) {
+            setObjectNumbers(child);
+            setObjectNumbersForChildObjects(child);
+        }
+    }
+
+    private void setObjectNumbers(PmbObject obj) throws Exception {
+        int avgPerNE = 1;
+        int maxPerNE = 1;
+        int avgPerNet;
+        int maxPerNet;
+        for (ObjectLoad load : objectLoads) {
+            if (load.getObjectClass().equals(obj.getName())) {
+                if (load.getRelatedObjectClass() == null || "".equals(load.getRelatedObjectClass()))
+                // root
+                {
+                    maxPerNE = load.getMax();
+                    avgPerNE = load.getAvg();
+                }
+                else
+                // non-root
+                {
+                    PmbObject relatedObj = findObject(load.getRelatedObjectClass());
+                    if (null == relatedObj) {
+                        throw new Exception("Can't find related object: " + load.getRelatedObjectClass());
+                    }
+
+                    maxPerNE = load.getMax() * relatedObj.getMaxPerNE();
+                    avgPerNE = load.getAvg() * relatedObj.getAvgPerNE();
+                }
+            }
+        }
+        maxPerNet = maxPerNE * config.getMaxNePerNet();
+        avgPerNet = avgPerNE * config.getAvgNePerNet();
+
+        obj.setMaxPerNE(maxPerNE);
+        obj.setAvgPerNE(avgPerNE);
+        obj.setMaxPerNet(maxPerNet);
+        obj.setAvgPerNet(avgPerNet);
+        obj.setMaxNE(config.getMaxNePerNet());
+        obj.setAvgNE(config.getAvgNePerNet());
+    }
+
+    private PmbObject findObject(String name) {
+        for (List<PmbObject> list : allReleaseObjects.values()) {
+            for (PmbObject obj : list) {
+                if (obj.getName().equals(name)) {
+                    return obj;
+                }
+            }
+        }
+        return null;
     }
 
     private void addParentObject() throws Exception {
@@ -136,7 +202,7 @@ public class PmbObjectRepository {
     }
 
     public Map<String, List<PmbObject>> getRootObjects() {
-        Map<String, List<PmbObject>> rootObjectMap = new HashMap<String, List<PmbObject>>();
+        Map<String, List<PmbObject>> rootObjectMap = new HashMap<>();
         for (Map.Entry<String, List<PmbObject>> entry : allReleaseObjects.entrySet()) {
             String adaptationId = entry.getKey();
             List<PmbObject> rootObjects = new ArrayList<>();
@@ -258,7 +324,7 @@ public class PmbObjectRepository {
             pmbObject = new PmbObject();
             ObjectClass classDef = findPmClassDefinition(clazz, objectClasses);
             if (null == classDef) {
-                LOG.error("Can't find PM class: " + clazz);
+                LOG.severe("Can't find PM class: " + clazz);
                 throw new Exception("Can't find PM class: " + clazz + ". Please check your adaptation");
             }
             pmbObject.setName(classDef.getName());

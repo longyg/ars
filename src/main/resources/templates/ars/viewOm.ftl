@@ -70,9 +70,9 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
+                        <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">${oci.min}</td>
+                        <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">${oci.max}</td>
+                        <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">${oci.avg}</td>
                         <td style="width:150px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">${oci.adaptationId}</td>
                         <td style="width:150px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">${oci.nameInOmes}</td>
                         <td style="padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">${oci.supportedReleases}</td>

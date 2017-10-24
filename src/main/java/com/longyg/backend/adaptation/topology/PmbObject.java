@@ -22,6 +22,16 @@ public class PmbObject implements Comparable<PmbObject> {
     private List<PmbObject> childObjects = new ArrayList<>();
     private List<PmbObject> parentObjects = new ArrayList<>();
 
+    // object load
+    private int maxPerNE;
+    private int avgPerNE;
+
+    private int maxPerNet;
+    private int avgPerNet;
+
+    private int maxNE;
+    private int avgNE;
+
     private boolean isAdditional;
 
     public void addSupportedVersion(String version) {
@@ -139,6 +149,54 @@ public class PmbObject implements Comparable<PmbObject> {
 
     public void setParentObjects(List<PmbObject> parentObjects) {
         this.parentObjects = parentObjects;
+    }
+
+    public int getMaxPerNE() {
+        return maxPerNE;
+    }
+
+    public void setMaxPerNE(int maxPerNE) {
+        this.maxPerNE = maxPerNE;
+    }
+
+    public int getAvgPerNE() {
+        return avgPerNE;
+    }
+
+    public void setAvgPerNE(int avgPerNE) {
+        this.avgPerNE = avgPerNE;
+    }
+
+    public int getMaxPerNet() {
+        return maxPerNet;
+    }
+
+    public void setMaxPerNet(int maxPerNet) {
+        this.maxPerNet = maxPerNet;
+    }
+
+    public int getAvgPerNet() {
+        return avgPerNet;
+    }
+
+    public void setAvgPerNet(int avgPerNet) {
+        this.avgPerNet = avgPerNet;
+    }
+
+    public int getMaxNE() {
+        return maxNE;
+    }
+
+    public void setMaxNE(int maxNE) {
+        this.maxNE = maxNE;
+    }
+
+    public int getAvgNE() {
+        return avgNE;
+    }
+
+    public void setAvgNE(int avgNE) {
+        this.avgNE = avgNE;
     }
 
     public boolean isAdditional() {
