@@ -29,6 +29,7 @@ public class ObjectClassInfo implements Comparable {
     private int maxPerNE;
     private int maxNePerNet;
     private int avgNePerNet;
+    private int maxPerRoot;
     private boolean mocrNeeded;
     private String comment;
     private List<String> supporteredVersions = new ArrayList<String>();
@@ -217,6 +218,14 @@ public class ObjectClassInfo implements Comparable {
 
     public void setAvgNePerNet(int avgNePerNet) {
         this.avgNePerNet = avgNePerNet;
+    }
+
+    public int getMaxPerRoot() {
+        return maxPerRoot;
+    }
+
+    public void setMaxPerRoot(int maxPerRoot) {
+        this.maxPerRoot = maxPerRoot;
     }
 
     public boolean isMocrNeeded() {

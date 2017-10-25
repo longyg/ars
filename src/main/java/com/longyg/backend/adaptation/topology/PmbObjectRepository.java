@@ -41,18 +41,44 @@ public class PmbObjectRepository {
 
     public void init() throws Exception {
         createPmbObjectFromPmb();
+
         addParentObject();
+
+        setObjectsDN();
+
         setObjectLoad();
     }
 
-    private void setObjectLoad() throws Exception {
-        LOG.info("Setting object load");
+    private void setObjectsDN() {
         Map<String, List<PmbObject>> rootObjectMap = getRootObjects();
-        LOG.info("Root Objects: " + rootObjectMap);
         for (List<PmbObject> rootList : rootObjectMap.values()) {
-            LOG.info("Root Objects: " + rootList);
             for (PmbObject root : rootList) {
-                LOG.info("Root Object: " + root.getName());
+                setDn(root);
+                setChildObjectsDN(root);
+            }
+        }
+    }
+
+    private void setChildObjectsDN(PmbObject obj) {
+        for (PmbObject child : obj.getChildObjects()) {
+            setDn(child);
+            setChildObjectsDN(child);
+        }
+    }
+
+    private void setDn(PmbObject obj) {
+        if (null == obj.getParentObjects() || obj.getParentObjects().size() < 1) {
+            obj.setDn(obj.getName());
+        } else {
+            PmbObject parent = obj.getParentObjects().get(0);
+            obj.setDn(parent.getDn() + "/" + obj.getName());
+        }
+    }
+
+    private void setObjectLoad() throws Exception {
+        Map<String, List<PmbObject>> rootObjectMap = getRootObjects();
+        for (List<PmbObject> rootList : rootObjectMap.values()) {
+            for (PmbObject root : rootList) {
                 setObjectNumbers(root);
                 setObjectNumbersForChildObjects(root);
             }
@@ -68,9 +94,16 @@ public class PmbObjectRepository {
 
     private void setObjectNumbers(PmbObject obj) throws Exception {
         int avgPerNE = 1;
+        if (null != obj.getParentObjects() && obj.getParentObjects().size() > 0) {
+            avgPerNE = 1 * obj.getParentObjects().get(0).getAvg();
+        }
         int maxPerNE = 1;
+        if (null != obj.getParentObjects() && obj.getParentObjects().size() > 0) {
+            maxPerNE = 1 * obj.getParentObjects().get(0).getMax();
+        }
         int avgPerNet;
         int maxPerNet;
+        int maxPerRoot = 1;
         for (ObjectLoad load : objectLoads) {
             if (load.getObjectClass().equals(obj.getName())) {
                 if (load.getRelatedObjectClass() == null || "".equals(load.getRelatedObjectClass()))
@@ -78,35 +111,41 @@ public class PmbObjectRepository {
                 {
                     maxPerNE = load.getMax();
                     avgPerNE = load.getAvg();
+                    maxPerRoot = load.getMax();
                 }
                 else
                 // non-root
                 {
-                    PmbObject relatedObj = findObject(load.getRelatedObjectClass());
+                    PmbObject relatedObj = findRelatedObject(obj, load.getRelatedObjectClass());
                     if (null == relatedObj) {
                         throw new Exception("Can't find related object: " + load.getRelatedObjectClass());
                     }
 
-                    maxPerNE = load.getMax() * relatedObj.getMaxPerNE();
-                    avgPerNE = load.getAvg() * relatedObj.getAvgPerNE();
+                    maxPerNE = load.getMax() * relatedObj.getMax();
+                    avgPerNE = load.getAvg() * relatedObj.getAvg();
+                    maxPerRoot = load.getMax();
                 }
             }
         }
+
         maxPerNet = maxPerNE * config.getMaxNePerNet();
         avgPerNet = avgPerNE * config.getAvgNePerNet();
 
-        obj.setMaxPerNE(maxPerNE);
-        obj.setAvgPerNE(avgPerNE);
+        obj.setMin(1);
+        obj.setMax(maxPerNE);
+        obj.setAvg(avgPerNE);
         obj.setMaxPerNet(maxPerNet);
         obj.setAvgPerNet(avgPerNet);
-        obj.setMaxNE(config.getMaxNePerNet());
-        obj.setAvgNE(config.getAvgNePerNet());
+        obj.setMaxPerNE(maxPerNE);
+        obj.setMaxNePerNet(config.getMaxNePerNet());
+        obj.setAvgNePerNet(config.getAvgNePerNet());
+        obj.setMaxPerRoot(maxPerRoot);
     }
 
-    private PmbObject findObject(String name) {
+    private PmbObject findRelatedObject(PmbObject object, String name) {
         for (List<PmbObject> list : allReleaseObjects.values()) {
             for (PmbObject obj : list) {
-                if (obj.getName().equals(name)) {
+                if (obj.getName().equals(name) && object.getDn().contains(name)) {
                     return obj;
                 }
             }

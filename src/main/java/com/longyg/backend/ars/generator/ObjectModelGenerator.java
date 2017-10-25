@@ -143,19 +143,21 @@ public class ObjectModelGenerator {
         //oci.setHasIcon(false);
         //oci.setHasGuiLuanch(false);
 
-        // objects per Network
-        oci.setAvg(0);
-        oci.setMin(0);
-        oci.setMax(0);
+        // objects per Network Element
+        oci.setAvg(pmbObject.getAvg());
+        oci.setMin(1);
+        oci.setMax(pmbObject.getMax());
 
         // NEs per Network
-        oci.setAvgNePerNet(0);
-        oci.setMaxNePerNet(0);
+        oci.setAvgNePerNet(pmbObject.getAvgNePerNet());
+        oci.setMaxNePerNet(pmbObject.getMaxNePerNet());
 
-        oci.setAvgPerNet(0);
-        oci.setMaxPerNE(0);
+        oci.setAvgPerNet(pmbObject.getAvgPerNet());
+        oci.setMaxPerNet(pmbObject.getMaxPerNet());
 
-        oci.setMaxPerNE(0);
+        oci.setMaxPerNE(pmbObject.getMaxPerNE());
+
+        oci.setMaxPerRoot(pmbObject.getMaxPerRoot());
 
         oci.setAdaptationId(pmbObject.isAdditional() ? "" : adaptationId);
         oci.setNameInOmes(pmbObject.getNameInOmes());

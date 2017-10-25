@@ -27,15 +27,23 @@
                         <span style="transform:rotate(-90deg);line-height: 10px;text-align: center;margin:0px">Alarming</span>
                     </th>
                     <th style="width:20px;">Measured</th>
+                    <!--
                     <th style="width:20px;">Configured</th>
                     <th style="width:20px;">Icon</th>
                     <th style="width:20px;">GUI launch</th>
                     <th style="width:60px;">3GPP NRM object</th>
                     <th style="width:30px;">Integration Version</th>
                     <th style="width:40px;">Integration (NASDA) </th>
+                    -->
                     <th style="width:20px;">Min</th>
                     <th style="width:20px;">Max</th>
                     <th style="width:20px;">Avg</th>
+                    <th style="width:20px;">Avg Per Network</th>
+                    <th style="width:20px;">Max Per Network</th>
+                    <th style="width:20px;">Max Per NE</th>
+                    <th style="width:20px;">Max NE</th>
+                    <th style="width:20px;">Avg NE</th>
+                    <th style="width:20px;">Max Per Root</th>
                     <th>Adaptation ID</th>
                     <th>Name In OMeS</th>
                     <th>Supported Releases</th>
@@ -64,15 +72,23 @@
                                 M
                             </#if>
                         </td>
+                        <!--
                         <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
                         <td></td>
+                        -->
                         <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">${oci.min}</td>
                         <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">${oci.max}</td>
                         <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">${oci.avg}</td>
+                        <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">${oci.avgPerNet}</td>
+                        <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">${oci.maxPerNet}</td>
+                        <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">${oci.maxPerNE}</td>
+                        <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">${oci.maxNePerNet}</td>
+                        <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">${oci.avgNePerNet}</td>
+                        <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">${oci.maxPerRoot}</td>
                         <td style="width:150px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">${oci.adaptationId}</td>
                         <td style="width:150px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">${oci.nameInOmes}</td>
                         <td style="padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">${oci.supportedReleases}</td>

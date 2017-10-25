@@ -16,6 +16,7 @@ public class PmbObject implements Comparable<PmbObject> {
     private boolean isTransient;
     private String presentation;
     private boolean isMeasuredObject;
+    private String dn;
 
     private List<String> supporteredVersions = new ArrayList<>();
     private List<String> dimensions = new ArrayList<>();
@@ -23,14 +24,15 @@ public class PmbObject implements Comparable<PmbObject> {
     private List<PmbObject> parentObjects = new ArrayList<>();
 
     // object load
-    private int maxPerNE;
-    private int avgPerNE;
-
-    private int maxPerNet;
+    private int min;
+    private int max;
+    private int avg;
     private int avgPerNet;
-
-    private int maxNE;
-    private int avgNE;
+    private int maxPerNet;
+    private int maxPerNE;
+    private int maxNePerNet;
+    private int avgNePerNet;
+    private int maxPerRoot;
 
     private boolean isAdditional;
 
@@ -131,6 +133,14 @@ public class PmbObject implements Comparable<PmbObject> {
         return supporteredVersions;
     }
 
+    public String getDn() {
+        return dn;
+    }
+
+    public void setDn(String dn) {
+        this.dn = dn;
+    }
+
     public void setSupporteredVersions(List<String> supporteredVersions) {
         this.supporteredVersions = supporteredVersions;
     }
@@ -151,28 +161,28 @@ public class PmbObject implements Comparable<PmbObject> {
         this.parentObjects = parentObjects;
     }
 
-    public int getMaxPerNE() {
-        return maxPerNE;
+    public int getMin() {
+        return min;
     }
 
-    public void setMaxPerNE(int maxPerNE) {
-        this.maxPerNE = maxPerNE;
+    public void setMin(int min) {
+        this.min = min;
     }
 
-    public int getAvgPerNE() {
-        return avgPerNE;
+    public int getMax() {
+        return max;
     }
 
-    public void setAvgPerNE(int avgPerNE) {
-        this.avgPerNE = avgPerNE;
+    public void setMax(int max) {
+        this.max = max;
     }
 
-    public int getMaxPerNet() {
-        return maxPerNet;
+    public int getAvg() {
+        return avg;
     }
 
-    public void setMaxPerNet(int maxPerNet) {
-        this.maxPerNet = maxPerNet;
+    public void setAvg(int avg) {
+        this.avg = avg;
     }
 
     public int getAvgPerNet() {
@@ -183,20 +193,45 @@ public class PmbObject implements Comparable<PmbObject> {
         this.avgPerNet = avgPerNet;
     }
 
-    public int getMaxNE() {
-        return maxNE;
+    public int getMaxPerNet() {
+        return maxPerNet;
     }
 
-    public void setMaxNE(int maxNE) {
-        this.maxNE = maxNE;
+    public void setMaxPerNet(int maxPerNet) {
+        this.maxPerNet = maxPerNet;
     }
 
-    public int getAvgNE() {
-        return avgNE;
+    public int getMaxPerNE() {
+        return maxPerNE;
     }
 
-    public void setAvgNE(int avgNE) {
-        this.avgNE = avgNE;
+    public void setMaxPerNE(int maxPerNE) {
+        this.maxPerNE = maxPerNE;
+    }
+
+    public int getMaxNePerNet() {
+        return maxNePerNet;
+    }
+
+    public void setMaxNePerNet(int maxNePerNet) {
+        this.maxNePerNet = maxNePerNet;
+    }
+
+    public int getAvgNePerNet() {
+        return avgNePerNet;
+    }
+
+    public void setAvgNePerNet(int avgNePerNet) {
+        this.avgNePerNet = avgNePerNet;
+    }
+
+
+    public int getMaxPerRoot() {
+        return maxPerRoot;
+    }
+
+    public void setMaxPerRoot(int maxPerRoot) {
+        this.maxPerRoot = maxPerRoot;
     }
 
     public boolean isAdditional() {
