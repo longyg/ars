@@ -27,7 +27,8 @@
                 <thead>
                 <tr>
                     <th>Object Class</th>
-                    <th>Object Number</th>
+                    <th>Max</th>
+                    <th>Avg</th>
                     <th>Related Object Class</th>
                     <th>Operations</th>
                 </tr>
@@ -36,7 +37,8 @@
                     <#list olList as ol>
                     <tr>
                         <td>${ol.objectClass}</td>
-                        <td>${ol.objectNumber}</td>
+                        <td>${ol.max}</td>
+                        <td>${ol.avg}</td>
                         <td>${ol.relatedObjectClass}</td>
                         <td>
                             <a class="btn btn-sm btn-info" href="/ol/edit?id=${ol.id}">
@@ -84,9 +86,15 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label" for="objectNumber" >Object Number</label>
+                        <label class="col-sm-3 control-label" for="max" >Max</label>
                         <div class="col-sm-8">
-                            <input class="form-control" id="objectNumber" name="objectNumber" placeholder="1"/>
+                            <input class="form-control" id="max" name="max" placeholder="1"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="avg" >Avg</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" id="avg" name="avg" placeholder="1"/>
                         </div>
                     </div>
                     <div class="form-group">

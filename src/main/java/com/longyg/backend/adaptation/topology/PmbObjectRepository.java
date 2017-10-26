@@ -92,14 +92,31 @@ public class PmbObjectRepository {
         }
     }
 
+    private PmbObject getParentObject(PmbObject obj) throws Exception {
+        if (null == obj.getParentObjects() || obj.getParentObjects().size() < 1) {
+            return null;
+        }
+        PmbObject parentObj = null;
+        for (PmbObject parent : obj.getParentObjects()) {
+            if (obj.getDn().startsWith(parent.getDn())) {
+                parentObj = parent;
+                break;
+            }
+        }
+        if (null == parentObj) {
+            throw new Exception("No suitable parent object");
+        } else {
+            return parentObj;
+        }
+    }
+
     private void setObjectNumbers(PmbObject obj) throws Exception {
         int avgPerNE = 1;
-        if (null != obj.getParentObjects() && obj.getParentObjects().size() > 0) {
-            avgPerNE = 1 * obj.getParentObjects().get(0).getAvg();
-        }
         int maxPerNE = 1;
-        if (null != obj.getParentObjects() && obj.getParentObjects().size() > 0) {
-            maxPerNE = 1 * obj.getParentObjects().get(0).getMax();
+        PmbObject parentObj = getParentObject(obj);
+        if (null != parentObj) {
+            avgPerNE = 1 * parentObj.getAvg();
+            maxPerNE = 1 * parentObj.getMax();
         }
         int avgPerNet;
         int maxPerNet;
@@ -117,13 +134,11 @@ public class PmbObjectRepository {
                 // non-root
                 {
                     PmbObject relatedObj = findRelatedObject(obj, load.getRelatedObjectClass());
-                    if (null == relatedObj) {
-                        throw new Exception("Can't find related object: " + load.getRelatedObjectClass());
+                    if (null != relatedObj) {
+                        maxPerNE = load.getMax() * relatedObj.getMax();
+                        avgPerNE = load.getAvg() * relatedObj.getAvg();
+                        maxPerRoot = load.getMax();
                     }
-
-                    maxPerNE = load.getMax() * relatedObj.getMax();
-                    avgPerNE = load.getAvg() * relatedObj.getAvg();
-                    maxPerRoot = load.getMax();
                 }
             }
         }
@@ -145,12 +160,26 @@ public class PmbObjectRepository {
     private PmbObject findRelatedObject(PmbObject object, String name) {
         for (List<PmbObject> list : allReleaseObjects.values()) {
             for (PmbObject obj : list) {
-                if (obj.getName().equals(name) && object.getDn().contains(name)) {
+                if (obj.getName().equals(name) && isDescendant(object, name)) {
                     return obj;
                 }
             }
         }
         return null;
+    }
+
+    // is object is descendant of object with name
+    private boolean isDescendant(PmbObject object, String name) {
+        boolean descendant = false;
+        String dn = object.getDn();
+        String[] clazz = dn.split("/");
+        for (String clz : clazz) {
+            if (clz.equals(name)) {
+                descendant = true;
+                break;
+            }
+        }
+        return descendant;
     }
 
     private void addParentObject() throws Exception {

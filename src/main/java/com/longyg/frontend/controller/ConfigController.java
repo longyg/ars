@@ -137,4 +137,10 @@ public class ConfigController {
         }
         return "redirect:/ol";
     }
+
+    @RequestMapping(value = "/ol/delete")
+    public String deleteOl(@RequestParam String id) {
+        configService.deleteLoad(id);
+        return "redirect:/ol";
+    }
 }

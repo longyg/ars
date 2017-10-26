@@ -214,6 +214,21 @@ public class ArsController {
         }
         params.put("supportedLoads", supportedLoads);
 
+        List<ObjectLoad> selectableLoads = new ArrayList<>();
+        for (ObjectLoad load : configService.findObjectLoads()) {
+            boolean supported = false;
+            for (ObjectLoad ld : supportedLoads) {
+                if (ld.getId().equals(load.getId())) {
+                    supported = true;
+                    break;
+                }
+            }
+            if (!supported) {
+                selectableLoads.add(load);
+            }
+        }
+        params.put("selectableLoads", selectableLoads);
+
         return new ModelAndView("ars/addConfig", params);
     }
 
@@ -303,6 +318,35 @@ public class ArsController {
         if (flag) {
             arsService.saveConfig(arsConfig);
             response.setStatus("ok");
+        } else {
+            response.setStatus("nok");
+        }
+        return response;
+    }
+
+    @RequestMapping("/ars/addLoad")
+    @ResponseBody
+    public AjaxResponse addLoad(@RequestParam String neTypeId,
+                                     @RequestParam String neRelId, @RequestParam String loadId) {
+        ArsConfig arsConfig = findOrCreateArsConfig(neRelId);
+
+        ObjectLoad objectLoad = null;
+        List<ObjectLoad> loads = configService.findObjectLoads();
+        for (ObjectLoad load : loads) {
+            if (load.getId().equals(loadId)) {
+                boolean success = arsConfig.addObjectLoad(loadId);
+                if (success) {
+                    objectLoad = load;
+                }
+                break;
+            }
+        }
+        arsService.saveConfig(arsConfig);
+
+        AjaxResponse response = new AjaxResponse();
+        if (null != objectLoad) {
+            response.setStatus("ok");
+            response.setData(objectLoad);
         } else {
             response.setStatus("nok");
         }

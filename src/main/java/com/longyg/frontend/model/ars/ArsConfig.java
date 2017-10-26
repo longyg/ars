@@ -127,4 +127,12 @@ public class ArsConfig {
         }
         return false;
     }
+
+    public boolean addObjectLoad(String loadId) {
+        if (!loadIds.contains(loadId)) {
+            loadIds.add(loadId);
+            return true;
+        }
+        return false;
+    }
 }

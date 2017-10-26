@@ -89,4 +89,11 @@ public class ConfigService {
         }
         return loads;
     }
+
+    public void deleteLoad(String id) {
+        if (null == id) {
+            return;
+        }
+        objectLoadRepository.deleteById(id);
+    }
 }

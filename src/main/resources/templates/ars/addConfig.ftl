@@ -203,7 +203,27 @@
                 <hr/>
                 <h4>Object Load</h4>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">Object Load Setting</label>
+                    <label class="col-sm-3 control-label" for="loadSelect" >Object Load</label>
+                    <div class="col-sm-9">
+                        <div class="row form-group">
+                            <div class="col-sm-6">
+                                <select class="form-control" name="load" id="loadSelect">
+                                    <option value="">--Select--</option>
+                                <#list selectableLoads as load>
+                                    <option value="${load.id}">
+                                        ${load.objectClass}:${load.relatedObjectClass} [Max:${load.max}, Avg:${load.avg}]
+                                    </option>
+                                </#list>
+                                </select>
+                            </div>
+                            <div class="col-sm-3" id="loadAddBtnDiv">
+                                <button id="loadAddBtn" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Selected Object Load</label>
                     <div class="col-sm-9">
                         <table class="table table-bordered">
                             <thead>
