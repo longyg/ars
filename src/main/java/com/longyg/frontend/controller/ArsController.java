@@ -103,9 +103,15 @@ public class ArsController {
         ArsConfig arsConfig = findArsConfig(neRelId);
         if (null != arsConfig)
         {
-            try {
+            try
+            {
+                NeRelease neRelease = neService.findRelease(neRelId);
+                arsConfig.setMaxNePerNet(neRelease.getMaxPerNet());
+                arsConfig.setAvgNePerNet(neRelease.getAvgPerNet());
                 arsGenerator.generateAndSave(arsConfig);
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 LOG.severe("Exception while generating ARS: ");
                 e.printStackTrace();
             }

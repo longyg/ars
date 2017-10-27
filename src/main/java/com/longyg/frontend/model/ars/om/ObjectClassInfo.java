@@ -35,6 +35,7 @@ public class ObjectClassInfo implements Comparable {
     private List<String> supporteredVersions = new ArrayList<String>();
     private List<String> dimensions = new ArrayList<String>();
     private String supportedReleases;
+    private String dn;
 
     public int getRow() {
         return row;
@@ -246,6 +247,14 @@ public class ObjectClassInfo implements Comparable {
 
     public List<String> getSupporteredVersions() {
         return supporteredVersions;
+    }
+
+    public String getDn() {
+        return dn;
+    }
+
+    public void setDn(String dn) {
+        this.dn = dn;
     }
 
     public void setSupporteredVersions(List<String> supporteredVersions) {

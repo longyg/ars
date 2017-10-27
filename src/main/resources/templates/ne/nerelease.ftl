@@ -28,6 +28,8 @@
                 <tr>
                     <th>NE Type</th>
                     <th>NE Version</th>
+                    <th>Max Per Network</th>
+                    <th>Avg Per Network</th>
                     <th>Remarks</th>
                     <th>Operations</th>
                 </tr>
@@ -37,6 +39,8 @@
                     <tr>
                         <td>${neRelease.neType}</td>
                         <td>${neRelease.neVersion}</td>
+                        <td>${neRelease.maxPerNet}</td>
+                        <td>${neRelease.avgPerNet}</td>
                         <td>${neRelease.remarks}</td>
                         <td>
                             <a class="btn btn-sm btn-danger" href="/nerelease/delete?id=${neRelease.id}">
@@ -88,6 +92,18 @@
                         <label class="col-sm-2 control-label" for="neVersion" >NE Version</label>
                         <div class="col-sm-10">
                             <input class="form-control" id="neVersion" name="neVersion" placeholder="NE Version"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="maxPerNet" >Max Per Network</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" id="maxPerNet" name="maxPerNet" placeholder="1"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label" for="avgPerNet" >Avg Per Network</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" id="avgPerNet" name="avgPerNet" placeholder="1"/>
                         </div>
                     </div>
                     <div class="form-group">

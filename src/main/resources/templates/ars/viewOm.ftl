@@ -16,7 +16,7 @@
 
     <div class="row">
         <div class="col-md-1"></div>
-        <div class="col-md-10">
+        <div class="col-md-12">
             <#if spec??>
             <div><h3>Object Model of ${spec.neType} ${spec.neVersion}</h3></div>
             <table class="table table-bordered">
@@ -44,9 +44,11 @@
                     <th style="width:20px;">Max NE</th>
                     <th style="width:20px;">Avg NE</th>
                     <th style="width:20px;">Max Per Root</th>
-                    <th>Adaptation ID</th>
-                    <th>Name In OMeS</th>
                     <th>Supported Releases</th>
+                    <th>Transient/MO</th>
+                    <th>Presentation</th>
+                    <th>Name In OMeS</th>
+                    <th>Adaptation ID</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -89,9 +91,17 @@
                         <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">${oci.maxNePerNet}</td>
                         <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">${oci.avgNePerNet}</td>
                         <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">${oci.maxPerRoot}</td>
-                        <td style="width:150px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">${oci.adaptationId}</td>
-                        <td style="width:150px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">${oci.nameInOmes}</td>
                         <td style="padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">${oci.supportedReleases}</td>
+                        <td style="padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">
+                            <#if oci.transient == true>
+                                Transient
+                            <#else>
+                                MO
+                            </#if>
+                        </td>
+                        <td style="width:150px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">${oci.presentation}</td>
+                        <td style="width:150px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">${oci.nameInOmes}</td>
+                        <td style="width:150px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">${oci.adaptationId}</td>
                     </tr>
                     </#list>
                 </#list>
