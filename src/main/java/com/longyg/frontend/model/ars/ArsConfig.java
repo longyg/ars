@@ -23,6 +23,8 @@ public class ArsConfig {
     private int maxNePerNet;
     private int avgNePerNet;
 
+    private String lastVersion;
+
     public String getId() {
         return id;
     }
@@ -101,6 +103,14 @@ public class ArsConfig {
 
     public void setAvgNePerNet(int avgNePerNet) {
         this.avgNePerNet = avgNePerNet;
+    }
+
+    public String getLastVersion() {
+        return lastVersion;
+    }
+
+    public void setLastVersion(String lastVersion) {
+        this.lastVersion = lastVersion;
     }
 
     public boolean addResource(String srcId) {

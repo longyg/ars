@@ -1,11 +1,14 @@
 package com.longyg.frontend.service;
 
+import com.longyg.backend.adaptation.pm.PmDataLoadRepository;
 import com.longyg.frontend.model.ars.ARS;
 import com.longyg.frontend.model.ars.ArsConfig;
 import com.longyg.frontend.model.ars.ArsConfigRepository;
 import com.longyg.frontend.model.ars.ArsRepository;
 import com.longyg.frontend.model.ars.om.ObjectModelSpec;
 import com.longyg.frontend.model.ars.om.OmRepository;
+import com.longyg.frontend.model.ars.pm.PmDataLoadSpec;
+import com.longyg.frontend.model.ars.pm.PmRepository;
 import com.longyg.frontend.model.ars.us.UsRepository;
 import com.longyg.frontend.model.ars.us.UserStorySpec;
 import com.longyg.frontend.model.ne.NeRelease;
@@ -28,6 +31,9 @@ public class ArsService {
 
     @Autowired
     private ArsRepository arsRepository;
+
+    @Autowired
+    private PmRepository pmRepository;
 
     public ArsConfig findArsConfig(NeRelease neRelease) {
         if (null == neRelease) {
@@ -61,5 +67,9 @@ public class ArsService {
             return opt.get();
         }
         return null;
+    }
+
+    public PmDataLoadSpec savePmDataLoad(PmDataLoadSpec spec) {
+        return pmRepository.save(spec);
     }
 }

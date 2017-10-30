@@ -1,6 +1,5 @@
 package com.longyg.frontend.model.ars.pm;
 
-import com.longyg.frontend.model.ars.om.ObjectClassInfo;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.HashMap;
@@ -13,7 +12,7 @@ public class PmDataLoadSpec {
     private String neType;
     private String neVersion;
 
-    private Map<String, List<MeasurementInfo>> miMap = new HashMap<>();
+    private Map<String, List<ArsMeasurement>> measurementMap = new HashMap<>();
 
     public String getId() {
         return id;
@@ -39,11 +38,11 @@ public class PmDataLoadSpec {
         this.neVersion = neVersion;
     }
 
-    public Map<String, List<MeasurementInfo>> getMiMap() {
-        return miMap;
+    public Map<String, List<ArsMeasurement>> getMeasurementMap() {
+        return measurementMap;
     }
 
-    public void setMiMap(Map<String, List<MeasurementInfo>> miMap) {
-        this.miMap = miMap;
+    public void setMeasurementMap(Map<String, List<ArsMeasurement>> measurementMap) {
+        this.measurementMap = measurementMap;
     }
 }

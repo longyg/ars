@@ -1,11 +1,13 @@
 package com.longyg.frontend.model.ars.pm;
 
+import com.longyg.backend.adaptation.pm.Counter;
 import com.longyg.backend.adaptation.pm.Measurement;
 import com.longyg.backend.adaptation.topology.PmbObject;
-import com.longyg.frontend.model.ars.om.ObjectClassInfo;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class MeasurementInfo {
     private int row;
@@ -17,6 +19,8 @@ public class MeasurementInfo {
     private boolean isSupported;
     private List<String> supportedVersions = new ArrayList<>();
     private List<String> dimensions = new ArrayList<>();
+
+    private Map<String, List<Counter>> allReleaseCounters = new HashMap<>();
 
     public int getRow() {
         return row;
@@ -88,5 +92,32 @@ public class MeasurementInfo {
 
     public void setDimensions(List<String> dimensions) {
         this.dimensions = dimensions;
+    }
+
+    public void addSupportedVersion(String version) {
+        if (!supportedVersions.contains(version)) {
+            supportedVersions.add(version);
+        }
+    }
+
+    public void addCounters(String version, List<Counter> counters) {
+        if (!allReleaseCounters.containsKey(version)) {
+            allReleaseCounters.put(version, counters);
+        }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        MeasurementInfo that = (MeasurementInfo) o;
+
+        return name.equals(that.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
     }
 }

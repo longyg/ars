@@ -405,8 +405,6 @@ public class PmbObjectRepository {
         return pmbObject;
     }
 
-
-
     private ObjectClass findPmClassDefinition(String clazz, List<ObjectClass> pmClasses) {
         for (ObjectClass objectClass : pmClasses) {
             if (clazz.equals(objectClass.getName())) {
