@@ -72,6 +72,9 @@ public class PmDataLoadRepository {
             mi = new MeasurementInfo();
             mi.setName(measurement.getName());
             mi.setNameInOmes(measurement.getNameInOmes());
+            mi.setAdaptationId(adaptationId);
+            // TODO
+
         }
 
         mi.addSupportedVersion(version);

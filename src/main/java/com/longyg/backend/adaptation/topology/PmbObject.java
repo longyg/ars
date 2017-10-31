@@ -17,6 +17,7 @@ public class PmbObject implements Comparable<PmbObject> {
     private String presentation;
     private boolean isMeasuredObject;
     private String dn;
+    private String originalDn;
 
     private List<String> supporteredVersions = new ArrayList<>();
     private List<String> dimensions = new ArrayList<>();
@@ -67,6 +68,14 @@ public class PmbObject implements Comparable<PmbObject> {
                 ", supporteredVersions=" + supporteredVersions +
                 ", childObjects=" + childObjects +
                 '}';
+    }
+
+    public String getOriginalDn() {
+        return originalDn;
+    }
+
+    public void setOriginalDn(String originalDn) {
+        this.originalDn = originalDn;
     }
 
     public String getId() {

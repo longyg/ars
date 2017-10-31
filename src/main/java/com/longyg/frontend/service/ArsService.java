@@ -72,4 +72,15 @@ public class ArsService {
     public PmDataLoadSpec savePmDataLoad(PmDataLoadSpec spec) {
         return pmRepository.save(spec);
     }
+
+    public PmDataLoadSpec findPmDL(String id) {
+        if (null == id) {
+            return null;
+        }
+        Optional<PmDataLoadSpec> opt = pmRepository.findById(id);
+        if (opt.isPresent()) {
+            return opt.get();
+        }
+        return null;
+    }
 }

@@ -70,6 +70,7 @@ public class PmbObjectRepository {
         if (null == obj.getParentObjects() || obj.getParentObjects().size() < 1) {
             obj.setDn(obj.getName());
         } else {
+            // multiple parent is not handled
             PmbObject parent = obj.getParentObjects().get(0);
             obj.setDn(parent.getDn() + "/" + obj.getName());
         }
@@ -346,6 +347,10 @@ public class PmbObjectRepository {
         if (null != parentObj) {
             parentObj.addChildObject(pmbObject);
             pmbObject.addParentObject(parentObj);
+
+            pmbObject.setOriginalDn(parentObj.getOriginalDn() + "/" + pmbObject.getName());
+        } else {
+            pmbObject.setOriginalDn(pmbObject.getName());
         }
         if (null == childHierarchy || "".equals(childHierarchy)) {
             pmbObject.setMeasuredObject(true);

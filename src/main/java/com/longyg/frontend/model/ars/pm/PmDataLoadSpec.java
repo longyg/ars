@@ -2,6 +2,7 @@ package com.longyg.frontend.model.ars.pm;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -36,6 +37,19 @@ public class PmDataLoadSpec {
 
     public void setNeVersion(String neVersion) {
         this.neVersion = neVersion;
+    }
+
+    public void addMeasurement(String adaptationId, ArsMeasurement measurement) {
+        if (measurementMap.containsKey(adaptationId)) {
+            List<ArsMeasurement> measList = measurementMap.get(adaptationId);
+            if (!measList.contains(measurement)) {
+                measList.add(measurement);
+            }
+        } else {
+            List<ArsMeasurement> measList = new ArrayList<>();
+            measList.add(measurement);
+            measurementMap.put(adaptationId, measList);
+        }
     }
 
     public Map<String, List<ArsMeasurement>> getMeasurementMap() {

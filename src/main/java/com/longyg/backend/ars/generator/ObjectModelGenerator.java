@@ -37,14 +37,13 @@ public class ObjectModelGenerator {
 
     private PmbObjectRepository pmbObjectRepository;
 
-    public String generateAndSave(ArsConfig config, AdaptationRepository adaptationRepository) throws Exception {
+    public ObjectModelSpec generateAndSave(ArsConfig config, AdaptationRepository adaptationRepository) throws Exception {
         this.config = config;
         this.adaptationRepository = adaptationRepository;
 
         initRepository();
 
-        ObjectModelSpec spec = generateAndSave();
-        return spec.getId();
+        return generateAndSave();
     }
 
     private void initRepository() throws Exception {
@@ -166,6 +165,7 @@ public class ObjectModelGenerator {
         oci.setTransient(pmbObject.isTransient());
         oci.setSupporteredVersions(pmbObject.getSupporteredVersions());
         oci.setDn(pmbObject.getDn());
+        oci.setOriginalDn(pmbObject.getOriginalDn());
 
         spec.addObjectClassInfo(adaptationId, oci);
     }

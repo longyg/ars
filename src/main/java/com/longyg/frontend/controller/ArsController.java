@@ -3,6 +3,7 @@ package com.longyg.frontend.controller;
 import com.longyg.backend.ars.generator.ArsGenerator;
 import com.longyg.frontend.model.ars.*;
 import com.longyg.frontend.model.ars.om.ObjectModelSpec;
+import com.longyg.frontend.model.ars.pm.PmDataLoadSpec;
 import com.longyg.frontend.model.ars.us.UsRepository;
 import com.longyg.frontend.model.ars.us.UserStorySpec;
 import com.longyg.frontend.model.config.*;
@@ -143,6 +144,27 @@ public class ArsController {
         params.put("neType", neType);
 
         return new ModelAndView("ars/viewOm", params);
+    }
+
+    @RequestMapping("/ars/viewPmDL")
+    public ModelAndView viewPmDataLoad(@RequestParam String id, @RequestParam String neTypeId) {
+        Map<String, Object> params = new HashMap<>();
+
+        NeType neType = neService.findNeType(neTypeId);
+        PmDataLoadSpec spec = arsService.findPmDL(id);
+
+        List<String> adaps = new ArrayList<>();
+        for (String adaptationId : neType.getAdaptSet()) {
+            String adap = adaptationId.replaceAll("\\.", "_");
+            adaps.add(adap);
+        }
+        neType.setAdaptSet(adaps);
+
+        params.put("spec", spec);
+        params.put("neTypeId", neTypeId);
+        params.put("neType", neType);
+
+        return new ModelAndView("ars/viewPmDL", params);
     }
 
     @RequestMapping("/ars/setConfig")

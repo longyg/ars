@@ -6,6 +6,7 @@ import com.longyg.backend.adaptation.svn.SvnDownloader;
 import com.longyg.frontend.model.ars.ARS;
 import com.longyg.frontend.model.ars.ArsConfig;
 import com.longyg.frontend.model.ars.ArsRepository;
+import com.longyg.frontend.model.ars.om.ObjectModelSpec;
 import com.longyg.frontend.model.config.AdaptationResource;
 import com.longyg.frontend.model.config.AdaptationResourceRepository;
 import com.longyg.frontend.model.config.InterfaceObject;
@@ -60,9 +61,9 @@ public class ArsGenerator {
         initAdaptationRepository();
 
         String usId = usGenerator.generateAndSave(config);
-        String omId = omGenerator.generateAndSave(config, adaptationRepository);
+        ObjectModelSpec om = omGenerator.generateAndSave(config, adaptationRepository);
 
-        String pmDlId = pmDataLoadGenerator.generateAndSave(config, adaptationRepository);
+        String pmDlId = pmDataLoadGenerator.generateAndSave(config, adaptationRepository, om);
 //        String counterId = counterGenerator.generateAndSave(config);
 //        String alarmId = alarmGenerator.generateAndSave(config);
 
@@ -70,7 +71,7 @@ public class ArsGenerator {
         ars.setNeType(config.getNeType());
         ars.setNeVersion(config.getNeVersion());
         ars.setUserStory(usId);
-        ars.setObjectModel(omId);
+        ars.setObjectModel(om.getId());
         ars.setPmDataLoad(pmDlId);
 //        ars.setCounter(counterId);
 //        ars.setAlarm(alarmId);
