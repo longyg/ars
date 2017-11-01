@@ -96,7 +96,7 @@ public class PmDataLoadGenerator {
     }
 
     private ObjectClassInfo getMeasuredOci(MeasurementInfo mi) {
-        List<ObjectClassInfo> ociList = om.getOciMap().get(mi.getAdaptationId());
+        List<ObjectClassInfo> ociList = om.getOciList(mi.getAdaptationId());
         String hierarchy = mi.getMeasuredObject();
         for (ObjectClassInfo oci : ociList) {
             if (oci.getOriginalDn().equals(hierarchy)) {

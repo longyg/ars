@@ -73,6 +73,7 @@ public class PmDataLoadRepository {
             mi.setName(measurement.getName());
             mi.setNameInOmes(measurement.getNameInOmes());
             mi.setAdaptationId(adaptationId);
+            mi.setMeasurement(measurement);
             // TODO
 
         }

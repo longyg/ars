@@ -22,6 +22,7 @@
             <#list neType.adaptSet as adap>
                 <div><h2>adap</h2></div>
                 <table class="table table-bordered">
+                    <#list neType.adaptSet as adap>
                     <thead>
                     <tr>
                         <th style="width:200px;">Name</th>
@@ -29,32 +30,20 @@
                     </tr>
                     </thead>
                     <tbody>
-                        <#list neType.adaptSet as adap>
-                            <#list spec.ociMap[adap] as oci>
-                            <tr style="font-size: 8pt;">
-                                <td style="width:200px;padding:0px 0px 0px 10px;margin:0px;line-height:15px;">
-                                    <#list 0..oci.column as i>
-                                        <#if i == oci.column>
-                                            <span>|- ${oci.name}</span>
-                                        <#else>
-                                            <span>|&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                                        </#if>
-                                    </#list>
-                                </td>
-                                <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">
-                                    <#if oci.alarmingObject == true>
-                                        A
-                                    </#if>
-                                </td>
-                                <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">
-                                    <#if oci.measuredObject == true>
-                                        M
-                                    </#if>
-                                </td>
-                            </tr>
-                            </#list>
+
+                        <#list spec.measurementMap[adap] as meas>
+                        <tr style="font-size: 8pt;">
+                            <td style="width:200px;padding:0px 0px 0px 10px;margin:0px;line-height:15px;">
+                                ${meas.name}
+                            </td>
+                            <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">
+                                ${meas.nameInOmes}
+                            </td>
+                        </tr>
                         </#list>
+
                     </tbody>
+                    </#list>
                 </table>
             </#list>
             </#if>

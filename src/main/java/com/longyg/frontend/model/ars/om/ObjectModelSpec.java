@@ -61,4 +61,13 @@ public class ObjectModelSpec {
             ociMap.put(adapId, ociSet);
         }
     }
+
+    public List<ObjectClassInfo> getOciList(String adaptationId) {
+        String adapId = adaptationId.replaceAll("\\.", "_");
+        if (ociMap.containsKey(adapId)) {
+            return ociMap.get(adapId);
+        } else {
+            return new ArrayList<>();
+        }
+    }
 }
