@@ -40,15 +40,16 @@ public class PmDataLoadSpec {
     }
 
     public void addMeasurement(String adaptationId, ArsMeasurement measurement) {
-        if (measurementMap.containsKey(adaptationId)) {
-            List<ArsMeasurement> measList = measurementMap.get(adaptationId);
+        String adapId = adaptationId.replaceAll("\\.", "_");
+        if (measurementMap.containsKey(adapId)) {
+            List<ArsMeasurement> measList = measurementMap.get(adapId);
             if (!measList.contains(measurement)) {
                 measList.add(measurement);
             }
         } else {
             List<ArsMeasurement> measList = new ArrayList<>();
             measList.add(measurement);
-            measurementMap.put(adaptationId, measList);
+            measurementMap.put(adapId, measList);
         }
     }
 

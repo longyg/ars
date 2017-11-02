@@ -76,7 +76,7 @@
                                 </a>
                                 </#if>
                                 <#if neArs.ars.pmDataLoad??>
-                                <a class="btn btn-sm btn-success" href="/ars/viewPmDL?id=${neArs.ars.pmDataLoad}">
+                                <a class="btn btn-sm btn-success" href="/ars/viewPmDL?id=${neArs.ars.pmDataLoad}&neTypeId=${neTypeId}">
                                     <span class="glyphicon glyphicon-eye-open"></span> PM Data Load
                                 </a>
                                 </#if>

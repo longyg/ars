@@ -1,11 +1,7 @@
 package com.longyg.backend.ars.generator;
 
 import com.longyg.backend.adaptation.main.AdaptationRepository;
-import com.longyg.backend.adaptation.pm.Measurement;
-import com.longyg.backend.adaptation.pm.PmAdaptation;
 import com.longyg.backend.adaptation.pm.PmDataLoadRepository;
-import com.longyg.backend.adaptation.topology.PmbObject;
-import com.longyg.frontend.model.ars.ARS;
 import com.longyg.frontend.model.ars.ArsConfig;
 import com.longyg.frontend.model.ars.om.ObjectClassInfo;
 import com.longyg.frontend.model.ars.om.ObjectModelSpec;
@@ -17,12 +13,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 @Component
 public class PmDataLoadGenerator {
+    private static final Logger LOG = Logger.getLogger(PmDataLoadGenerator.class.getName());
     @Autowired
     private ArsService arsService;
 
@@ -87,18 +84,29 @@ public class PmDataLoadGenerator {
         meas.setMaxPerNe(oci.getMaxPerNE());
         meas.setCounterNumber(getCnOfVersion(mi, config.getNeVersion()));
         meas.setCounterNumberOfLastVersion(getCnOfVersion(mi, config.getLastVersion()));
+        meas.setDelta(meas.getCounterNumber() - meas.getCounterNumberOfLastVersion());
+        meas.setAggObject(meas.getMeasuredObject());
+        meas.setMphPerNE(meas.getMaxPerNe() * meas.getActive() * (60 / meas.getMinimalInterval()));
+        meas.setCphPerNE(meas.getMphPerNE() * meas.getCounterNumber());
+        meas.setChaPerNE(meas.getCphPerNE() / (60 / meas.getMinimalInterval()));
 
         return meas;
     }
 
     private int getCnOfVersion(MeasurementInfo mi, String version) {
-        return mi.getAllReleaseCounters().get(version).size();
+        if (null != version) {
+            return mi.getAllReleaseCounters().get(version).size();
+        }
+        return 0;
     }
 
     private ObjectClassInfo getMeasuredOci(MeasurementInfo mi) {
         List<ObjectClassInfo> ociList = om.getOciList(mi.getAdaptationId());
         String hierarchy = mi.getMeasuredObject();
         for (ObjectClassInfo oci : ociList) {
+            if (oci.getOriginalDn() == null) {
+                continue;
+            }
             if (oci.getOriginalDn().equals(hierarchy)) {
                 return oci;
             }

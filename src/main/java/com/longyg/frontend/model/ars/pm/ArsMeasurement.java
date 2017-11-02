@@ -9,7 +9,9 @@ public class ArsMeasurement {
     private String measuredObject;
     private boolean isSupported;
     private List<String> supportedPreviousVersions = new ArrayList<>();
+    private String supportedOtherReleases;
     private List<String> dimensions = new ArrayList<>();
+    private String dimension;
     private int avgPerNet;
     private int maxPerNet;
     private int maxPerNe;
@@ -17,13 +19,13 @@ public class ArsMeasurement {
     private int counterNumberOfLastVersion;
     private int delta;
     private String aggObject;
-    private String timeAgg;
-    private String bh;
-    private int active;
-    private int defaultInterval;
-    private int minimalInterval;
-    private int storageDays;
-    private int defaultSpaceForOneCounter;
+    private String timeAgg = "15min, 30min, Hour,Day,Week,Month";
+    private String bh = "";
+    private int active = 1;
+    private int defaultInterval = 15;
+    private int minimalInterval = 1;
+    private int storageDays = 14;
+    private int bytesPerCounter = 4;
     private int mphPerNE;
     private int cphPerNE;
     private int chaPerNE;
@@ -81,12 +83,40 @@ public class ArsMeasurement {
         this.supportedPreviousVersions = supportedPreviousVersions;
     }
 
+    public String getSupportedOtherReleases() {
+        if (null == supportedPreviousVersions || supportedPreviousVersions.size() < 1) {
+            return "";
+        }
+        StringBuilder sb = new StringBuilder();
+        for (String version : supportedPreviousVersions) {
+            sb.append(version).append(", ");
+        }
+        sb.deleteCharAt(sb.length() - 1);
+        sb.deleteCharAt(sb.length() - 1);
+        this.supportedOtherReleases = sb.toString();
+        return supportedOtherReleases;
+    }
+
     public List<String> getDimensions() {
         return dimensions;
     }
 
     public void setDimensions(List<String> dimensions) {
         this.dimensions = dimensions;
+    }
+
+    public String getDimension() {
+        if (null == dimensions || dimensions.size() < 1) {
+            return "";
+        }
+        StringBuilder sb = new StringBuilder();
+        for (String version : dimensions) {
+            sb.append(version).append(", ");
+        }
+        sb.deleteCharAt(sb.length() - 1);
+        sb.deleteCharAt(sb.length() - 1);
+        this.dimension = sb.toString();
+        return dimension;
     }
 
     public int getAvgPerNet() {
@@ -193,12 +223,12 @@ public class ArsMeasurement {
         this.storageDays = storageDays;
     }
 
-    public int getDefaultSpaceForOneCounter() {
-        return defaultSpaceForOneCounter;
+    public int getBytesPerCounter() {
+        return bytesPerCounter;
     }
 
-    public void setDefaultSpaceForOneCounter(int defaultSpaceForOneCounter) {
-        this.defaultSpaceForOneCounter = defaultSpaceForOneCounter;
+    public void setBytesPerCounter(int bytesPerCounter) {
+        this.bytesPerCounter = bytesPerCounter;
     }
 
     public int getMphPerNE() {
