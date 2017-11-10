@@ -89,6 +89,18 @@ public class PmDataLoadGenerator {
         meas.setMphPerNE(meas.getMaxPerNe() * meas.getActive() * (60 / meas.getMinimalInterval()));
         meas.setCphPerNE(meas.getMphPerNE() * meas.getCounterNumber());
         meas.setChaPerNE(meas.getCphPerNE() / (60 / meas.getMinimalInterval()));
+        meas.setCdaPerNe(meas.getChaPerNE());
+        meas.setMaxMph(meas.getMaxPerNet() * meas.getActive() * (60 / meas.getMinimalInterval()));
+        meas.setMaxCph(meas.getMaxMph() * meas.getCounterNumber());
+        meas.setDbRrPerNe(24 * meas.getMphPerNE() * meas.getStorageDays());
+        meas.setDbRcPerNe(24 * meas.getCphPerNE() * meas.getStorageDays());
+        meas.setMsPerNe(meas.getDbRcPerNe() * meas.getBytesPerCounter());
+        meas.setDbMaxRows(24 * meas.getMaxMph() * meas.getStorageDays());
+        meas.setDbMaxCtrs(24 * meas.getMaxCph() * meas.getStorageDays());
+        meas.setMaxMs(meas.getDbMaxCtrs() * meas.getBytesPerCounter());
+        meas.setTotalBytesPerInterval(meas.getMaxPerNet() * meas.getCounterNumber() * meas.getBytesPerCounter() * meas.getActive());
+        meas.setTotalSizePerHour((meas.getTotalBytesPerInterval() * (60 / meas.getMinimalInterval())) / (1024 * 1024 * 1024));
+        meas.setTableSizePerDay(meas.getTotalSizePerHour() * 24);
 
         return meas;
     }

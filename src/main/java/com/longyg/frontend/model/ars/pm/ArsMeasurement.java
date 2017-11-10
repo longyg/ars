@@ -12,36 +12,36 @@ public class ArsMeasurement {
     private String supportedOtherReleases;
     private List<String> dimensions = new ArrayList<>();
     private String dimension;
-    private int avgPerNet;
-    private int maxPerNet;
-    private int maxPerNe;
-    private int counterNumber;
-    private int counterNumberOfLastVersion;
-    private int delta;
+    private long avgPerNet;
+    private long maxPerNet;
+    private long maxPerNe;
+    private long counterNumber;
+    private long counterNumberOfLastVersion;
+    private long delta;
     private String aggObject;
     private String timeAgg = "15min, 30min, Hour,Day,Week,Month";
     private String bh = "";
-    private int active = 1;
-    private int defaultInterval = 15;
-    private int minimalInterval = 1;
-    private int storageDays = 14;
-    private int bytesPerCounter = 4;
-    private int mphPerNE;
-    private int cphPerNE;
-    private int chaPerNE;
-    private int dhaPerNe;
-    private int maxMph;
-    private int maxCph;
+    private long active = 1;
+    private long defaultInterval = 15;
+    private long minimalInterval = 1;
+    private long storageDays = 14;
+    private long bytesPerCounter = 4;
+    private long mphPerNE;
+    private long cphPerNE;
+    private long chaPerNE;
+    private long cdaPerNe;
+    private long maxMph;
+    private long maxCph;
     private String measGroup;
-    private int dbRrPerNe;
-    private int dbRcPerNe;
-    private int msPerNe;
-    private int dbMaxRows;
-    private int dbMaxCtrs;
-    private int maxMs;
-    private int totalBytesPerInterval;
-    private int totalSizePerHour;
-    private int tableSizePerDay;
+    private long dbRrPerNe;
+    private long dbRcPerNe;
+    private long msPerNe;
+    private long dbMaxRows;
+    private long dbMaxCtrs;
+    private long maxMs;
+    private long totalBytesPerInterval;
+    private float totalSizePerHour;
+    private float tableSizePerDay;
 
     public String getName() {
         return name;
@@ -119,51 +119,59 @@ public class ArsMeasurement {
         return dimension;
     }
 
-    public int getAvgPerNet() {
+    public void setSupportedOtherReleases(String supportedOtherReleases) {
+        this.supportedOtherReleases = supportedOtherReleases;
+    }
+
+    public void setDimension(String dimension) {
+        this.dimension = dimension;
+    }
+
+    public long getAvgPerNet() {
         return avgPerNet;
     }
 
-    public void setAvgPerNet(int avgPerNet) {
+    public void setAvgPerNet(long avgPerNet) {
         this.avgPerNet = avgPerNet;
     }
 
-    public int getMaxPerNet() {
+    public long getMaxPerNet() {
         return maxPerNet;
     }
 
-    public void setMaxPerNet(int maxPerNet) {
+    public void setMaxPerNet(long maxPerNet) {
         this.maxPerNet = maxPerNet;
     }
 
-    public int getMaxPerNe() {
+    public long getMaxPerNe() {
         return maxPerNe;
     }
 
-    public void setMaxPerNe(int maxPerNe) {
+    public void setMaxPerNe(long maxPerNe) {
         this.maxPerNe = maxPerNe;
     }
 
-    public int getCounterNumber() {
+    public long getCounterNumber() {
         return counterNumber;
     }
 
-    public void setCounterNumber(int counterNumber) {
+    public void setCounterNumber(long counterNumber) {
         this.counterNumber = counterNumber;
     }
 
-    public int getCounterNumberOfLastVersion() {
+    public long getCounterNumberOfLastVersion() {
         return counterNumberOfLastVersion;
     }
 
-    public void setCounterNumberOfLastVersion(int counterNumberOfLastVersion) {
+    public void setCounterNumberOfLastVersion(long counterNumberOfLastVersion) {
         this.counterNumberOfLastVersion = counterNumberOfLastVersion;
     }
 
-    public int getDelta() {
+    public long getDelta() {
         return delta;
     }
 
-    public void setDelta(int delta) {
+    public void setDelta(long delta) {
         this.delta = delta;
     }
 
@@ -191,91 +199,91 @@ public class ArsMeasurement {
         this.bh = bh;
     }
 
-    public int getActive() {
+    public long getActive() {
         return active;
     }
 
-    public void setActive(int active) {
+    public void setActive(long active) {
         this.active = active;
     }
 
-    public int getDefaultInterval() {
+    public long getDefaultInterval() {
         return defaultInterval;
     }
 
-    public void setDefaultInterval(int defaultInterval) {
+    public void setDefaultInterval(long defaultInterval) {
         this.defaultInterval = defaultInterval;
     }
 
-    public int getMinimalInterval() {
+    public long getMinimalInterval() {
         return minimalInterval;
     }
 
-    public void setMinimalInterval(int minimalInterval) {
+    public void setMinimalInterval(long minimalInterval) {
         this.minimalInterval = minimalInterval;
     }
 
-    public int getStorageDays() {
+    public long getStorageDays() {
         return storageDays;
     }
 
-    public void setStorageDays(int storageDays) {
+    public void setStorageDays(long storageDays) {
         this.storageDays = storageDays;
     }
 
-    public int getBytesPerCounter() {
+    public long getBytesPerCounter() {
         return bytesPerCounter;
     }
 
-    public void setBytesPerCounter(int bytesPerCounter) {
+    public void setBytesPerCounter(long bytesPerCounter) {
         this.bytesPerCounter = bytesPerCounter;
     }
 
-    public int getMphPerNE() {
+    public long getMphPerNE() {
         return mphPerNE;
     }
 
-    public void setMphPerNE(int mphPerNE) {
+    public void setMphPerNE(long mphPerNE) {
         this.mphPerNE = mphPerNE;
     }
 
-    public int getCphPerNE() {
+    public long getCphPerNE() {
         return cphPerNE;
     }
 
-    public void setCphPerNE(int cphPerNE) {
+    public void setCphPerNE(long cphPerNE) {
         this.cphPerNE = cphPerNE;
     }
 
-    public int getChaPerNE() {
+    public long getChaPerNE() {
         return chaPerNE;
     }
 
-    public void setChaPerNE(int chaPerNE) {
+    public void setChaPerNE(long chaPerNE) {
         this.chaPerNE = chaPerNE;
     }
 
-    public int getDhaPerNe() {
-        return dhaPerNe;
+    public long getCdaPerNe() {
+        return cdaPerNe;
     }
 
-    public void setDhaPerNe(int dhaPerNe) {
-        this.dhaPerNe = dhaPerNe;
+    public void setCdaPerNe(long cdaPerNe) {
+        this.cdaPerNe = cdaPerNe;
     }
 
-    public int getMaxMph() {
+    public long getMaxMph() {
         return maxMph;
     }
 
-    public void setMaxMph(int maxMph) {
+    public void setMaxMph(long maxMph) {
         this.maxMph = maxMph;
     }
 
-    public int getMaxCph() {
+    public long getMaxCph() {
         return maxCph;
     }
 
-    public void setMaxCph(int maxCph) {
+    public void setMaxCph(long maxCph) {
         this.maxCph = maxCph;
     }
 
@@ -287,75 +295,79 @@ public class ArsMeasurement {
         this.measGroup = measGroup;
     }
 
-    public int getDbRrPerNe() {
+    public long getDbRrPerNe() {
         return dbRrPerNe;
     }
 
-    public void setDbRrPerNe(int dbRrPerNe) {
+    public void setDbRrPerNe(long dbRrPerNe) {
         this.dbRrPerNe = dbRrPerNe;
     }
 
-    public int getDbRcPerNe() {
+    public long getDbRcPerNe() {
         return dbRcPerNe;
     }
 
-    public void setDbRcPerNe(int dbRcPerNe) {
+    public void setDbRcPerNe(long dbRcPerNe) {
         this.dbRcPerNe = dbRcPerNe;
     }
 
-    public int getMsPerNe() {
+    public long getMsPerNe() {
         return msPerNe;
     }
 
-    public void setMsPerNe(int msPerNe) {
+    public void setMsPerNe(long msPerNe) {
         this.msPerNe = msPerNe;
     }
 
-    public int getDbMaxRows() {
+    public long getDbMaxRows() {
         return dbMaxRows;
     }
 
-    public void setDbMaxRows(int dbMaxRows) {
+    public void setDbMaxRows(long dbMaxRows) {
         this.dbMaxRows = dbMaxRows;
     }
 
-    public int getDbMaxCtrs() {
+    public long getDbMaxCtrs() {
         return dbMaxCtrs;
     }
 
-    public void setDbMaxCtrs(int dbMaxCtrs) {
+    public void setDbMaxCtrs(long dbMaxCtrs) {
         this.dbMaxCtrs = dbMaxCtrs;
     }
 
-    public int getMaxMs() {
+    public long getMaxMs() {
         return maxMs;
     }
 
-    public void setMaxMs(int maxMs) {
+    public void setMaxMs(long maxMs) {
         this.maxMs = maxMs;
     }
 
-    public int getTotalBytesPerInterval() {
+    public long getTotalBytesPerInterval() {
         return totalBytesPerInterval;
     }
 
-    public void setTotalBytesPerInterval(int totalBytesPerInterval) {
+    public void setTotalBytesPerInterval(long totalBytesPerInterval) {
         this.totalBytesPerInterval = totalBytesPerInterval;
     }
 
-    public int getTotalSizePerHour() {
+    public float getTotalSizePerHour() {
         return totalSizePerHour;
     }
 
-    public void setTotalSizePerHour(int totalSizePerHour) {
+    public void setTotalSizePerHour(float totalSizePerHour) {
         this.totalSizePerHour = totalSizePerHour;
     }
 
-    public int getTableSizePerDay() {
+    public float getTableSizePerDay() {
         return tableSizePerDay;
     }
 
-    public void setTableSizePerDay(int tableSizePerDay) {
+    public void setTableSizePerDay(float tableSizePerDay) {
+        this.tableSizePerDay = tableSizePerDay;
+    }
+
+    public void setTableSizePerDay(long tableSizePerDay) {
         this.tableSizePerDay = tableSizePerDay;
     }
 

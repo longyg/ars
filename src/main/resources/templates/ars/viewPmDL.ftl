@@ -47,6 +47,19 @@
                         <th style="width:20px;">1 NE Measurements/h</th>
                         <th style="width:20px;">1 NE Counters/h</th>
                         <th style="width:20px;">1 NE hourly aggregation Counter/h</th>
+                        <th style="width:20px;">1 NE daily aggregation Counter/day</th>
+                        <th style="width:20px;">Max Measurements/h</th>
+                        <th style="width:20px;">Max Counters/h</th>
+                        <th style="width:20px;">Measurement Grouping Name</th>
+                        <th style="width:20px;">1 NE Raw rows in DB</th>
+                        <th style="width:20px;">1 NE Raw counters in DB</th>
+                        <th style="width:20px;">1 NE Space that will use for one measurement (Raw Data)</th>
+                        <th style="width:20px;">Max Raw rows in DB</th>
+                        <th style="width:20px;">Max Raw counters in DB</th>
+                        <th style="width:20px;">Max Space that will use for one measurement (Raw Data)</th>
+                        <th style="width:20px;">Total bytes per interval</th>
+                        <th style="width:20px;">Total Size per hour(GB)</th>
+                        <th style="width:20px;">Table Size per day (GB)</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -107,19 +120,59 @@
                                 ${meas.minimalInterval}
                             </td>
                             <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">
-                            ${meas.storageDays}
+                                ${meas.storageDays}
                             </td>
                             <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">
-                            ${meas.bytesPerCounter}
+                                ${meas.bytesPerCounter}
                             </td>
                             <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">
-                            ${meas.mphPerNE}
+                                ${meas.mphPerNE}
                             </td>
                             <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">
-                            ${meas.cphPerNE}
+                                ${meas.cphPerNE}
                             </td>
                             <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">
-                            ${meas.chaPerNE}
+                                ${meas.chaPerNE}
+                            </td>
+                            <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">
+                                ${meas.cdaPerNe}
+                            </td>
+
+                            <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">
+                            ${meas.maxMph}
+                            </td>
+                            <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">
+                            ${meas.maxCph}
+                            </td>
+                            <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">
+                            ${meas.measGroup!""}
+                            </td>
+                            <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">
+                            ${meas.dbRrPerNe}
+                            </td>
+                            <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">
+                            ${meas.dbRcPerNe}
+                            </td>
+                            <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">
+                            ${meas.msPerNe}
+                            </td>
+                            <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">
+                            ${meas.dbMaxRows}
+                            </td>
+                            <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">
+                            ${meas.dbMaxCtrs}
+                            </td>
+                            <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">
+                            ${meas.maxMs}
+                            </td>
+                            <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">
+                            ${meas.totalBytesPerInterval}
+                            </td>
+                            <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">
+                            ${meas.totalSizePerHour}
+                            </td>
+                            <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">
+                            ${meas.tableSizePerDay}
                             </td>
                         </tr>
                         </#list>
