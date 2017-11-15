@@ -1,5 +1,6 @@
 package com.longyg.frontend.model.ars.pm;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,8 +41,8 @@ public class ArsMeasurement {
     private long dbMaxCtrs;
     private long maxMs;
     private long totalBytesPerInterval;
-    private float totalSizePerHour;
-    private float tableSizePerDay;
+    private BigDecimal totalSizePerHour;
+    private BigDecimal tableSizePerDay;
 
     public String getName() {
         return name;
@@ -351,23 +352,19 @@ public class ArsMeasurement {
         this.totalBytesPerInterval = totalBytesPerInterval;
     }
 
-    public float getTotalSizePerHour() {
+    public BigDecimal getTotalSizePerHour() {
         return totalSizePerHour;
     }
 
-    public void setTotalSizePerHour(float totalSizePerHour) {
+    public void setTotalSizePerHour(BigDecimal totalSizePerHour) {
         this.totalSizePerHour = totalSizePerHour;
     }
 
-    public float getTableSizePerDay() {
+    public BigDecimal getTableSizePerDay() {
         return tableSizePerDay;
     }
 
-    public void setTableSizePerDay(float tableSizePerDay) {
-        this.tableSizePerDay = tableSizePerDay;
-    }
-
-    public void setTableSizePerDay(long tableSizePerDay) {
+    public void setTableSizePerDay(BigDecimal tableSizePerDay) {
         this.tableSizePerDay = tableSizePerDay;
     }
 

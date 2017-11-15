@@ -12,6 +12,8 @@ import com.longyg.frontend.service.ArsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -99,8 +101,11 @@ public class PmDataLoadGenerator {
         meas.setDbMaxCtrs(24 * meas.getMaxCph() * meas.getStorageDays());
         meas.setMaxMs(meas.getDbMaxCtrs() * meas.getBytesPerCounter());
         meas.setTotalBytesPerInterval(meas.getMaxPerNet() * meas.getCounterNumber() * meas.getBytesPerCounter() * meas.getActive());
-        meas.setTotalSizePerHour((meas.getTotalBytesPerInterval() * (60 / meas.getMinimalInterval())) / (1024 * 1024 * 1024));
-        meas.setTableSizePerDay(meas.getTotalSizePerHour() * 24);
+
+        BigDecimal d = new BigDecimal(1024 * 1024 * 1024);
+        BigDecimal d1 = new BigDecimal(meas.getTotalBytesPerInterval() * (60 / meas.getMinimalInterval()));
+        meas.setTotalSizePerHour(d1.divide(d));
+        meas.setTableSizePerDay(meas.getTotalSizePerHour().multiply(new BigDecimal(24)));
 
         return meas;
     }

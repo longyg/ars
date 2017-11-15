@@ -8,6 +8,29 @@
     <link href="/css/bootstrap.min.css" rel="stylesheet">
     <link href="/css/ars.css" rel="stylesheet">
     <title>PM Data Load</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            font-size: 8pt;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th {
+            background-color: #c1e2b3;
+            font-weight: bold;
+        }
+        th, td {
+            height: 18px;
+            line-height: 15px;
+            padding: 0px 5px 0px 5px;
+            text-align: left;
+        }
+        td {
+            white-space: nowrap;
+        }
+    </style>
 </head>
 <body>
 
@@ -21,163 +44,165 @@
             <div><h3>PM Data Load of ${spec.neType} ${spec.neVersion}</h3></div>
             <#list neType.adaptSet as adap>
                 <div><h2>${adap}</h2></div>
-                <table class="table table-bordered">
+                <div style="overflow: auto;">
+                <table>
                     <thead>
                     <tr>
-                        <th style="width:20px;">Name</th>
-                        <th style="width:20px;">Name In Omes</th>
-                        <th style="width:20px;">Measured Object</th>
-                        <th style="width:20px;">Is supported by ${spec.neVersion}</th>
-                        <th style="width:20px;">Supported other versions</th>
-                        <th style="width:20px;">Dimension</th>
-                        <th style="width:20px;">Avg Per Network</th>
-                        <th style="width:20px;">Max Per Network</th>
-                        <th style="width:20px;">Max Per NE</th>
-                        <th style="width:20px;">Nbr of Counters</th>
-                        <th style="width:20px;">N-1 Nbr of Counters</th>
-                        <th style="width:20px;">Delta</th>
-                        <th style="width:20px;">NW Agg Object</th>
-                        <th style="width:20px;">Time Agg</th>
-                        <th style="width:20px;">BH</th>
-                        <th style="width:20px;">Active</th>
-                        <th style="width:20px;">Default Interval</th>
-                        <th style="width:20px;">Minimum Interval</th>
-                        <th style="width:20px;">Storage</th>
-                        <th style="width:20px;">Bytes of counter</th>
-                        <th style="width:20px;">1 NE Measurements/h</th>
-                        <th style="width:20px;">1 NE Counters/h</th>
-                        <th style="width:20px;">1 NE hourly aggregation Counter/h</th>
-                        <th style="width:20px;">1 NE daily aggregation Counter/day</th>
-                        <th style="width:20px;">Max Measurements/h</th>
-                        <th style="width:20px;">Max Counters/h</th>
-                        <th style="width:20px;">Measurement Grouping Name</th>
-                        <th style="width:20px;">1 NE Raw rows in DB</th>
-                        <th style="width:20px;">1 NE Raw counters in DB</th>
-                        <th style="width:20px;">1 NE Space that will use for one measurement (Raw Data)</th>
-                        <th style="width:20px;">Max Raw rows in DB</th>
-                        <th style="width:20px;">Max Raw counters in DB</th>
-                        <th style="width:20px;">Max Space that will use for one measurement (Raw Data)</th>
-                        <th style="width:20px;">Total bytes per interval</th>
-                        <th style="width:20px;">Total Size per hour(GB)</th>
-                        <th style="width:20px;">Table Size per day (GB)</th>
+                        <th>Name</th>
+                        <th>Name In Omes</th>
+                        <th>Measured Object</th>
+                        <th>Is supported by ${spec.neVersion}</th>
+                        <th>Supported other versions</th>
+                        <th>Dimension</th>
+                        <th>Avg Per Network</th>
+                        <th>Max Per Network</th>
+                        <th>Max Per NE</th>
+                        <th>Nbr of Counters</th>
+                        <th>N-1 Nbr of Counters</th>
+                        <th>Delta</th>
+                        <th>NW Agg Object</th>
+                        <th>Time Agg</th>
+                        <th>BH</th>
+                        <th>Active</th>
+                        <th>Default Interval</th>
+                        <th>Minimum Interval</th>
+                        <th>Storage</th>
+                        <th>Bytes of counter</th>
+                        <th>1 NE Measurements/h</th>
+                        <th>1 NE Counters/h</th>
+                        <th>1 NE hourly aggregation Counter/h</th>
+                        <th>1 NE daily aggregation Counter/day</th>
+                        <th>Max Measurements/h</th>
+                        <th>Max Counters/h</th>
+                        <th>Measurement Grouping Name</th>
+                        <th>1 NE Raw rows in DB</th>
+                        <th>1 NE Raw counters in DB</th>
+                        <th>1 NE Space that will use for one measurement (Raw Data)</th>
+                        <th>Max Raw rows in DB</th>
+                        <th>Max Raw counters in DB</th>
+                        <th>Max Space that will use for one measurement (Raw Data)</th>
+                        <th>Total bytes per interval</th>
+                        <th>Total Size per hour(GB)</th>
+                        <th>Table Size per day (GB)</th>
                     </tr>
                     </thead>
                     <tbody>
                         <#list spec.measurementMap[adap] as meas>
-                        <tr style="font-size: 8pt;">
-                            <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height:15px;">
+                        <tr>
+                            <td>
                                 ${meas.name}
                             </td>
-                            <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">
+                            <td>
                                 ${meas.nameInOmes}
                             </td>
-                            <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">
+                            <td>
                                 ${meas.measuredObject}
                             </td>
-                            <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">
+                            <td>
                                 ${meas.supported?string('Yes', 'No')}
                             </td>
-                            <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">
+                            <td>
                                 ${meas.supportedOtherReleases}
                             </td>
-                            <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">
+                            <td>
                                 ${meas.dimension}
                             </td>
-                            <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">
-                                ${meas.avgPerNet}
+                            <td>
+                                ${meas.avgPerNet?c}
                             </td>
-                            <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">
-                                ${meas.maxPerNet}
+                            <td>
+                                ${meas.maxPerNet?c}
                             </td>
-                            <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">
-                                ${meas.maxPerNe}
+                            <td>
+                                ${meas.maxPerNe?c}
                             </td>
-                            <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">
-                                ${meas.counterNumber}
+                            <td>
+                                ${meas.counterNumber?c}
                             </td>
-                            <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">
-                                ${meas.counterNumberOfLastVersion}
+                            <td>
+                                ${meas.counterNumberOfLastVersion?c}
                             </td>
-                            <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">
-                                ${meas.delta}
+                            <td>
+                                ${meas.delta?c}
                             </td>
-                            <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">
+                            <td>
                                 ${meas.aggObject}
                             </td>
-                            <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">
+                            <td>
                             ${meas.timeAgg!""}
                             </td>
-                            <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">
+                            <td>
                             ${meas.bh!""}
                             </td>
-                            <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">
+                            <td>
                                 ${meas.active}
                             </td>
-                            <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">
-                                ${meas.defaultInterval}
+                            <td>
+                                ${meas.defaultInterval?c}
                             </td>
-                            <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">
-                                ${meas.minimalInterval}
+                            <td>
+                                ${meas.minimalInterval?c}
                             </td>
-                            <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">
-                                ${meas.storageDays}
+                            <td>
+                                ${meas.storageDays?c}
                             </td>
-                            <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">
-                                ${meas.bytesPerCounter}
+                            <td>
+                                ${meas.bytesPerCounter?c}
                             </td>
-                            <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">
-                                ${meas.mphPerNE}
+                            <td>
+                                ${meas.mphPerNE?c}
                             </td>
-                            <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">
-                                ${meas.cphPerNE}
+                            <td>
+                                ${meas.cphPerNE?c}
                             </td>
-                            <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">
-                                ${meas.chaPerNE}
+                            <td>
+                                ${meas.chaPerNE?c}
                             </td>
-                            <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">
-                                ${meas.cdaPerNe}
+                            <td>
+                                ${meas.cdaPerNe?c}
                             </td>
 
-                            <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">
-                            ${meas.maxMph}
+                            <td>
+                            ${meas.maxMph?c}
                             </td>
-                            <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">
-                            ${meas.maxCph}
+                            <td>
+                            ${meas.maxCph?c}
                             </td>
-                            <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">
+                            <td>
                             ${meas.measGroup!""}
                             </td>
-                            <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">
-                            ${meas.dbRrPerNe}
+                            <td>
+                            ${meas.dbRrPerNe?c}
                             </td>
-                            <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">
-                            ${meas.dbRcPerNe}
+                            <td>
+                            ${meas.dbRcPerNe?c}
                             </td>
-                            <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">
-                            ${meas.msPerNe}
+                            <td>
+                            ${meas.msPerNe?c}
                             </td>
-                            <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">
-                            ${meas.dbMaxRows}
+                            <td>
+                            ${meas.dbMaxRows?c}
                             </td>
-                            <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">
-                            ${meas.dbMaxCtrs}
+                            <td>
+                            ${meas.dbMaxCtrs?c}
                             </td>
-                            <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">
-                            ${meas.maxMs}
+                            <td>
+                            ${meas.maxMs?c}
                             </td>
-                            <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">
-                            ${meas.totalBytesPerInterval}
+                            <td>
+                            ${meas.totalBytesPerInterval?c}
                             </td>
-                            <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">
-                            ${meas.totalSizePerHour}
+                            <td>
+                            ${meas.totalSizePerHour?string["0.#########"]}
                             </td>
-                            <td style="width:20px;padding:0px 0px 0px 10px;margin:0px;line-height: 15px;">
-                            ${meas.tableSizePerDay}
+                            <td>
+                            ${meas.tableSizePerDay?string["0.#########"]}
                             </td>
                         </tr>
                         </#list>
                     </tbody>
                 </table>
+                </div>
             </#list>
             </#if>
         </div>
