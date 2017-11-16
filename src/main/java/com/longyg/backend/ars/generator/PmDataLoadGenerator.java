@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -54,6 +55,10 @@ public class PmDataLoadGenerator {
             List<MeasurementInfo> miList = entry.getValue();
 
             addArsMeasurements(spec, adaptationId, miList);
+        }
+
+        for (List<ArsMeasurement> measLit : spec.getMeasurementMap().values()) {
+            Collections.sort(measLit);
         }
 
         spec = arsService.savePmDataLoad(spec);
@@ -144,5 +149,9 @@ public class PmDataLoadGenerator {
     private void initRepository() {
         pmDataLoadRepository = new PmDataLoadRepository(config, adaptationRepository);
         pmDataLoadRepository.init();
+    }
+
+    public PmDataLoadRepository getPmDataLoadRepository() {
+        return pmDataLoadRepository;
     }
 }

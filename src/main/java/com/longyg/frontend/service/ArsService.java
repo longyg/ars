@@ -5,6 +5,8 @@ import com.longyg.frontend.model.ars.ARS;
 import com.longyg.frontend.model.ars.ArsConfig;
 import com.longyg.frontend.model.ars.ArsConfigRepository;
 import com.longyg.frontend.model.ars.ArsRepository;
+import com.longyg.frontend.model.ars.counter.CounterRepository;
+import com.longyg.frontend.model.ars.counter.CounterSpec;
 import com.longyg.frontend.model.ars.om.ObjectModelSpec;
 import com.longyg.frontend.model.ars.om.OmRepository;
 import com.longyg.frontend.model.ars.pm.PmDataLoadSpec;
@@ -34,6 +36,9 @@ public class ArsService {
 
     @Autowired
     private PmRepository pmRepository;
+
+    @Autowired
+    private CounterRepository counterRepository;
 
     public ArsConfig findArsConfig(NeRelease neRelease) {
         if (null == neRelease) {
@@ -82,5 +87,9 @@ public class ArsService {
             return opt.get();
         }
         return null;
+    }
+
+    public CounterSpec saveCounter(CounterSpec spec) {
+        return counterRepository.save(spec);
     }
 }

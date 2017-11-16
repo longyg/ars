@@ -1,5 +1,6 @@
-package com.longyg.frontend.model.ars.pm;
+package com.longyg.frontend.model.ars.counter;
 
+import com.longyg.frontend.model.ars.pm.ArsMeasurement;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -8,14 +9,16 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Document(collection = "pm")
-public class PmDataLoadSpec {
+@Document(collection = "counter")
+public class CounterSpec {
     @Id
     private String id;
     private String neType;
     private String neVersion;
 
-    private Map<String, List<ArsMeasurement>> measurementMap = new HashMap<>();
+    // key: adaptation id
+    // value: measurement list
+    private Map<String, List<CounterMeas>> measurementMap = new HashMap<>();
 
     public String getId() {
         return id;
@@ -41,25 +44,25 @@ public class PmDataLoadSpec {
         this.neVersion = neVersion;
     }
 
-    public void addMeasurement(String adaptationId, ArsMeasurement measurement) {
+    public Map<String, List<CounterMeas>> getMeasurementMap() {
+        return measurementMap;
+    }
+
+    public void setMeasurementMap(Map<String, List<CounterMeas>> measurementMap) {
+        this.measurementMap = measurementMap;
+    }
+
+    public void addMeasurement(String adaptationId, CounterMeas measurement) {
         String adapId = adaptationId.replaceAll("\\.", "_");
         if (measurementMap.containsKey(adapId)) {
-            List<ArsMeasurement> measList = measurementMap.get(adapId);
+            List<CounterMeas> measList = measurementMap.get(adapId);
             if (!measList.contains(measurement)) {
                 measList.add(measurement);
             }
         } else {
-            List<ArsMeasurement> measList = new ArrayList<>();
+            List<CounterMeas> measList = new ArrayList<>();
             measList.add(measurement);
             measurementMap.put(adapId, measList);
         }
-    }
-
-    public Map<String, List<ArsMeasurement>> getMeasurementMap() {
-        return measurementMap;
-    }
-
-    public void setMeasurementMap(Map<String, List<ArsMeasurement>> measurementMap) {
-        this.measurementMap = measurementMap;
     }
 }

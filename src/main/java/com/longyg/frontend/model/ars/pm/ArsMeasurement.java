@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ArsMeasurement {
+public class ArsMeasurement implements Comparable<ArsMeasurement> {
     private String name;
     private String nameInOmes;
     private String measuredObject;
@@ -381,5 +381,10 @@ public class ArsMeasurement {
     @Override
     public int hashCode() {
         return name != null ? name.hashCode() : 0;
+    }
+
+    @Override
+    public int compareTo(ArsMeasurement o) {
+        return this.getName().compareTo(o.getName());
     }
 }

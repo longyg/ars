@@ -47,9 +47,7 @@
                 <thead>
                 <tr>
                     <th>Topology</th>
-                    <th>
-                        <span>Alarming</span>
-                    </th>
+                    <th>Alarming</th>
                     <th>Measured</th>
                     <!--
                     <th style="width:20px;">Configured</th>

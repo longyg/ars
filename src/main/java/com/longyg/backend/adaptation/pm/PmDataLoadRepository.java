@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 
 public class PmDataLoadRepository {
+    // key: adaptation id
+    // value: measurement list
     private Map<String, List<MeasurementInfo>> allReleaseMeasurements = new HashMap<>();
 
     private ArsConfig config;

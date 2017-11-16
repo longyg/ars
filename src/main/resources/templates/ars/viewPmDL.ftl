@@ -43,7 +43,7 @@
             <#if spec??>
             <div><h3>PM Data Load of ${spec.neType} ${spec.neVersion}</h3></div>
             <#list neType.adaptSet as adap>
-                <div><h2>${adap}</h2></div>
+                <div><h3>Adaptation ID: ${adap}</h3></div>
                 <div style="overflow: auto;">
                 <table>
                     <thead>
