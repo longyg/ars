@@ -1,11 +1,11 @@
 package com.longyg.backend.ars.generator;
 
-import com.longyg.backend.adaptation.pm.Measurement;
+import com.longyg.backend.adaptation.pm.Counter;
 import com.longyg.backend.adaptation.pm.PmDataLoadRepository;
 import com.longyg.frontend.model.ars.ArsConfig;
+import com.longyg.frontend.model.ars.counter.ArsCounter;
 import com.longyg.frontend.model.ars.counter.CounterMeas;
 import com.longyg.frontend.model.ars.counter.CounterSpec;
-import com.longyg.frontend.model.ars.pm.ArsMeasurement;
 import com.longyg.frontend.model.ars.pm.MeasurementInfo;
 import com.longyg.frontend.service.ArsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +46,10 @@ public class CounterGenerator {
 
         for (List<CounterMeas> measLit : spec.getMeasurementMap().values()) {
             Collections.sort(measLit);
+
+            for (CounterMeas meas : measLit) {
+                Collections.sort(meas.getCounters());
+            }
         }
 
         spec = arsService.saveCounter(spec);
@@ -64,8 +68,64 @@ public class CounterGenerator {
         CounterMeas meas = new CounterMeas();
         meas.setName(mi.getName());
 
+        createArsCountersForCurrentVersion(meas, mi);
 
+        Map<String, List<Counter>> counterMap = mi.getAllReleaseCounters();
+        for (Map.Entry<String, List<Counter>> entry : counterMap.entrySet()) {
+            String v = entry.getKey();
+            for (Counter counter : entry.getValue()) {
+                addArsCounter(meas, counter, v);
+            }
+        }
 
         return meas;
+    }
+
+    private void createArsCountersForCurrentVersion(CounterMeas meas, MeasurementInfo mi) {
+        Map<String, List<Counter>> counterMap = mi.getAllReleaseCounters();
+        for (Map.Entry<String, List<Counter>> entry : counterMap.entrySet()) {
+            String v = entry.getKey();
+            if (config.getNeVersion().equals(v)) {
+                for (Counter counter : entry.getValue()) {
+                    ArsCounter c = findOrCreateArsCounter(meas, counter);
+                    c.setSupported(true);
+                    meas.addCounter(c);
+                }
+            }
+        }
+    }
+
+    private void addArsCounter(CounterMeas meas, Counter counter, String version) {
+        ArsCounter c = findOrCreateArsCounter(meas, counter);
+        if (!version.equals(config.getNeVersion())) {
+            c.addSupportedPreviousVersion(version);
+        }
+        meas.addCounter(c);
+    }
+
+    private ArsCounter findOrCreateArsCounter(CounterMeas meas, Counter counter) {
+        ArsCounter c = findArsCounter(meas, counter.getName());
+        if (null == c) {
+            c = createArsCounter(counter);
+        }
+        return c;
+    }
+    private ArsCounter createArsCounter(Counter counter) {
+        ArsCounter c = new ArsCounter();
+        c.setName(counter.getName());
+        c.setAggRule(counter.getAggRule());
+        c.setDescription(counter.getDescription());
+        c.setPresentation(counter.getPresentation());
+        c.setUnit(counter.getUnit());
+        return c;
+    }
+
+    private ArsCounter findArsCounter(CounterMeas meas, String name) {
+        for (ArsCounter c : meas.getCounters()) {
+            if (c.getName().equals(name)) {
+                return c;
+            }
+        }
+        return null;
     }
 }

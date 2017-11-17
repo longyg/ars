@@ -1,5 +1,7 @@
 package com.longyg.frontend.model.ars.pm;
 
+import com.longyg.frontend.Utils.CommonUtil;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -85,16 +87,7 @@ public class ArsMeasurement implements Comparable<ArsMeasurement> {
     }
 
     public String getSupportedOtherReleases() {
-        if (null == supportedPreviousVersions || supportedPreviousVersions.size() < 1) {
-            return "";
-        }
-        StringBuilder sb = new StringBuilder();
-        for (String version : supportedPreviousVersions) {
-            sb.append(version).append(", ");
-        }
-        sb.deleteCharAt(sb.length() - 1);
-        sb.deleteCharAt(sb.length() - 1);
-        this.supportedOtherReleases = sb.toString();
+        this.supportedOtherReleases = CommonUtil.listToString(supportedPreviousVersions);
         return supportedOtherReleases;
     }
 

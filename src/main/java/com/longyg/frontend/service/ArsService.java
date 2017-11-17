@@ -92,4 +92,15 @@ public class ArsService {
     public CounterSpec saveCounter(CounterSpec spec) {
         return counterRepository.save(spec);
     }
+
+    public CounterSpec findCounter(String id) {
+        if (null == id) {
+            return null;
+        }
+        Optional<CounterSpec> opt = counterRepository.findById(id);
+        if (opt.isPresent()) {
+            return opt.get();
+        }
+        return null;
+    }
 }

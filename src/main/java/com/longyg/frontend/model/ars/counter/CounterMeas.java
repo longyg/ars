@@ -24,6 +24,12 @@ public class CounterMeas implements Comparable<CounterMeas> {
         this.counters = counters;
     }
 
+    public void addCounter(ArsCounter counter) {
+        if (!counters.contains(counter)) {
+            counters.add(counter);
+        }
+    }
+
     @Override
     public int compareTo(CounterMeas o) {
         return this.name.compareTo(o.getName());

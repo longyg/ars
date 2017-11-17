@@ -81,7 +81,7 @@
                                 </a>
                                 </#if>
                                 <#if neArs.ars.counter??>
-                                <a class="btn btn-sm btn-success" href="/ars/viewCounter?id=${neArs.ars.counter}">
+                                <a class="btn btn-sm btn-success" href="/ars/viewCounter?id=${neArs.ars.counter}&neTypeId=${neTypeId}">
                                     <span class="glyphicon glyphicon-eye-open"></span> Counter
                                 </a>
                                 </#if>

@@ -1,5 +1,7 @@
 package com.longyg.frontend.model.ars.counter;
 
+import com.longyg.frontend.Utils.CommonUtil;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,6 +40,7 @@ public class ArsCounter implements Comparable<ArsCounter> {
     }
 
     public String getSupportedOtherReleases() {
+        this.supportedOtherReleases = CommonUtil.listToString(supportedPreviousVersions);
         return supportedOtherReleases;
     }
 
@@ -75,6 +78,12 @@ public class ArsCounter implements Comparable<ArsCounter> {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public void addSupportedPreviousVersion(String version) {
+        if (!supportedPreviousVersions.contains(version)) {
+            supportedPreviousVersions.add(version);
+        }
     }
 
     @Override
