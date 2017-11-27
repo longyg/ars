@@ -86,7 +86,7 @@
                                 </a>
                                 </#if>
                                 <#if neArs.ars.alarm??>
-                                <a class="btn btn-sm btn-success" href="/ars/viewAlarm?id=${neArs.ars.alarm}">
+                                <a class="btn btn-sm btn-success" href="/ars/viewAlarm?id=${neArs.ars.alarm}&neTypeId=${neTypeId}">
                                     <span class="glyphicon glyphicon-eye-open"></span> Alarm
                                 </a>
                                 </#if>

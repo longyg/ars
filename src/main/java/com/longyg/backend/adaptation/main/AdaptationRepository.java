@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class AdaptationRepository {
     // key: adaptation id
-    // value: adaptation list of same adaptation id
+    // value: adaptation list of same adaptation id, with different release
     private Map<String, List<PmAdaptation>> pmAdaptations = new HashMap<>();
     private Map<String, List<FmAdaptation>> fmAdaptations = new HashMap<>();
 

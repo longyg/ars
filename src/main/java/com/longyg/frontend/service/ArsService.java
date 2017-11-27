@@ -5,6 +5,8 @@ import com.longyg.frontend.model.ars.ARS;
 import com.longyg.frontend.model.ars.ArsConfig;
 import com.longyg.frontend.model.ars.ArsConfigRepository;
 import com.longyg.frontend.model.ars.ArsRepository;
+import com.longyg.frontend.model.ars.alarm.AlarmRepository;
+import com.longyg.frontend.model.ars.alarm.AlarmSpec;
 import com.longyg.frontend.model.ars.counter.CounterRepository;
 import com.longyg.frontend.model.ars.counter.CounterSpec;
 import com.longyg.frontend.model.ars.om.ObjectModelSpec;
@@ -39,6 +41,9 @@ public class ArsService {
 
     @Autowired
     private CounterRepository counterRepository;
+
+    @Autowired
+    private AlarmRepository alarmRepository;
 
     public ArsConfig findArsConfig(NeRelease neRelease) {
         if (null == neRelease) {
@@ -98,6 +103,21 @@ public class ArsService {
             return null;
         }
         Optional<CounterSpec> opt = counterRepository.findById(id);
+        if (opt.isPresent()) {
+            return opt.get();
+        }
+        return null;
+    }
+
+    public AlarmSpec saveAlarm(AlarmSpec spec) {
+        return alarmRepository.save(spec);
+    }
+
+    public AlarmSpec findAlarm(String id) {
+        if (null == id) {
+            return null;
+        }
+        Optional<AlarmSpec> opt = alarmRepository.findById(id);
         if (opt.isPresent()) {
             return opt.get();
         }

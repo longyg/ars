@@ -11,7 +11,7 @@ public class FmAdaptation {
     private String adapRelease;
     private String presentation;
 
-    private List<Alarm> alarms = new ArrayList<Alarm>();
+    private List<Alarm> alarms = new ArrayList<>();
 
     public void addAlarm(Alarm alarm) {
         if (!alarms.contains(alarm)) {

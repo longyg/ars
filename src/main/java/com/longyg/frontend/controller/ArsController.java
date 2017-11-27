@@ -2,6 +2,7 @@ package com.longyg.frontend.controller;
 
 import com.longyg.backend.ars.generator.ArsGenerator;
 import com.longyg.frontend.model.ars.*;
+import com.longyg.frontend.model.ars.alarm.AlarmSpec;
 import com.longyg.frontend.model.ars.counter.CounterSpec;
 import com.longyg.frontend.model.ars.om.ObjectModelSpec;
 import com.longyg.frontend.model.ars.pm.ArsMeasurement;
@@ -188,6 +189,27 @@ public class ArsController {
         params.put("neType", neType);
 
         return new ModelAndView("ars/viewCounter", params);
+    }
+
+    @RequestMapping("/ars/viewAlarm")
+    public ModelAndView viewAlarm(@RequestParam String id, @RequestParam String neTypeId) {
+        Map<String, Object> params = new HashMap<>();
+
+        NeType neType = neService.findNeType(neTypeId);
+        AlarmSpec spec = arsService.findAlarm(id);
+
+        List<String> adaps = new ArrayList<>();
+        for (String adaptationId : neType.getAdaptSet()) {
+            String adap = adaptationId.replaceAll("\\.", "_");
+            adaps.add(adap);
+        }
+        neType.setAdaptSet(adaps);
+
+        params.put("spec", spec);
+        params.put("neTypeId", neTypeId);
+        params.put("neType", neType);
+
+        return new ModelAndView("ars/viewAlarm", params);
     }
 
     @RequestMapping("/ars/setConfig")
