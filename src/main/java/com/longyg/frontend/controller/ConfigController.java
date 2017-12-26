@@ -32,9 +32,6 @@ public class ConfigController {
     @Autowired
     private ConfigService configService;
 
-    @Autowired
-    private NeService neService;
-
     @RequestMapping("/interface")
     public ModelAndView listInterface() {
         List<InterfaceObject> interfaceList = interfaceRepository.findAll();

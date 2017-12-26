@@ -1,6 +1,7 @@
 package com.longyg.frontend.controller;
 
 import com.longyg.backend.ars.generator.ArsGenerator;
+import com.longyg.backend.ars.generator.UsGenerator;
 import com.longyg.frontend.model.ars.*;
 import com.longyg.frontend.model.ars.alarm.AlarmSpec;
 import com.longyg.frontend.model.ars.counter.CounterSpec;
@@ -27,7 +28,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 import java.util.logging.Logger;
 
-@Controller
+@RestController
 public class ArsController {
     private static final Logger LOG = Logger.getLogger(ArsController.class.getName());
 
@@ -62,6 +63,12 @@ public class ArsController {
     private ArsGenerator arsGenerator;
 
     @RequestMapping("/ars")
+    public List<ARS> listArs() {
+        List<ARS> list = arsRepository.findAll();
+        return list;
+    }
+
+    @RequestMapping("/ars1")
     public ModelAndView list(HttpServletRequest request) {
         String neTypeId = request.getParameter("neTypeId");
 

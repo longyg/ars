@@ -5,12 +5,9 @@ import com.longyg.backend.adaptation.main.AdaptationResourceParser;
 import com.longyg.backend.adaptation.svn.SvnDownloader;
 import com.longyg.frontend.model.ars.ARS;
 import com.longyg.frontend.model.ars.ArsConfig;
-import com.longyg.frontend.model.ars.ArsRepository;
 import com.longyg.frontend.model.ars.om.ObjectModelSpec;
 import com.longyg.frontend.model.config.AdaptationResource;
-import com.longyg.frontend.model.config.AdaptationResourceRepository;
 import com.longyg.frontend.model.config.InterfaceObject;
-import com.longyg.frontend.model.config.InterfaceRepository;
 import com.longyg.frontend.service.ArsService;
 import com.longyg.frontend.service.ConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +16,6 @@ import org.springframework.stereotype.Component;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.TreeSet;
 import java.util.logging.Logger;
 
 @Component
