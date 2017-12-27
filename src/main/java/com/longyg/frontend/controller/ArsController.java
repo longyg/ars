@@ -62,7 +62,7 @@ public class ArsController {
     @Autowired
     private ArsGenerator arsGenerator;
 
-    @RequestMapping("/ars")
+    @RequestMapping("/api/ars")
     public List<ARS> listArs() {
         List<ARS> list = arsRepository.findAll();
         return list;
