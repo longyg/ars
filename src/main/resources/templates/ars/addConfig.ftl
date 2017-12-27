@@ -38,7 +38,7 @@
                     </div>
                 </div>
                 <hr/>
-                <h4>Interfaces</h4>
+                <h4><span class="glyphicon glyphicon-link"></span> Interfaces</h4>
                 <div class="form-group">
                     <label class="col-sm-3 control-label" for="interfaceSelect" >Interfaces</label>
                     <div class="col-sm-9">
@@ -79,7 +79,7 @@
                     </div>
                 </div>
                 <hr/>
-                <h4>Resources</h4>
+                <h4><span class="glyphicon glyphicon-link"></span> Resources</h4>
                 <div class="form-group">
                     <label class="col-sm-3 control-label" for="adapIdSelect" >Adaptation ID</label>
                     <div class="col-sm-9">
@@ -141,7 +141,7 @@
                 </div>
 
                 <hr/>
-                <h4>Parent Hierarchy</h4>
+                <h4><span class="glyphicon glyphicon-link"></span> Parent Hierarchy</h4>
                 <div class="form-group">
                     <label class="col-sm-3 control-label" for="parentAdapIdSelect" >Adaptation ID</label>
                     <div class="col-sm-9">
@@ -201,8 +201,18 @@
                 </div>
 
                 <hr/>
-                <h4>Object Load</h4>
+                <h4><span class="glyphicon glyphicon-link"></span> Object Load</h4>
                 <div class="form-group">
+                    <label class="col-sm-3 control-label">Add Object Load</label>
+                    <div class="col-sm-9">
+                        <div class="row form-group">
+                            <div class="col-sm-3" id="loadAddBtnDiv">
+                                <button id="loadAddBtn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#createNETypeFromModal"><span class="glyphicon glyphicon-plus"></span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group" id="parentTable">
                     <label class="col-sm-3 control-label">Object Load Setting</label>
                     <div class="col-sm-9">
                         <table class="table table-bordered">
@@ -233,6 +243,57 @@
     </div>
 
     <#include "/inc/footer.ftl" />
+</div>
+
+<div class="modal fade" id="createNETypeFromModal" tabindex="-1" role="dialog"
+     aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close"
+                        data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">
+                    Add Object Load
+                </h4>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="modal-body">
+
+                <form class="form-horizontal" role="form" action="/netype/add" method="post">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th><input type="checkbox" id="selectAll" /></th>
+                            <th>Object Class</th>
+                            <th>Object Number</th>
+                            <th>Related Object Class</th>
+                        </tr>
+                        </thead>
+                        <tbody id="olTableBody">
+                        </tbody>
+                    </table>
+                    <img src="/image/loading.gif">
+
+                    <div class="form-group">
+                        <div class="col-sm-offset-3 col-sm-10">
+                            <button type="submit" class="btn btn-primary">Save</button>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="modal-footer">
+
+            </div>
+        </div>
+    </div>
 </div>
 
 <script src="/js/jquery-1.9.1.min.js"></script>
