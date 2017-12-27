@@ -4,12 +4,13 @@ import com.longyg.backend.adaptation.main.AdaptationRepository;
 import com.longyg.backend.adaptation.pm.*;
 import com.longyg.frontend.model.ars.ArsConfig;
 import com.longyg.frontend.model.config.GlobalObject;
-import org.apache.log4j.Logger;
+import com.longyg.frontend.model.config.ObjectLoad;
 
 import java.util.*;
+import java.util.logging.Logger;
 
 public class PmbObjectRepository {
-    private static final Logger LOG = Logger.getLogger(PmbObjectRepository.class);
+    private static final Logger LOG = Logger.getLogger(PmbObjectRepository.class.getName());
 
     // key: adaptation Id
     // value: all releases' object of specific adaptation id
@@ -21,6 +22,8 @@ public class PmbObjectRepository {
 
     private List<GlobalObject> globalObjects;
 
+    private List<ObjectLoad> objectLoads;
+
     public Map<String, List<PmbObject>> getAllReleaseObjects() {
         return allReleaseObjects;
     }
@@ -29,15 +32,155 @@ public class PmbObjectRepository {
         this.allReleaseObjects = allReleaseObjects;
     }
 
-    public PmbObjectRepository(AdaptationRepository adaptationRepository, ArsConfig config, List<GlobalObject> globalObjects) {
+    public PmbObjectRepository(AdaptationRepository adaptationRepository, ArsConfig config, List<GlobalObject> globalObjects, List<ObjectLoad> objectLoads) {
         this.adaptationRepository = adaptationRepository;
         this.config = config;
         this.globalObjects = globalObjects;
+        this.objectLoads = objectLoads;
     }
 
     public void init() throws Exception {
         createPmbObjectFromPmb();
+
         addParentObject();
+
+        setObjectsDN();
+
+        setObjectLoad();
+    }
+
+    private void setObjectsDN() {
+        Map<String, List<PmbObject>> rootObjectMap = getRootObjects();
+        for (List<PmbObject> rootList : rootObjectMap.values()) {
+            for (PmbObject root : rootList) {
+                setDn(root);
+                setChildObjectsDN(root);
+            }
+        }
+    }
+
+    private void setChildObjectsDN(PmbObject obj) {
+        for (PmbObject child : obj.getChildObjects()) {
+            setDn(child);
+            setChildObjectsDN(child);
+        }
+    }
+
+    private void setDn(PmbObject obj) {
+        if (null == obj.getParentObjects() || obj.getParentObjects().size() < 1) {
+            obj.setDn(obj.getName());
+        } else {
+            // multiple parent is not handled
+            PmbObject parent = obj.getParentObjects().get(0);
+            obj.setDn(parent.getDn() + "/" + obj.getName());
+        }
+    }
+
+    private void setObjectLoad() throws Exception {
+        Map<String, List<PmbObject>> rootObjectMap = getRootObjects();
+        for (List<PmbObject> rootList : rootObjectMap.values()) {
+            for (PmbObject root : rootList) {
+                setObjectNumbers(root);
+                setObjectNumbersForChildObjects(root);
+            }
+        }
+    }
+
+    private void setObjectNumbersForChildObjects(PmbObject parent) throws Exception {
+        for (PmbObject child : parent.getChildObjects()) {
+            setObjectNumbers(child);
+            setObjectNumbersForChildObjects(child);
+        }
+    }
+
+    private PmbObject getParentObject(PmbObject obj) throws Exception {
+        if (null == obj.getParentObjects() || obj.getParentObjects().size() < 1) {
+            return null;
+        }
+        PmbObject parentObj = null;
+        for (PmbObject parent : obj.getParentObjects()) {
+            if (obj.getDn().startsWith(parent.getDn())) {
+                parentObj = parent;
+                break;
+            }
+        }
+        if (null == parentObj) {
+            throw new Exception("No suitable parent object");
+        } else {
+            return parentObj;
+        }
+    }
+
+    private void setObjectNumbers(PmbObject obj) throws Exception {
+        int avgPerNE = 1;
+        int maxPerNE = 1;
+        PmbObject parentObj = getParentObject(obj);
+        if (null != parentObj) {
+            avgPerNE = 1 * parentObj.getAvg();
+            maxPerNE = 1 * parentObj.getMax();
+        }
+        int avgPerNet;
+        int maxPerNet;
+        int maxPerRoot = 1;
+        for (ObjectLoad load : objectLoads) {
+            if (load.getObjectClass().equals(obj.getName())) {
+                if (load.getRelatedObjectClass() == null || "".equals(load.getRelatedObjectClass()))
+                // root
+                {
+                    maxPerNE = load.getMax();
+                    avgPerNE = load.getAvg();
+                    maxPerRoot = load.getMax();
+                }
+                else
+                // non-root
+                {
+                    PmbObject relatedObj = findRelatedObject(obj, load.getRelatedObjectClass());
+                    if (null != relatedObj) {
+                        maxPerNE = load.getMax() * relatedObj.getMax();
+                        avgPerNE = load.getAvg() * relatedObj.getAvg();
+                        maxPerRoot = load.getMax();
+                    }
+                }
+            }
+        }
+
+        maxPerNet = maxPerNE * config.getMaxNePerNet();
+        avgPerNet = avgPerNE * config.getAvgNePerNet();
+
+        obj.setMin(1);
+        obj.setMax(maxPerNE);
+        obj.setAvg(avgPerNE);
+        obj.setMaxPerNet(maxPerNet);
+        obj.setAvgPerNet(avgPerNet);
+        obj.setMaxPerNE(maxPerNE);
+        obj.setMaxNePerNet(config.getMaxNePerNet());
+        obj.setAvgNePerNet(config.getAvgNePerNet());
+        obj.setMaxPerRoot(maxPerRoot);
+    }
+
+    private PmbObject findRelatedObject(PmbObject object, String name) {
+        for (List<PmbObject> list : allReleaseObjects.values()) {
+            for (PmbObject obj : list) {
+                if (obj.getName().equals(name) && isDescendant(object, name)) {
+                    return obj;
+                }
+            }
+        }
+        return null;
+    }
+
+    // is object is descendant of object with name
+    private boolean isDescendant(PmbObject object, String name) {
+        boolean descendant = false;
+        String dn = object.getDn();
+        String[] clazz = dn.split("/");
+        for (String clz : clazz) {
+            if (clz.equals(name)) {
+                descendant = true;
+                break;
+            }
+        }
+        return descendant;
     }
 
     private void addParentObject() throws Exception {
@@ -56,6 +199,7 @@ public class PmbObjectRepository {
                         throw new Exception("Parent Object class '" + lastClass + "' is not defined.");
                     }
                     PmbObject pmbObject = new PmbObject();
+                    pmbObject.setAdditional(true);
                     pmbObject.setName(lastClass);
                     pmbObject.setNameInOmes(globalObject.getNameInOMeS());
                     pmbObject.setPresentation(globalObject.getPresentation());
@@ -110,6 +254,7 @@ public class PmbObjectRepository {
         }
 
         PmbObject pmbObject = new PmbObject();
+        pmbObject.setAdditional(true);
         pmbObject.setName(lastClass);
         pmbObject.setNameInOmes(globalObject.getNameInOMeS());
         pmbObject.setPresentation(globalObject.getPresentation());
@@ -126,7 +271,7 @@ public class PmbObjectRepository {
     }
 
     public Map<String, List<PmbObject>> getRootObjects() {
-        Map<String, List<PmbObject>> rootObjectMap = new HashMap<String, List<PmbObject>>();
+        Map<String, List<PmbObject>> rootObjectMap = new HashMap<>();
         for (Map.Entry<String, List<PmbObject>> entry : allReleaseObjects.entrySet()) {
             String adaptationId = entry.getKey();
             List<PmbObject> rootObjects = new ArrayList<>();
@@ -202,6 +347,10 @@ public class PmbObjectRepository {
         if (null != parentObj) {
             parentObj.addChildObject(pmbObject);
             pmbObject.addParentObject(parentObj);
+
+            pmbObject.setOriginalDn(parentObj.getOriginalDn() + "/" + pmbObject.getName());
+        } else {
+            pmbObject.setOriginalDn(pmbObject.getName());
         }
         if (null == childHierarchy || "".equals(childHierarchy)) {
             pmbObject.setMeasuredObject(true);
@@ -248,7 +397,7 @@ public class PmbObjectRepository {
             pmbObject = new PmbObject();
             ObjectClass classDef = findPmClassDefinition(clazz, objectClasses);
             if (null == classDef) {
-                LOG.error("Can't find PM class: " + clazz);
+                LOG.severe("Can't find PM class: " + clazz);
                 throw new Exception("Can't find PM class: " + clazz + ". Please check your adaptation");
             }
             pmbObject.setName(classDef.getName());
@@ -260,8 +409,6 @@ public class PmbObjectRepository {
         pmbObject.addDimension(dimension);
         return pmbObject;
     }
-
-
 
     private ObjectClass findPmClassDefinition(String clazz, List<ObjectClass> pmClasses) {
         for (ObjectClass objectClass : pmClasses) {

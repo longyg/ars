@@ -16,11 +16,26 @@ public class PmbObject implements Comparable<PmbObject> {
     private boolean isTransient;
     private String presentation;
     private boolean isMeasuredObject;
+    private String dn;
+    private String originalDn;
 
     private List<String> supporteredVersions = new ArrayList<>();
     private List<String> dimensions = new ArrayList<>();
     private List<PmbObject> childObjects = new ArrayList<>();
     private List<PmbObject> parentObjects = new ArrayList<>();
+
+    // object load
+    private int min;
+    private int max;
+    private int avg;
+    private int avgPerNet;
+    private int maxPerNet;
+    private int maxPerNE;
+    private int maxNePerNet;
+    private int avgNePerNet;
+    private int maxPerRoot;
+
+    private boolean isAdditional;
 
     public void addSupportedVersion(String version) {
         if (!supporteredVersions.contains(version)) {
@@ -53,6 +68,14 @@ public class PmbObject implements Comparable<PmbObject> {
                 ", supporteredVersions=" + supporteredVersions +
                 ", childObjects=" + childObjects +
                 '}';
+    }
+
+    public String getOriginalDn() {
+        return originalDn;
+    }
+
+    public void setOriginalDn(String originalDn) {
+        this.originalDn = originalDn;
     }
 
     public String getId() {
@@ -119,6 +142,14 @@ public class PmbObject implements Comparable<PmbObject> {
         return supporteredVersions;
     }
 
+    public String getDn() {
+        return dn;
+    }
+
+    public void setDn(String dn) {
+        this.dn = dn;
+    }
+
     public void setSupporteredVersions(List<String> supporteredVersions) {
         this.supporteredVersions = supporteredVersions;
     }
@@ -137,6 +168,87 @@ public class PmbObject implements Comparable<PmbObject> {
 
     public void setParentObjects(List<PmbObject> parentObjects) {
         this.parentObjects = parentObjects;
+    }
+
+    public int getMin() {
+        return min;
+    }
+
+    public void setMin(int min) {
+        this.min = min;
+    }
+
+    public int getMax() {
+        return max;
+    }
+
+    public void setMax(int max) {
+        this.max = max;
+    }
+
+    public int getAvg() {
+        return avg;
+    }
+
+    public void setAvg(int avg) {
+        this.avg = avg;
+    }
+
+    public int getAvgPerNet() {
+        return avgPerNet;
+    }
+
+    public void setAvgPerNet(int avgPerNet) {
+        this.avgPerNet = avgPerNet;
+    }
+
+    public int getMaxPerNet() {
+        return maxPerNet;
+    }
+
+    public void setMaxPerNet(int maxPerNet) {
+        this.maxPerNet = maxPerNet;
+    }
+
+    public int getMaxPerNE() {
+        return maxPerNE;
+    }
+
+    public void setMaxPerNE(int maxPerNE) {
+        this.maxPerNE = maxPerNE;
+    }
+
+    public int getMaxNePerNet() {
+        return maxNePerNet;
+    }
+
+    public void setMaxNePerNet(int maxNePerNet) {
+        this.maxNePerNet = maxNePerNet;
+    }
+
+    public int getAvgNePerNet() {
+        return avgNePerNet;
+    }
+
+    public void setAvgNePerNet(int avgNePerNet) {
+        this.avgNePerNet = avgNePerNet;
+    }
+
+
+    public int getMaxPerRoot() {
+        return maxPerRoot;
+    }
+
+    public void setMaxPerRoot(int maxPerRoot) {
+        this.maxPerRoot = maxPerRoot;
+    }
+
+    public boolean isAdditional() {
+        return isAdditional;
+    }
+
+    public void setAdditional(boolean additional) {
+        isAdditional = additional;
     }
 
     @Override

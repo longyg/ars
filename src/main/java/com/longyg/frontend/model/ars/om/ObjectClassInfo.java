@@ -29,11 +29,14 @@ public class ObjectClassInfo implements Comparable {
     private int maxPerNE;
     private int maxNePerNet;
     private int avgNePerNet;
+    private int maxPerRoot;
     private boolean mocrNeeded;
     private String comment;
-    private List<String> supporteredVersions = new ArrayList<String>();
-    private List<String> dimensions = new ArrayList<String>();
+    private List<String> supporteredVersions = new ArrayList<>();
+    private List<String> dimensions = new ArrayList<>();
     private String supportedReleases;
+    private String dn;
+    private String originalDn;
 
     public int getRow() {
         return row;
@@ -219,6 +222,14 @@ public class ObjectClassInfo implements Comparable {
         this.avgNePerNet = avgNePerNet;
     }
 
+    public int getMaxPerRoot() {
+        return maxPerRoot;
+    }
+
+    public void setMaxPerRoot(int maxPerRoot) {
+        this.maxPerRoot = maxPerRoot;
+    }
+
     public boolean isMocrNeeded() {
         return mocrNeeded;
     }
@@ -237,6 +248,22 @@ public class ObjectClassInfo implements Comparable {
 
     public List<String> getSupporteredVersions() {
         return supporteredVersions;
+    }
+
+    public String getDn() {
+        return dn;
+    }
+
+    public void setDn(String dn) {
+        this.dn = dn;
+    }
+
+    public String getOriginalDn() {
+        return originalDn;
+    }
+
+    public void setOriginalDn(String originalDn) {
+        this.originalDn = originalDn;
     }
 
     public void setSupporteredVersions(List<String> supporteredVersions) {

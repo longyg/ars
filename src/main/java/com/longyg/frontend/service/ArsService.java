@@ -1,11 +1,18 @@
 package com.longyg.frontend.service;
 
+import com.longyg.backend.adaptation.pm.PmDataLoadRepository;
 import com.longyg.frontend.model.ars.ARS;
 import com.longyg.frontend.model.ars.ArsConfig;
 import com.longyg.frontend.model.ars.ArsConfigRepository;
 import com.longyg.frontend.model.ars.ArsRepository;
+import com.longyg.frontend.model.ars.alarm.AlarmRepository;
+import com.longyg.frontend.model.ars.alarm.AlarmSpec;
+import com.longyg.frontend.model.ars.counter.CounterRepository;
+import com.longyg.frontend.model.ars.counter.CounterSpec;
 import com.longyg.frontend.model.ars.om.ObjectModelSpec;
 import com.longyg.frontend.model.ars.om.OmRepository;
+import com.longyg.frontend.model.ars.pm.PmDataLoadSpec;
+import com.longyg.frontend.model.ars.pm.PmRepository;
 import com.longyg.frontend.model.ars.us.UsRepository;
 import com.longyg.frontend.model.ars.us.UserStorySpec;
 import com.longyg.frontend.model.ne.NeRelease;
@@ -28,6 +35,15 @@ public class ArsService {
 
     @Autowired
     private ArsRepository arsRepository;
+
+    @Autowired
+    private PmRepository pmRepository;
+
+    @Autowired
+    private CounterRepository counterRepository;
+
+    @Autowired
+    private AlarmRepository alarmRepository;
 
     public ArsConfig findArsConfig(NeRelease neRelease) {
         if (null == neRelease) {
@@ -57,6 +73,51 @@ public class ArsService {
             return null;
         }
         Optional<ObjectModelSpec> opt = omRepository.findById(id);
+        if (opt.isPresent()) {
+            return opt.get();
+        }
+        return null;
+    }
+
+    public PmDataLoadSpec savePmDataLoad(PmDataLoadSpec spec) {
+        return pmRepository.save(spec);
+    }
+
+    public PmDataLoadSpec findPmDL(String id) {
+        if (null == id) {
+            return null;
+        }
+        Optional<PmDataLoadSpec> opt = pmRepository.findById(id);
+        if (opt.isPresent()) {
+            return opt.get();
+        }
+        return null;
+    }
+
+    public CounterSpec saveCounter(CounterSpec spec) {
+        return counterRepository.save(spec);
+    }
+
+    public CounterSpec findCounter(String id) {
+        if (null == id) {
+            return null;
+        }
+        Optional<CounterSpec> opt = counterRepository.findById(id);
+        if (opt.isPresent()) {
+            return opt.get();
+        }
+        return null;
+    }
+
+    public AlarmSpec saveAlarm(AlarmSpec spec) {
+        return alarmRepository.save(spec);
+    }
+
+    public AlarmSpec findAlarm(String id) {
+        if (null == id) {
+            return null;
+        }
+        Optional<AlarmSpec> opt = alarmRepository.findById(id);
         if (opt.isPresent()) {
             return opt.get();
         }

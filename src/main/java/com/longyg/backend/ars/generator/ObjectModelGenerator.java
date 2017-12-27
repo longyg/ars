@@ -8,8 +8,8 @@ import com.longyg.frontend.Utils.IntHolder;
 import com.longyg.frontend.model.ars.ArsConfig;
 import com.longyg.frontend.model.ars.om.ObjectClassInfo;
 import com.longyg.frontend.model.ars.om.ObjectModelSpec;
-import com.longyg.frontend.model.config.AdaptationResource;
 import com.longyg.frontend.model.config.GlobalObject;
+import com.longyg.frontend.model.config.ObjectLoad;
 import com.longyg.frontend.model.ne.NeType;
 import com.longyg.frontend.service.ArsService;
 import com.longyg.frontend.service.ConfigService;
@@ -37,19 +37,19 @@ public class ObjectModelGenerator {
 
     private PmbObjectRepository pmbObjectRepository;
 
-    public String generateAndSave(ArsConfig config, AdaptationRepository adaptationRepository) throws Exception {
+    public ObjectModelSpec generateAndSave(ArsConfig config, AdaptationRepository adaptationRepository) throws Exception {
         this.config = config;
         this.adaptationRepository = adaptationRepository;
 
         initRepository();
 
-        ObjectModelSpec spec = generateAndSave();
-        return spec.getId();
+        return generateAndSave();
     }
 
     private void initRepository() throws Exception {
         List<GlobalObject> globalObjects = configService.findGlobalObjects();
-        pmbObjectRepository = new PmbObjectRepository(adaptationRepository, config, globalObjects);
+        List<ObjectLoad> objectLoads = configService.findObjectLoads(config.getLoadIds());
+        pmbObjectRepository = new PmbObjectRepository(adaptationRepository, config, globalObjects, objectLoads);
         pmbObjectRepository.init();
     }
 
@@ -141,12 +141,31 @@ public class ObjectModelGenerator {
         //oci.setCmObject(false);
         //oci.setHasIcon(false);
         //oci.setHasGuiLuanch(false);
-        oci.setAdaptationId(adaptationId);
+
+        // objects per Network Element
+        oci.setAvg(pmbObject.getAvg());
+        oci.setMin(1);
+        oci.setMax(pmbObject.getMax());
+
+        // NEs per Network
+        oci.setAvgNePerNet(pmbObject.getAvgNePerNet());
+        oci.setMaxNePerNet(pmbObject.getMaxNePerNet());
+
+        oci.setAvgPerNet(pmbObject.getAvgPerNet());
+        oci.setMaxPerNet(pmbObject.getMaxPerNet());
+
+        oci.setMaxPerNE(pmbObject.getMaxPerNE());
+
+        oci.setMaxPerRoot(pmbObject.getMaxPerRoot());
+
+        oci.setAdaptationId(pmbObject.isAdditional() ? "" : adaptationId);
         oci.setNameInOmes(pmbObject.getNameInOmes());
         oci.setMeasuredObject(pmbObject.isMeasuredObject());
         oci.setPresentation(pmbObject.getPresentation());
         oci.setTransient(pmbObject.isTransient());
         oci.setSupporteredVersions(pmbObject.getSupporteredVersions());
+        oci.setDn(pmbObject.getDn());
+        oci.setOriginalDn(pmbObject.getOriginalDn());
 
         spec.addObjectClassInfo(adaptationId, oci);
     }

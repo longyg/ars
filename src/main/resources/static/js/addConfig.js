@@ -2,6 +2,7 @@ $(document).ready(function() {
     $("#srcAddBtnDiv").hide();
     $("#ifaceAddBtnDiv").hide();
     $("#parentAddBtnDiv").hide();
+    $("#loadAddBtnDiv").hide();
 
    $("#adapIdSelect").change(function(e) {
        $("#srcAddBtnDiv").hide();
@@ -133,6 +134,43 @@ $(document).ready(function() {
                     $("#parentTableBody").append("<tr>\n" +
                         "                            <td>" + $("#parentAdapIdSelect").val() + "</td>\n" +
                         "                            <td>" + $("#parent").val() + "</td>\n" +
+                        "                            <td>Delete</td>\n" +
+                        "                          </tr>")
+                }
+            }
+        });
+    });
+
+    $("#loadSelect").change(function(e) {
+        $this = $(e.target);
+        if ("" != $this.val()) {
+            $("#loadAddBtnDiv").show();
+        } else {
+            $("#loadAddBtnDiv").hide();
+        }
+    });
+
+    $("#loadAddBtn").click(function(e) {
+        e.preventDefault();
+        if ($("#loadSelect").val() == "") {
+            alert("Please select object load");
+        }
+        $.ajax({
+            type: "post",
+            url: "/ars/addLoad",
+            data: {
+                neTypeId: $("input[name='neTypeId']").val(),
+                neRelId: $("input[name='neRelId']").val(),
+                loadId: $("#loadSelect").val()
+            },
+            success: function(data, status) {
+                if (data.status == "ok") {
+                    var load = data.data;
+                    $("#olTableBody").append("<tr>\n" +
+                        "                            <td>" + load.objectClass + "</td>\n" +
+                        "                            <td>" + load.max + "</td>\n" +
+                        "                            <td>" + load.avg + "</td>\n" +
+                        "                            <td>" + load.relatedObjectClass + "</td>\n" +
                         "                            <td>Delete</td>\n" +
                         "                          </tr>")
                 }

@@ -188,12 +188,12 @@
                             </tr>
                             </thead>
                             <tbody id="parentTableBody">
-                            <#list supportedResources as src>
-                            <tr>
-                                <td>${src.adaptation.id}</td>
-                                <td>${src.adaptation.release}</td>
-                                <td>Delete</td>
-                            </tr>
+                            <#list supportedParents as adapId, parent>
+                                <tr>
+                                    <td>${adapId}</td>
+                                    <td>${parent}</td>
+                                    <td>Delete</td>
+                                </tr>
                             </#list>
                             </tbody>
                         </table>
@@ -203,23 +203,47 @@
                 <hr/>
                 <h4><span class="glyphicon glyphicon-link"></span> Object Load</h4>
                 <div class="form-group">
+<<<<<<< HEAD
                     <label class="col-sm-3 control-label">Add Object Load</label>
                     <div class="col-sm-9">
                         <div class="row form-group">
                             <div class="col-sm-3" id="loadAddBtnDiv">
                                 <button id="loadAddBtn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#createNETypeFromModal"><span class="glyphicon glyphicon-plus"></span></button>
+=======
+                    <label class="col-sm-3 control-label" for="loadSelect" >Object Load</label>
+                    <div class="col-sm-9">
+                        <div class="row form-group">
+                            <div class="col-sm-6">
+                                <select class="form-control" name="load" id="loadSelect">
+                                    <option value="">--Select--</option>
+                                <#list selectableLoads as load>
+                                    <option value="${load.id}">
+                                        ${load.objectClass}:${load.relatedObjectClass} [Max:${load.max}, Avg:${load.avg}]
+                                    </option>
+                                </#list>
+                                </select>
+                            </div>
+                            <div class="col-sm-3" id="loadAddBtnDiv">
+                                <button id="loadAddBtn" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span></button>
+>>>>>>> 9a1101b25aedaeb9915f780bd99b5e62bcd23d0f
                             </div>
                         </div>
                     </div>
                 </div>
+<<<<<<< HEAD
                 <div class="form-group" id="parentTable">
                     <label class="col-sm-3 control-label">Object Load Setting</label>
+=======
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Selected Object Load</label>
+>>>>>>> 9a1101b25aedaeb9915f780bd99b5e62bcd23d0f
                     <div class="col-sm-9">
                         <table class="table table-bordered">
                             <thead>
                             <tr>
                                 <th>Object Class</th>
-                                <th>Object Number</th>
+                                <th>Max</th>
+                                <th>Avg</th>
                                 <th>Related Object Class</th>
                                 <th>Operations</th>
                             </tr>
@@ -228,7 +252,8 @@
                             <#list supportedLoads as load>
                             <tr>
                                 <td>${load.objectClass}</td>
-                                <td>${load.objectNumber}</td>
+                                <td>${load.max}</td>
+                                <td>${load.avg}</td>
                                 <td>${load.relatedObjectClass}</td>
                                 <td>Delete</td>
                             </tr>

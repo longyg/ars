@@ -32,9 +32,6 @@ public class ConfigController {
     @Autowired
     private ConfigService configService;
 
-    @Autowired
-    private NeService neService;
-
     @RequestMapping("/interface")
     public ModelAndView listInterface() {
         List<InterfaceObject> interfaceList = interfaceRepository.findAll();
@@ -127,7 +124,7 @@ public class ConfigController {
         boolean exist = false;
         for (ObjectLoad ol : olList) {
             if (ol.getObjectClass().equals(objectLoad.getObjectClass())
-                    && ol.getObjectNumber() == objectLoad.getObjectNumber()
+                    && ol.getMax() == objectLoad.getMax() && ol.getAvg() == objectLoad.getAvg()
                     && ol.getRelatedObjectClass().equals(objectLoad.getRelatedObjectClass())) {
                 exist = true;
             }
@@ -135,6 +132,12 @@ public class ConfigController {
         if (!exist) {
             configService.saveObjectLoad(objectLoad);
         }
+        return "redirect:/ol";
+    }
+
+    @RequestMapping(value = "/ol/delete")
+    public String deleteOl(@RequestParam String id) {
+        configService.deleteLoad(id);
         return "redirect:/ol";
     }
 }

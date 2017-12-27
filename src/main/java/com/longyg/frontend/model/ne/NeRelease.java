@@ -9,6 +9,8 @@ public class NeRelease {
     private String id;
     private String neType;
     private String neVersion;
+    private int maxPerNet;
+    private int avgPerNet;
     private String remarks;
 
     public NeRelease() {
@@ -55,6 +57,22 @@ public class NeRelease {
 
     public void setRemarks(String remarks) {
         this.remarks = remarks;
+    }
+
+    public int getMaxPerNet() {
+        return maxPerNet;
+    }
+
+    public void setMaxPerNet(int maxPerNet) {
+        this.maxPerNet = maxPerNet;
+    }
+
+    public int getAvgPerNet() {
+        return avgPerNet;
+    }
+
+    public void setAvgPerNet(int avgPerNet) {
+        this.avgPerNet = avgPerNet;
     }
 
     @Override

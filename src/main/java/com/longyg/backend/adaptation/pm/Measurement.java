@@ -13,8 +13,8 @@ public class Measurement implements Comparable<Measurement> {
     private String description;
     private String interval;
 
-    private List<MeasuredTarget> measuredTargets = new ArrayList<MeasuredTarget>();
-    private List<Counter> counters = new ArrayList<Counter>();
+    private List<MeasuredTarget> measuredTargets = new ArrayList<>();
+    private List<Counter> counters = new ArrayList<>();
 
     public void addCounter(Counter counter) {
         if (!counters.contains(counter)) {

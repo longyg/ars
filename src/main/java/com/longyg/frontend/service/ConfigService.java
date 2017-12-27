@@ -78,4 +78,22 @@ public class ConfigService {
         }
         return null;
     }
+
+    public List<ObjectLoad> findObjectLoads(List<String> ids) {
+        List<ObjectLoad> loads = new ArrayList<>();
+        for (String id : ids) {
+            ObjectLoad load = findObjectLoad(id);
+            if (null != load && !loads.contains(load)) {
+                loads.add(load);
+            }
+        }
+        return loads;
+    }
+
+    public void deleteLoad(String id) {
+        if (null == id) {
+            return;
+        }
+        objectLoadRepository.deleteById(id);
+    }
 }

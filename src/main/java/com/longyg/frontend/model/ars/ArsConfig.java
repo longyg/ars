@@ -20,6 +20,11 @@ public class ArsConfig {
     private List<String> resources = new ArrayList<>();
     private List<String> loadIds = new ArrayList<>();
 
+    private int maxNePerNet;
+    private int avgNePerNet;
+
+    private String lastVersion;
+
     public String getId() {
         return id;
     }
@@ -84,6 +89,30 @@ public class ArsConfig {
         this.loadIds = loadIds;
     }
 
+    public int getMaxNePerNet() {
+        return maxNePerNet;
+    }
+
+    public void setMaxNePerNet(int maxNePerNet) {
+        this.maxNePerNet = maxNePerNet;
+    }
+
+    public int getAvgNePerNet() {
+        return avgNePerNet;
+    }
+
+    public void setAvgNePerNet(int avgNePerNet) {
+        this.avgNePerNet = avgNePerNet;
+    }
+
+    public String getLastVersion() {
+        return lastVersion;
+    }
+
+    public void setLastVersion(String lastVersion) {
+        this.lastVersion = lastVersion;
+    }
+
     public boolean addResource(String srcId) {
         if (!resources.contains(srcId)) {
             resources.add(srcId);
@@ -104,6 +133,14 @@ public class ArsConfig {
         String adapId = adaptationId.replaceAll("\\.", "_");
         if (!parents.containsKey(adapId)) {
             parents.put(adapId, parent);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean addObjectLoad(String loadId) {
+        if (!loadIds.contains(loadId)) {
+            loadIds.add(loadId);
             return true;
         }
         return false;

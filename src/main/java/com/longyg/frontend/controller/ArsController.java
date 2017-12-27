@@ -1,9 +1,13 @@
 package com.longyg.frontend.controller;
 
-import com.longyg.backend.adaptation.main.ResourceRepository;
 import com.longyg.backend.ars.generator.ArsGenerator;
+import com.longyg.backend.ars.generator.UsGenerator;
 import com.longyg.frontend.model.ars.*;
+import com.longyg.frontend.model.ars.alarm.AlarmSpec;
+import com.longyg.frontend.model.ars.counter.CounterSpec;
 import com.longyg.frontend.model.ars.om.ObjectModelSpec;
+import com.longyg.frontend.model.ars.pm.ArsMeasurement;
+import com.longyg.frontend.model.ars.pm.PmDataLoadSpec;
 import com.longyg.frontend.model.ars.us.UsRepository;
 import com.longyg.frontend.model.ars.us.UserStorySpec;
 import com.longyg.frontend.model.config.*;
@@ -15,18 +19,16 @@ import com.longyg.frontend.model.response.AjaxResponse;
 import com.longyg.frontend.service.ArsService;
 import com.longyg.frontend.service.ConfigService;
 import com.longyg.frontend.service.NeService;
-import org.apache.xmlbeans.impl.xb.xmlconfig.Extensionconfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.swing.text.html.Option;
 import java.util.*;
 import java.util.logging.Logger;
 
-@Controller
+@RestController
 public class ArsController {
     private static final Logger LOG = Logger.getLogger(ArsController.class.getName());
 
@@ -60,7 +62,13 @@ public class ArsController {
     @Autowired
     private ArsGenerator arsGenerator;
 
-    @RequestMapping("/ars")
+    @RequestMapping("/api/ars")
+    public List<ARS> listArs() {
+        List<ARS> list = arsRepository.findAll();
+        return list;
+    }
+
+    @RequestMapping("/ars1")
     public ModelAndView list(HttpServletRequest request) {
         String neTypeId = request.getParameter("neTypeId");
 
@@ -106,9 +114,15 @@ public class ArsController {
         ArsConfig arsConfig = findArsConfig(neRelId);
         if (null != arsConfig)
         {
-            try {
+            try
+            {
+                NeRelease neRelease = neService.findRelease(neRelId);
+                arsConfig.setMaxNePerNet(neRelease.getMaxPerNet());
+                arsConfig.setAvgNePerNet(neRelease.getAvgPerNet());
                 arsGenerator.generateAndSave(arsConfig);
-            } catch (Exception e) {
+            }
+            catch (Exception e)
+            {
                 LOG.severe("Exception while generating ARS: ");
                 e.printStackTrace();
             }
@@ -140,6 +154,69 @@ public class ArsController {
         params.put("neType", neType);
 
         return new ModelAndView("ars/viewOm", params);
+    }
+
+    @RequestMapping("/ars/viewPmDL")
+    public ModelAndView viewPmDataLoad(@RequestParam String id, @RequestParam String neTypeId) {
+        Map<String, Object> params = new HashMap<>();
+
+        NeType neType = neService.findNeType(neTypeId);
+        PmDataLoadSpec spec = arsService.findPmDL(id);
+
+        List<String> adaps = new ArrayList<>();
+        for (String adaptationId : neType.getAdaptSet()) {
+            String adap = adaptationId.replaceAll("\\.", "_");
+            adaps.add(adap);
+        }
+        neType.setAdaptSet(adaps);
+
+        params.put("spec", spec);
+        params.put("neTypeId", neTypeId);
+        params.put("neType", neType);
+
+        return new ModelAndView("ars/viewPmDL", params);
+    }
+
+    @RequestMapping("/ars/viewCounter")
+    public ModelAndView viewCounter(@RequestParam String id, @RequestParam String neTypeId) {
+        Map<String, Object> params = new HashMap<>();
+
+        NeType neType = neService.findNeType(neTypeId);
+        CounterSpec spec = arsService.findCounter(id);
+
+        List<String> adaps = new ArrayList<>();
+        for (String adaptationId : neType.getAdaptSet()) {
+            String adap = adaptationId.replaceAll("\\.", "_");
+            adaps.add(adap);
+        }
+        neType.setAdaptSet(adaps);
+
+        params.put("spec", spec);
+        params.put("neTypeId", neTypeId);
+        params.put("neType", neType);
+
+        return new ModelAndView("ars/viewCounter", params);
+    }
+
+    @RequestMapping("/ars/viewAlarm")
+    public ModelAndView viewAlarm(@RequestParam String id, @RequestParam String neTypeId) {
+        Map<String, Object> params = new HashMap<>();
+
+        NeType neType = neService.findNeType(neTypeId);
+        AlarmSpec spec = arsService.findAlarm(id);
+
+        List<String> adaps = new ArrayList<>();
+        for (String adaptationId : neType.getAdaptSet()) {
+            String adap = adaptationId.replaceAll("\\.", "_");
+            adaps.add(adap);
+        }
+        neType.setAdaptSet(adaps);
+
+        params.put("spec", spec);
+        params.put("neTypeId", neTypeId);
+        params.put("neType", neType);
+
+        return new ModelAndView("ars/viewAlarm", params);
     }
 
     @RequestMapping("/ars/setConfig")
@@ -196,21 +273,29 @@ public class ArsController {
                 }
             }
         }
-
         params.put("supportedResources", supportedResources);
 
-        List<String> loadIds = arsConfig.getLoadIds();
+        Map<String, String> supportedParents = new HashMap<>();
+        if (null != arsConfig) {
+            supportedParents = arsConfig.getParents();
+        }
+        params.put("supportedParents", supportedParents);
+
+
         List<ObjectLoad> supportedLoads = new ArrayList<>();
-        for (String loadId : loadIds) {
-            ObjectLoad objectLoad = configService.findObjectLoad(loadId);
-            if (objectLoad != null) {
-                supportedLoads.add(objectLoad);
+        if (null != arsConfig) {
+            List<String> loadIds = arsConfig.getLoadIds();
+            for (String loadId : loadIds) {
+                ObjectLoad objectLoad = configService.findObjectLoad(loadId);
+                if (objectLoad != null) {
+                    supportedLoads.add(objectLoad);
+                }
             }
         }
-
         params.put("supportedLoads", supportedLoads);
 
         List<ObjectLoad> selectableLoads = new ArrayList<>();
+<<<<<<< HEAD
         List<ObjectLoad> allLoads = configService.findObjectLoads();
         for (ObjectLoad load : allLoads) {
             boolean isSupported = false;
@@ -225,6 +310,20 @@ public class ArsController {
             }
         }
 
+=======
+        for (ObjectLoad load : configService.findObjectLoads()) {
+            boolean supported = false;
+            for (ObjectLoad ld : supportedLoads) {
+                if (ld.getId().equals(load.getId())) {
+                    supported = true;
+                    break;
+                }
+            }
+            if (!supported) {
+                selectableLoads.add(load);
+            }
+        }
+>>>>>>> 9a1101b25aedaeb9915f780bd99b5e62bcd23d0f
         params.put("selectableLoads", selectableLoads);
 
         return new ModelAndView("ars/addConfig", params);
@@ -316,6 +415,35 @@ public class ArsController {
         if (flag) {
             arsService.saveConfig(arsConfig);
             response.setStatus("ok");
+        } else {
+            response.setStatus("nok");
+        }
+        return response;
+    }
+
+    @RequestMapping("/ars/addLoad")
+    @ResponseBody
+    public AjaxResponse addLoad(@RequestParam String neTypeId,
+                                     @RequestParam String neRelId, @RequestParam String loadId) {
+        ArsConfig arsConfig = findOrCreateArsConfig(neRelId);
+
+        ObjectLoad objectLoad = null;
+        List<ObjectLoad> loads = configService.findObjectLoads();
+        for (ObjectLoad load : loads) {
+            if (load.getId().equals(loadId)) {
+                boolean success = arsConfig.addObjectLoad(loadId);
+                if (success) {
+                    objectLoad = load;
+                }
+                break;
+            }
+        }
+        arsService.saveConfig(arsConfig);
+
+        AjaxResponse response = new AjaxResponse();
+        if (null != objectLoad) {
+            response.setStatus("ok");
+            response.setData(objectLoad);
         } else {
             response.setStatus("nok");
         }

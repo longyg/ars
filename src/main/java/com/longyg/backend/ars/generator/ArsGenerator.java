@@ -5,11 +5,9 @@ import com.longyg.backend.adaptation.main.AdaptationResourceParser;
 import com.longyg.backend.adaptation.svn.SvnDownloader;
 import com.longyg.frontend.model.ars.ARS;
 import com.longyg.frontend.model.ars.ArsConfig;
-import com.longyg.frontend.model.ars.ArsRepository;
+import com.longyg.frontend.model.ars.om.ObjectModelSpec;
 import com.longyg.frontend.model.config.AdaptationResource;
-import com.longyg.frontend.model.config.AdaptationResourceRepository;
 import com.longyg.frontend.model.config.InterfaceObject;
-import com.longyg.frontend.model.config.InterfaceRepository;
 import com.longyg.frontend.service.ArsService;
 import com.longyg.frontend.service.ConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +16,6 @@ import org.springframework.stereotype.Component;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.TreeSet;
 import java.util.logging.Logger;
 
 @Component
@@ -60,20 +56,19 @@ public class ArsGenerator {
         initAdaptationRepository();
 
         String usId = usGenerator.generateAndSave(config);
-        String omId = omGenerator.generateAndSave(config, adaptationRepository);
-
-//        String pmDlId = pmDataLoadGenerator.generateAndSave(config);
-//        String counterId = counterGenerator.generateAndSave(config);
-//        String alarmId = alarmGenerator.generateAndSave(config);
+        ObjectModelSpec om = omGenerator.generateAndSave(config, adaptationRepository);
+        String pmDlId = pmDataLoadGenerator.generateAndSave(config, adaptationRepository, om);
+        String counterId = counterGenerator.generateAndSave(config, pmDataLoadGenerator.getPmDataLoadRepository());
+        String alarmId = alarmGenerator.generateAndSave(config, adaptationRepository);
 
         ARS ars = new ARS();
         ars.setNeType(config.getNeType());
         ars.setNeVersion(config.getNeVersion());
         ars.setUserStory(usId);
-        ars.setObjectModel(omId);
-//        ars.setPmDataLoad(pmDlId);
-//        ars.setCounter(counterId);
-//        ars.setAlarm(alarmId);
+        ars.setObjectModel(om.getId());
+        ars.setPmDataLoad(pmDlId);
+        ars.setCounter(counterId);
+        ars.setAlarm(alarmId);
 
         return arsService.saveArs(ars);
     }
