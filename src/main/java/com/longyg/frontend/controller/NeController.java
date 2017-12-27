@@ -5,18 +5,14 @@ import com.longyg.frontend.model.config.InterfaceRepository;
 import com.longyg.frontend.model.ne.*;
 import com.longyg.frontend.service.NeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 import java.util.logging.Logger;
 
-@Controller
+@RestController
 public class NeController {
     private static final Logger LOG = Logger.getLogger(NeController.class.getName());
 
@@ -28,6 +24,11 @@ public class NeController {
 
     //////////////////////////////////////////////////////////////
     // NE Type
+    @RequestMapping("/api/netype")
+    public List<NeType> listNeTypes() {
+        return neService.findAllNeTypes();
+    }
+
     @RequestMapping("/netype")
     public ModelAndView listNeType() {
         List<NeType> neTypeList = neService.findAllNeTypes();
