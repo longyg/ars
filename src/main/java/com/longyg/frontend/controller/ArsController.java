@@ -295,7 +295,6 @@ public class ArsController {
         params.put("supportedLoads", supportedLoads);
 
         List<ObjectLoad> selectableLoads = new ArrayList<>();
-<<<<<<< HEAD
         List<ObjectLoad> allLoads = configService.findObjectLoads();
         for (ObjectLoad load : allLoads) {
             boolean isSupported = false;
@@ -310,7 +309,6 @@ public class ArsController {
             }
         }
 
-=======
         for (ObjectLoad load : configService.findObjectLoads()) {
             boolean supported = false;
             for (ObjectLoad ld : supportedLoads) {
@@ -323,7 +321,6 @@ public class ArsController {
                 selectableLoads.add(load);
             }
         }
->>>>>>> 9a1101b25aedaeb9915f780bd99b5e62bcd23d0f
         params.put("selectableLoads", selectableLoads);
 
         return new ModelAndView("ars/addConfig", params);

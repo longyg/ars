@@ -203,13 +203,11 @@
                 <hr/>
                 <h4><span class="glyphicon glyphicon-link"></span> Object Load</h4>
                 <div class="form-group">
-<<<<<<< HEAD
                     <label class="col-sm-3 control-label">Add Object Load</label>
                     <div class="col-sm-9">
                         <div class="row form-group">
                             <div class="col-sm-3" id="loadAddBtnDiv">
                                 <button id="loadAddBtn" type="button" class="btn btn-primary" data-toggle="modal" data-target="#createNETypeFromModal"><span class="glyphicon glyphicon-plus"></span></button>
-=======
                     <label class="col-sm-3 control-label" for="loadSelect" >Object Load</label>
                     <div class="col-sm-9">
                         <div class="row form-group">
@@ -225,18 +223,14 @@
                             </div>
                             <div class="col-sm-3" id="loadAddBtnDiv">
                                 <button id="loadAddBtn" type="button" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span></button>
->>>>>>> 9a1101b25aedaeb9915f780bd99b5e62bcd23d0f
                             </div>
                         </div>
                     </div>
                 </div>
-<<<<<<< HEAD
                 <div class="form-group" id="parentTable">
                     <label class="col-sm-3 control-label">Object Load Setting</label>
-=======
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Selected Object Load</label>
->>>>>>> 9a1101b25aedaeb9915f780bd99b5e62bcd23d0f
                     <div class="col-sm-9">
                         <table class="table table-bordered">
                             <thead>
