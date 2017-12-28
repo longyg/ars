@@ -29,6 +29,11 @@ public class NeController {
         return neService.findAllNeTypes();
     }
 
+    @RequestMapping("/api/getNeType")
+    public NeType getNeType(@RequestParam String id) {
+        return neService.findNeType(id);
+    }
+
     @RequestMapping("/netype")
     public ModelAndView listNeType() {
         List<NeType> neTypeList = neService.findAllNeTypes();
