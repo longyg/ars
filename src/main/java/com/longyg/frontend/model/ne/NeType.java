@@ -1,6 +1,8 @@
 package com.longyg.frontend.model.ne;
 
+import org.springframework.context.annotation.Primary;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.ArrayList;
@@ -11,6 +13,7 @@ import java.util.TreeSet;
 public class NeType {
     @Id
     private String id;
+    @Indexed(unique = true)
     private String name;
     private String presentation;
     private String description;
