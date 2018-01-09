@@ -67,7 +67,10 @@ public class NeController {
         neService.deleteNeType(id);
     }
 
-
+    @PostMapping(value = "/api/netype/delete")
+    public void removeNeTypes(@RequestBody List<String> ids) {
+        neService.deleteNeTypes(ids);
+    }
 
 
 

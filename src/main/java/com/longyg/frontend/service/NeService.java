@@ -61,6 +61,12 @@ public class NeService {
         neTypeRepository.deleteById(id);
     }
 
+    public void deleteNeTypes(List<String> ids) {
+        if (null != ids && ids.size() > 0) {
+            neTypeRepository.deleteByIdIn(ids);
+        }
+    }
+
     ///////////////////////////////////////////////////////
     // NE Release
     public List<NeRelease> findAllReleases() {
