@@ -1,9 +1,7 @@
 package com.longyg.frontend.controller;
 
 import com.longyg.frontend.model.config.*;
-import com.longyg.frontend.model.ne.NeType;
 import com.longyg.frontend.service.ConfigService;
-import com.longyg.frontend.service.NeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -12,14 +10,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Controller
-public class ConfigController {
+public class AdminController {
     @Autowired
     private InterfaceRepository interfaceRepository;
 

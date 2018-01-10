@@ -57,6 +57,23 @@ public class ConfigService {
         return null;
     }
 
+    public InterfaceObject saveInterface(InterfaceObject ifo) {
+        return interfaceRepository.save(ifo);
+    }
+
+    public void deleteInterface(String id) {
+        if (null == id) {
+            return;
+        }
+        interfaceRepository.deleteById(id);
+    }
+
+    public void deleteInterfaces(List<String> ids) {
+        if (null != ids && ids.size() > 0) {
+            interfaceRepository.deleteByIdIn(ids);
+        }
+    }
+
     public List<GlobalObject> findGlobalObjects() {
         return objectRepository.findAll();
     }
