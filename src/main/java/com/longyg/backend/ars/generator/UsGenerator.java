@@ -47,8 +47,8 @@ public class UsGenerator {
         UserStorySpec usSpec = new UserStorySpec();
 
         NeRelease neRelease = new NeRelease();
-        neRelease.setNeType(neParam.getNeType());
-        neRelease.setNeVersion(neParam.getNeVersion());
+        neRelease.setType(neParam.getNeType());
+        neRelease.setVersion(neParam.getNeVersion());
         usSpec.setNe(neRelease);
 
         usSpec.setTitle(createTitle());

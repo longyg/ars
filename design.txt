@@ -1,12 +1,23 @@
-NE Type configuration
-1. Agent class
-2. Adaptations
+NE Types
+NE Releases
 
-NE Type + NE Version configuration
-1. US parameters
-2. Adaptation resources
-3. Interface objects
-4. Parent hierarchy
-5. Object load
-6. Additonal alarming objects
-7. 
+Interfaces
+Adaptations
+Alarm objects
+Object Loads
+Parent Objects
+User Story Variables
+
+Release Configuration:
+ - Interfaces
+ - Adaptations
+ - Alarm objects
+ - Object Loads
+ - NE size (max/avg NEs per Network)
+ - Parent hierarchy
+ - User Story Variables
+
+Generate ARS:
+1. NE Type
+2. NE release
+3. Last NE release

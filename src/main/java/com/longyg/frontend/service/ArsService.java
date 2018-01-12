@@ -49,7 +49,7 @@ public class ArsService {
         if (null == neRelease) {
             return null;
         }
-        return arsConfigRepository.findByNeTypeAndRelease(neRelease.getNeType(), neRelease.getNeVersion());
+        return arsConfigRepository.findByNeTypeAndRelease(neRelease.getType(), neRelease.getVersion());
     }
 
     public ArsConfig saveConfig(ArsConfig arsConfig) {

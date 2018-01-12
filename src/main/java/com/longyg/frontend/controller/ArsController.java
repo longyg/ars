@@ -1,12 +1,10 @@
 package com.longyg.frontend.controller;
 
 import com.longyg.backend.ars.generator.ArsGenerator;
-import com.longyg.backend.ars.generator.UsGenerator;
 import com.longyg.frontend.model.ars.*;
 import com.longyg.frontend.model.ars.alarm.AlarmSpec;
 import com.longyg.frontend.model.ars.counter.CounterSpec;
 import com.longyg.frontend.model.ars.om.ObjectModelSpec;
-import com.longyg.frontend.model.ars.pm.ArsMeasurement;
 import com.longyg.frontend.model.ars.pm.PmDataLoadSpec;
 import com.longyg.frontend.model.ars.us.UsRepository;
 import com.longyg.frontend.model.ars.us.UserStorySpec;
@@ -20,7 +18,6 @@ import com.longyg.frontend.service.ArsService;
 import com.longyg.frontend.service.ConfigService;
 import com.longyg.frontend.service.NeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -80,8 +77,8 @@ public class ArsController {
             NeReleaseArs neArs = new NeReleaseArs();
             neArs.setNeRelease(neRelease);
 
-            ArsConfig arsConfig = arsConfigRepository.findByNeTypeAndRelease(neRelease.getNeType(), neRelease.getNeVersion());
-            ARS ars = arsRepository.findByNeTypeAndRelease(neRelease.getNeType(), neRelease.getNeVersion());
+            ArsConfig arsConfig = arsConfigRepository.findByNeTypeAndRelease(neRelease.getType(), neRelease.getVersion());
+            ARS ars = arsRepository.findByNeTypeAndRelease(neRelease.getType(), neRelease.getVersion());
 
             neArs.setArs(ars);
             neArs.setArsConfig(arsConfig);
@@ -117,8 +114,9 @@ public class ArsController {
             try
             {
                 NeRelease neRelease = neService.findRelease(neRelId);
-                arsConfig.setMaxNePerNet(neRelease.getMaxPerNet());
-                arsConfig.setAvgNePerNet(neRelease.getAvgPerNet());
+                // TODO
+                arsConfig.setMaxNePerNet(1);
+                arsConfig.setAvgNePerNet(1);
                 arsGenerator.generateAndSave(arsConfig);
             }
             catch (Exception e)
@@ -453,8 +451,8 @@ public class ArsController {
         if (arsConfig == null) {
             arsConfig = new ArsConfig();
             if (neRelease != null) {
-                arsConfig.setNeType(neRelease.getNeType());
-                arsConfig.setNeVersion(neRelease.getNeVersion());
+                arsConfig.setNeType(neRelease.getType());
+                arsConfig.setNeVersion(neRelease.getVersion());
             }
         }
         return arsConfig;
@@ -466,7 +464,7 @@ public class ArsController {
             Optional<NeType> neTypeOpt = neTypeRepository.findById(neTypeId);
             if (neTypeOpt.isPresent()) {
                 NeType neType = neTypeOpt.get();
-                neReleaseList = neReleaseRepository.findByNeType(neType.getName());
+                neReleaseList = neReleaseRepository.findByType(neType.getName());
             }
         }
         return neReleaseList;
@@ -477,7 +475,7 @@ public class ArsController {
             Optional<NeRelease> neRelOpt = neReleaseRepository.findById(neRelId);
             if (neRelOpt.isPresent()) {
                 NeRelease neRelease = neRelOpt.get();
-                return arsConfigRepository.findByNeTypeAndRelease(neRelease.getNeType(), neRelease.getNeVersion());
+                return arsConfigRepository.findByNeTypeAndRelease(neRelease.getType(), neRelease.getVersion());
             }
         }
         return null;

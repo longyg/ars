@@ -141,8 +141,8 @@ public class NeController {
         else
         {
             neInterface = new NeInterface();
-            neInterface.setNeType(neRelease.getNeType());
-            neInterface.setNeVersion(neRelease.getNeVersion());
+            neInterface.setNeType(neRelease.getType());
+            neInterface.setNeVersion(neRelease.getVersion());
             neInterface.addInterface(ifId);
         }
 

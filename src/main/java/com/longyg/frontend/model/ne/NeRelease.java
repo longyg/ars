@@ -7,23 +7,21 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class NeRelease {
     @Id
     private String id;
-    private String neType;
-    private String neVersion;
-    private int maxPerNet;
-    private int avgPerNet;
+    private String type;
+    private String version;
     private String remarks;
 
     public NeRelease() {
     }
 
-    public NeRelease(String neType, String neVersion) {
-        this.neType = neType;
-        this.neVersion = neVersion;
+    public NeRelease(String type, String version) {
+        this.type = type;
+        this.version = version;
     }
 
-    public NeRelease(String neType, String neVersion, String remarks) {
-        this.neType = neType;
-        this.neVersion = neVersion;
+    public NeRelease(String type, String version, String remarks) {
+        this.type = type;
+        this.version = version;
         this.remarks = remarks;
     }
 
@@ -35,20 +33,20 @@ public class NeRelease {
         this.id = id;
     }
 
-    public String getNeType() {
-        return neType;
+    public String getType() {
+        return type;
     }
 
-    public void setNeType(String neType) {
-        this.neType = neType;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public String getNeVersion() {
-        return neVersion;
+    public String getVersion() {
+        return version;
     }
 
-    public void setNeVersion(String neVersion) {
-        this.neVersion = neVersion;
+    public void setVersion(String version) {
+        this.version = version;
     }
 
     public String getRemarks() {
@@ -59,37 +57,21 @@ public class NeRelease {
         this.remarks = remarks;
     }
 
-    public int getMaxPerNet() {
-        return maxPerNet;
-    }
-
-    public void setMaxPerNet(int maxPerNet) {
-        this.maxPerNet = maxPerNet;
-    }
-
-    public int getAvgPerNet() {
-        return avgPerNet;
-    }
-
-    public void setAvgPerNet(int avgPerNet) {
-        this.avgPerNet = avgPerNet;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        NeRelease that = (NeRelease) o;
+        NeRelease neRelease = (NeRelease) o;
 
-        if (neType != null ? !neType.equals(that.neType) : that.neType != null) return false;
-        return neVersion != null ? neVersion.equals(that.neVersion) : that.neVersion == null;
+        if (!type.equals(neRelease.type)) return false;
+        return version.equals(neRelease.version);
     }
 
     @Override
     public int hashCode() {
-        int result = neType != null ? neType.hashCode() : 0;
-        result = 31 * result + (neVersion != null ? neVersion.hashCode() : 0);
+        int result = type.hashCode();
+        result = 31 * result + version.hashCode();
         return result;
     }
 }

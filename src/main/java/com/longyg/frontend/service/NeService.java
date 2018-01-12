@@ -87,11 +87,17 @@ public class NeService {
         neReleaseRepository.deleteById(id);
     }
 
+    public void deleteReleases(List<String> ids) {
+        if (null != ids && ids.size() > 0) {
+            neReleaseRepository.deleteByIdIn(ids);
+        }
+    }
+
     public List<NeRelease> findAllReleasesByType(String neType) {
         if (null == neType) {
             return new ArrayList<>();
         }
-        return neReleaseRepository.findByNeType(neType);
+        return neReleaseRepository.findByType(neType);
     }
 
     public List<NeRelease> findAllReleasesByTypeId(String neTypeId) {
@@ -141,7 +147,7 @@ public class NeService {
 
         if (null != neRelease)
         {
-            return findAllParams(neRelease.getNeType(), neRelease.getNeVersion());
+            return findAllParams(neRelease.getType(), neRelease.getVersion());
         }
 
         return neParamList;
@@ -193,7 +199,7 @@ public class NeService {
         if (null == neRelease) {
             return null;
         }
-        return findNeInterface(neRelease.getNeType(), neRelease.getNeVersion());
+        return findNeInterface(neRelease.getType(), neRelease.getVersion());
     }
 
     public NeInterface findNeInterface(String neRelId) {

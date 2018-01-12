@@ -1,5 +1,6 @@
 package com.longyg.frontend.controller;
 
+import com.longyg.frontend.model.ne.NeRelease;
 import com.longyg.frontend.model.ne.NeType;
 import com.longyg.frontend.service.NeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,5 +62,52 @@ public class NeRestController {
     @PostMapping(value = "/api/netype/delete")
     public void removeNeTypes(@RequestBody List<String> ids) {
         neService.deleteNeTypes(ids);
+    }
+
+    //////////////////////////////////////////////////////////////
+    // NE Release
+    @GetMapping("/api/nerel")
+    public List<NeRelease> getAllNeReleases() {
+        return neService.findAllReleases();
+    }
+
+    @PostMapping("/api/nerel")
+    public NeRelease addNeRelease(@RequestBody NeRelease entity) {
+        return neService.saveRelease(entity);
+    }
+
+    @GetMapping(value = "/api/nerel/{id}")
+    public ResponseEntity<NeRelease> getNeRelease(@PathVariable("id") String id) {
+        NeRelease entity = neService.findRelease(id);
+        if (null != entity) {
+            return new ResponseEntity<>(entity, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PutMapping(value = "/api/nerel/{id}")
+    public ResponseEntity<NeRelease> updateNeRelease(@PathVariable("id") String id, @RequestBody NeRelease entity) {
+        NeRelease entityData = neService.findRelease(id);
+        if (null == entityData) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        entityData.setType(entity.getType());
+        entityData.setVersion(entity.getVersion());
+        entityData.setRemarks(entity.getRemarks());
+
+        NeRelease updatedEntity = neService.saveRelease(entityData);
+
+        return new ResponseEntity<>(updatedEntity, HttpStatus.OK);
+    }
+
+    @DeleteMapping(value = "/api/nerel/{id}")
+    public void removeNeRelease(@PathVariable("id") String id) {
+        neService.deleteRelease(id);
+    }
+
+    @PostMapping(value = "/api/nerel/delete")
+    public void removeNeReleases(@RequestBody List<String> ids) {
+        neService.deleteReleases(ids);
     }
 }
