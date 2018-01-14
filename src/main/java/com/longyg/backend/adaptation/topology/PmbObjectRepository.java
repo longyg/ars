@@ -3,7 +3,7 @@ package com.longyg.backend.adaptation.topology;
 import com.longyg.backend.adaptation.main.AdaptationRepository;
 import com.longyg.backend.adaptation.pm.*;
 import com.longyg.frontend.model.ars.ArsConfig;
-import com.longyg.frontend.model.config.GlobalObject;
+import com.longyg.frontend.model.config.ParentObject;
 import com.longyg.frontend.model.config.ObjectLoad;
 
 import java.util.*;
@@ -20,7 +20,7 @@ public class PmbObjectRepository {
 
     private ArsConfig config;
 
-    private List<GlobalObject> globalObjects;
+    private List<ParentObject> globalObjects;
 
     private List<ObjectLoad> objectLoads;
 
@@ -32,7 +32,7 @@ public class PmbObjectRepository {
         this.allReleaseObjects = allReleaseObjects;
     }
 
-    public PmbObjectRepository(AdaptationRepository adaptationRepository, ArsConfig config, List<GlobalObject> globalObjects, List<ObjectLoad> objectLoads) {
+    public PmbObjectRepository(AdaptationRepository adaptationRepository, ArsConfig config, List<ParentObject> globalObjects, List<ObjectLoad> objectLoads) {
         this.adaptationRepository = adaptationRepository;
         this.config = config;
         this.globalObjects = globalObjects;
@@ -194,7 +194,7 @@ public class PmbObjectRepository {
                     List<PmbObject> rootObjects = rootObjectMap.get(adaptationId);
 
                     String lastClass = getLastClass(parent);
-                    GlobalObject globalObject = findGlobalObjectByName(lastClass);
+                    ParentObject globalObject = findGlobalObjectByName(lastClass);
                     if (null == globalObject) {
                         throw new Exception("Parent Object class '" + lastClass + "' is not defined.");
                     }
@@ -220,8 +220,8 @@ public class PmbObjectRepository {
         }
     }
 
-    private GlobalObject findGlobalObjectByName(String name) {
-        for (GlobalObject globalObject : globalObjects) {
+    private ParentObject findGlobalObjectByName(String name) {
+        for (ParentObject globalObject : globalObjects) {
             if (globalObject.getName().equals(name)) {
                 return globalObject;
             }
@@ -248,7 +248,7 @@ public class PmbObjectRepository {
         }
         String lastClass = getLastClass(hierarchy);
 
-        GlobalObject globalObject = findGlobalObjectByName(lastClass);
+        ParentObject globalObject = findGlobalObjectByName(lastClass);
         if (null == globalObject) {
             throw new Exception("Parent Object class '" + lastClass + "' is not defined.");
         }

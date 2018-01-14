@@ -3,7 +3,7 @@ package com.longyg.frontend.model.config;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "adaptations")
+@Document(collection = "adaptation_resources")
 public class AdaptationResource {
     @Id
     private String id;

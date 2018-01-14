@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeSet;
 
-@Document(collection = "netype")
+@Document(collection = "ne_types")
 public class NeType {
     @Id
     private String id;

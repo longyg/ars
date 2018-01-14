@@ -3,7 +3,7 @@ package com.longyg.frontend.model.config;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "interfaces")
+@Document(collection = "interface_objects")
 public class InterfaceObject {
     @Id
     private String id;

@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Document(collection = "arsconfig")
+@Document(collection = "ars_config")
 public class ArsConfig {
     @Id
     private String id;

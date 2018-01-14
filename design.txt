@@ -1,11 +1,11 @@
-NE Types
-NE Releases
+NE Types (Done)
+NE Releases (Done)
 
-Interfaces
+Interfaces (Done)
 Adaptations
-Alarm objects
+Alarm objects (Done)
 Object Loads
-Parent Objects
+Parent Objects (Done)
 User Story Variables
 
 Release Configuration:

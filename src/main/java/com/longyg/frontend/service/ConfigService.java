@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.TreeSet;
 
 @Component
 public class ConfigService {
@@ -21,8 +20,14 @@ public class ConfigService {
     private ObjectRepository objectRepository;
 
     @Autowired
+    private AlarmObjectRepository alarmObjectRepository;
+
+    @Autowired
     private ObjectLoadRepository objectLoadRepository;
 
+
+    //////////////////////////////////////////////////////////
+    // Adaptation Resource Service
     public AdaptationResource findResource(String id) {
         if (null == id) {
             return null;
@@ -42,6 +47,9 @@ public class ConfigService {
         return resourceRepository.save(resource);
     }
 
+
+    //////////////////////////////////////////////////////////
+    // Interface Object Service
     public List<InterfaceObject> findInterfaces() {
         return interfaceRepository.findAll();
     }
@@ -74,10 +82,79 @@ public class ConfigService {
         }
     }
 
-    public List<GlobalObject> findGlobalObjects() {
+
+    //////////////////////////////////////////////////////////
+    // Parent Object Service
+    public List<ParentObject> findParentObjects() {
         return objectRepository.findAll();
     }
 
+    public ParentObject saveParentObject(ParentObject pto) {
+        return objectRepository.save(pto);
+    }
+
+    public ParentObject findParentObject(String id) {
+        if (null == id) {
+            return null;
+        }
+        Optional<ParentObject> opt = objectRepository.findById(id);
+        if (opt.isPresent()) {
+            return opt.get();
+        }
+        return null;
+    }
+
+    public void deleteParentObject(String id) {
+        if (null == id) {
+            return;
+        }
+        objectRepository.deleteById(id);
+    }
+
+    public void deleteParentObjects(List<String> ids) {
+        if (null != ids && ids.size() > 0) {
+            objectRepository.deleteByIdIn(ids);
+        }
+    }
+
+
+    //////////////////////////////////////////////////////////
+    // Alarm Object Service
+    public List<AlarmObject> findAlarmObjects() {
+        return alarmObjectRepository.findAll();
+    }
+
+    public AlarmObject saveAlarmObject(AlarmObject entity) {
+        return alarmObjectRepository.save(entity);
+    }
+
+    public AlarmObject findAlarmObject(String id) {
+        if (null == id) {
+            return null;
+        }
+        Optional<AlarmObject> opt = alarmObjectRepository.findById(id);
+        if (opt.isPresent()) {
+            return opt.get();
+        }
+        return null;
+    }
+
+    public void deleteAlarmObject(String id) {
+        if (null == id) {
+            return;
+        }
+        alarmObjectRepository.deleteById(id);
+    }
+
+    public void deleteAlarmObjects(List<String> ids) {
+        if (null != ids && ids.size() > 0) {
+            alarmObjectRepository.deleteByIdIn(ids);
+        }
+    }
+
+
+    //////////////////////////////////////////////////////////
+    // Object Load Service
     public List<ObjectLoad> findObjectLoads() {
         return objectLoadRepository.findAll();
     }

@@ -59,23 +59,23 @@ public class AdminController {
 
     @RequestMapping("/object")
     public ModelAndView listObject() {
-        List<GlobalObject> objectList = objectRepository.findAll();
+        List<ParentObject> objectList = objectRepository.findAll();
         Map<String, Object> params = new HashMap<>();
         params.put("objectList", objectList);
         return new ModelAndView("config/object", params);
     }
 
     @RequestMapping(value = "/object/add", method = RequestMethod.POST)
-    public String addObject(@ModelAttribute GlobalObject ao) {
+    public String addObject(@ModelAttribute ParentObject ao) {
         objectRepository.save(ao);
         return "redirect:/object";
     }
 
     @RequestMapping("/object/delete")
-    public String deleteObject(@ModelAttribute GlobalObject ao) {
-        List<GlobalObject> objectList = objectRepository.findAll();
-        GlobalObject addo = null;
-        for (GlobalObject ado : objectList) {
+    public String deleteObject(@ModelAttribute ParentObject ao) {
+        List<ParentObject> objectList = objectRepository.findAll();
+        ParentObject addo = null;
+        for (ParentObject ado : objectList) {
             if (ado.getName().equals(ao.getName())) {
                 addo = ado;
             }

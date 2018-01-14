@@ -4,6 +4,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
 
-public interface ObjectRepository extends MongoRepository<ParentObject, String> {
+public interface AlarmObjectRepository extends MongoRepository<AlarmObject, String> {
     void deleteByIdIn(List<String> ids);
 }

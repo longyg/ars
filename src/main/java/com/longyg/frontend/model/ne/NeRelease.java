@@ -3,7 +3,7 @@ package com.longyg.frontend.model.ne;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "nes")
+@Document(collection = "ne_releases")
 public class NeRelease {
     @Id
     private String id;

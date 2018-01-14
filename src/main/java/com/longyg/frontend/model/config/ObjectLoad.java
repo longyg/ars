@@ -3,7 +3,7 @@ package com.longyg.frontend.model.config;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "ObjectLoad")
+@Document(collection = "object_loads")
 public class ObjectLoad {
     @Id
     private String id;

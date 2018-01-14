@@ -1,16 +1,17 @@
 package com.longyg.frontend.model.config;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "objects")
-public class GlobalObject {
+@Document(collection = "alarm_objects")
+public class AlarmObject {
     @Id
     private String id;
+    @Indexed (unique = true)
     private String name;
     private String presentation;
-    private String nameInOMeS;
-    private boolean isTransient;
+    private String description;
 
     public String getId() {
         return id;
@@ -36,19 +37,11 @@ public class GlobalObject {
         this.presentation = presentation;
     }
 
-    public String getNameInOMeS() {
-        return nameInOMeS;
+    public String getDescription() {
+        return description;
     }
 
-    public void setNameInOMeS(String nameInOMeS) {
-        this.nameInOMeS = nameInOMeS;
-    }
-
-    public boolean isTransient() {
-        return isTransient;
-    }
-
-    public void setTransient(boolean aTransient) {
-        isTransient = aTransient;
+    public void setDescription(String description) {
+        this.description = description;
     }
 }
