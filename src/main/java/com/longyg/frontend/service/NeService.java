@@ -22,8 +22,11 @@ public class NeService {
     @Autowired
     private NeInterfaceRepository neInterfaceRepository;
 
+    @Autowired
+    private AdaptationRepository adaptationRepository;
+
     ///////////////////////////////////////
-    // NE Type
+    // NE Type Service
     public List<NeType> findAllNeTypes() {
         return neTypeRepository.findAll();
     }
@@ -68,7 +71,7 @@ public class NeService {
     }
 
     ///////////////////////////////////////////////////////
-    // NE Release
+    // NE Release Service
     public List<NeRelease> findAllReleases() {
         return neReleaseRepository.findAll();
     }
@@ -125,6 +128,43 @@ public class NeService {
         }
 
         return neRelease;
+    }
+
+    ///////////////////////////////////////////////////////
+    // NE Adaptation Service
+    public List<Adaptation> findAllAdaptations() {
+        return adaptationRepository.findAll();
+    }
+
+    public Adaptation saveAdaptation(Adaptation adaptation) {
+        if (null == adaptation) {
+            return null;
+        }
+        return adaptationRepository.save(adaptation);
+    }
+
+    public void deleteAdaptation(String id) {
+        if (null == id) {
+            return;
+        }
+        adaptationRepository.deleteById(id);
+    }
+
+    public void deleteAdaptations(List<String> ids) {
+        if (null != ids && ids.size() > 0) {
+            adaptationRepository.deleteByIdIn(ids);
+        }
+    }
+
+    public Adaptation findAdaptation(String id) {
+        if (null == id) {
+            return null;
+        }
+        Optional<Adaptation> opt = adaptationRepository.findById(id);
+        if (opt.isPresent()) {
+            return opt.get();
+        }
+        return null;
     }
 
     ///////////////////////////////////////////////////////////////////////

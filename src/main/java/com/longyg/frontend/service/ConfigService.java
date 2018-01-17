@@ -184,10 +184,16 @@ public class ConfigService {
         return loads;
     }
 
-    public void deleteLoad(String id) {
+    public void deleteObjectLoad(String id) {
         if (null == id) {
             return;
         }
         objectLoadRepository.deleteById(id);
+    }
+
+    public void deleteObjectLoads(List<String> ids) {
+        if (null != ids && ids.size() > 0) {
+            objectLoadRepository.deleteByIdIn(ids);
+        }
     }
 }

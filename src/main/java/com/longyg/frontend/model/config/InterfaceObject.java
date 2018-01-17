@@ -1,12 +1,14 @@
 package com.longyg.frontend.model.config;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "interface_objects")
 public class InterfaceObject {
     @Id
     private String id;
+    @Indexed (unique = true)
     private String name;
     private String presentation;
     private String description;

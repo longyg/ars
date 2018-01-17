@@ -1,5 +1,6 @@
 package com.longyg.frontend.controller;
 
+import com.longyg.frontend.model.ne.Adaptation;
 import com.longyg.frontend.model.ne.NeRelease;
 import com.longyg.frontend.model.ne.NeType;
 import com.longyg.frontend.service.NeService;
@@ -17,7 +18,7 @@ public class NeRestController {
     private NeService neService;
 
     //////////////////////////////////////////////////////////////
-    // NE Type
+    // NE Type Rest API
     @GetMapping("/api/netype")
     public List<NeType> getAllNeTypes() {
         return neService.findAllNeTypes();
@@ -65,7 +66,7 @@ public class NeRestController {
     }
 
     //////////////////////////////////////////////////////////////
-    // NE Release
+    // NE Release Rest API
     @GetMapping("/api/nerel")
     public List<NeRelease> getAllNeReleases() {
         return neService.findAllReleases();
@@ -109,5 +110,54 @@ public class NeRestController {
     @PostMapping(value = "/api/nerel/delete")
     public void removeNeReleases(@RequestBody List<String> ids) {
         neService.deleteReleases(ids);
+    }
+
+
+    //////////////////////////////////////////////////////////////
+    // NE Adaptation Rest API
+    @GetMapping("/api/adap")
+    public List<Adaptation> getAllAdaptations() {
+        return neService.findAllAdaptations();
+    }
+
+    @PostMapping("/api/adap")
+    public Adaptation addAdaptation(@RequestBody Adaptation entity) {
+        return neService.saveAdaptation(entity);
+    }
+
+    @GetMapping(value = "/api/adap/{id}")
+    public ResponseEntity<Adaptation> getAdaptation(@PathVariable("id") String id) {
+        Adaptation entity = neService.findAdaptation(id);
+        if (null != entity) {
+            return new ResponseEntity<>(entity, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PutMapping(value = "/api/adap/{id}")
+    public ResponseEntity<Adaptation> updateAdaptation(@PathVariable("id") String id, @RequestBody Adaptation entity) {
+        Adaptation entityData = neService.findAdaptation(id);
+        if (null == entityData) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        entityData.setAdaptationId(entity.getAdaptationId());
+        entityData.setAdaptationRelease(entity.getAdaptationRelease());
+        entityData.setNeType(entity.getNeType());
+        entityData.setSourcePath(entity.getSourcePath());
+
+        Adaptation updatedEntity = neService.saveAdaptation(entityData);
+
+        return new ResponseEntity<>(updatedEntity, HttpStatus.OK);
+    }
+
+    @DeleteMapping(value = "/api/adap/{id}")
+    public void removeAdaptation(@PathVariable("id") String id) {
+        neService.deleteAdaptation(id);
+    }
+
+    @PostMapping(value = "/api/adap/delete")
+    public void removeAdaptations(@RequestBody List<String> ids) {
+        neService.deleteAdaptations(ids);
     }
 }

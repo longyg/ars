@@ -2,6 +2,7 @@ package com.longyg.frontend.controller;
 
 import com.longyg.frontend.model.config.AlarmObject;
 import com.longyg.frontend.model.config.InterfaceObject;
+import com.longyg.frontend.model.config.ObjectLoad;
 import com.longyg.frontend.model.config.ParentObject;
 import com.longyg.frontend.service.ConfigService;
 import javafx.scene.Parent;
@@ -158,5 +159,69 @@ public class AdminRestController {
     @PostMapping(value = "/api/ao/delete")
     public void removeAlarmObjects(@RequestBody List<String> ids) {
         configService.deleteAlarmObjects(ids);
+    }
+
+
+
+    //////////////////////////////////////////////////////////////
+    // Object Load Rest API
+    @GetMapping("/api/ol")
+    public List<ObjectLoad> getAllObjectLoads() {
+        return configService.findObjectLoads();
+    }
+
+    @PostMapping("/api/ol")
+    public ObjectLoad addObjectLoad(@RequestBody ObjectLoad entity) {
+        List<ObjectLoad> existingLoads = configService.findObjectLoads();
+        for (ObjectLoad load : existingLoads) {
+            if (load.getObjectClass().equals(entity.getObjectClass())
+                    && load.getRelatedObjectClass().equals(entity.getRelatedObjectClass())) {
+                return load;
+            }
+        }
+        return configService.saveObjectLoad(entity);
+    }
+
+    @GetMapping(value = "/api/ol/{id}")
+    public ResponseEntity<ObjectLoad> getObjectLoad(@PathVariable("id") String id) {
+        ObjectLoad entity = configService.findObjectLoad(id);
+        if (null != entity) {
+            return new ResponseEntity<>(entity, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PutMapping(value = "/api/ol/{id}")
+    public ResponseEntity<ObjectLoad> updateObjectLoad(@PathVariable("id") String id, @RequestBody ObjectLoad entity) {
+        ObjectLoad entityData = configService.findObjectLoad(id);
+        if (null == entityData) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        List<ObjectLoad> existingLoads = configService.findObjectLoads();
+        for (ObjectLoad load : existingLoads) {
+            if (load.getObjectClass().equals(entity.getObjectClass())
+                    && load.getRelatedObjectClass().equals(entity.getRelatedObjectClass()) && !load.getId().equals(entityData.getId())) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+        }
+        entityData.setObjectClass(entity.getObjectClass());
+        entityData.setAvg(entity.getAvg());
+        entityData.setMax(entity.getMax());
+        entityData.setRelatedObjectClass(entity.getRelatedObjectClass());
+
+        ObjectLoad updatedEntity = configService.saveObjectLoad(entityData);
+
+        return new ResponseEntity<>(updatedEntity, HttpStatus.OK);
+    }
+
+    @DeleteMapping(value = "/api/ol/{id}")
+    public void removeObjectLoad(@PathVariable("id") String id) {
+        configService.deleteObjectLoad(id);
+    }
+
+    @PostMapping(value = "/api/ol/delete")
+    public void removeObjectLoads(@RequestBody List<String> ids) {
+        configService.deleteObjectLoads(ids);
     }
 }

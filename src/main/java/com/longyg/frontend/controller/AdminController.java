@@ -133,7 +133,7 @@ public class AdminController {
 
     @RequestMapping(value = "/ol/delete")
     public String deleteOl(@RequestParam String id) {
-        configService.deleteLoad(id);
+        configService.deleteObjectLoad(id);
         return "redirect:/ol";
     }
 }

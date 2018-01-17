@@ -2,9 +2,9 @@ NE Types (Done)
 NE Releases (Done)
 
 Interfaces (Done)
-Adaptations
+Adaptations (Done)
 Alarm objects (Done)
-Object Loads
+Object Loads (Done)
 Parent Objects (Done)
 User Story Variables
 
