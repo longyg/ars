@@ -25,6 +25,9 @@ public class NeService {
     @Autowired
     private AdaptationRepository adaptationRepository;
 
+    @Autowired
+    private ReleaseConfigRepository releaseConfigRepository;
+
     ///////////////////////////////////////
     // NE Type Service
     public List<NeType> findAllNeTypes() {
@@ -166,6 +169,45 @@ public class NeService {
         }
         return null;
     }
+
+
+    ///////////////////////////////////////////////////////
+    // NE Release Config Service
+    public List<ReleaseConfig> findAllReleaseConfigs() {
+        return releaseConfigRepository.findAll();
+    }
+
+    public ReleaseConfig saveReleaseConfig(ReleaseConfig config) {
+        if (null == config) {
+            return null;
+        }
+        return releaseConfigRepository.save(config);
+    }
+
+    public void deleteReleaseConfig(String id) {
+        if (null == id) {
+            return;
+        }
+        releaseConfigRepository.deleteById(id);
+    }
+
+    public void deleteReleaseConfigs(List<String> ids) {
+        if (null != ids && ids.size() > 0) {
+            releaseConfigRepository.deleteByIdIn(ids);
+        }
+    }
+
+    public ReleaseConfig findReleaseConfig(String id) {
+        if (null == id) {
+            return null;
+        }
+        Optional<ReleaseConfig> opt = releaseConfigRepository.findById(id);
+        if (opt.isPresent()) {
+            return opt.get();
+        }
+        return null;
+    }
+
 
     ///////////////////////////////////////////////////////////////////////
     // NE Param

@@ -3,6 +3,7 @@ package com.longyg.frontend.controller;
 import com.longyg.frontend.model.ne.Adaptation;
 import com.longyg.frontend.model.ne.NeRelease;
 import com.longyg.frontend.model.ne.NeType;
+import com.longyg.frontend.model.ne.ReleaseConfig;
 import com.longyg.frontend.service.NeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -159,5 +160,59 @@ public class NeRestController {
     @PostMapping(value = "/api/adap/delete")
     public void removeAdaptations(@RequestBody List<String> ids) {
         neService.deleteAdaptations(ids);
+    }
+
+
+
+    //////////////////////////////////////////////////////////////
+    // NE Release Config Rest API
+    @GetMapping("/api/relconfig")
+    public List<ReleaseConfig> getAllReleaseConfigs() {
+        return neService.findAllReleaseConfigs();
+    }
+
+    @PostMapping("/api/relconfig")
+    public ReleaseConfig addReleaseConfig(@RequestBody ReleaseConfig entity) {
+        return neService.saveReleaseConfig(entity);
+    }
+
+    @GetMapping(value = "/api/relconfig/{id}")
+    public ResponseEntity<ReleaseConfig> getReleaseConfig(@PathVariable("id") String id) {
+        ReleaseConfig entity = neService.findReleaseConfig(id);
+        if (null != entity) {
+            return new ResponseEntity<>(entity, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PutMapping(value = "/api/relconfig/{id}")
+    public ResponseEntity<ReleaseConfig> updateReleaseConfig(@PathVariable("id") String id, @RequestBody ReleaseConfig entity) {
+        ReleaseConfig entityData = neService.findReleaseConfig(id);
+        if (null == entityData) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        entityData.setNeType(entity.getNeType());
+        entityData.setNeVersion(entity.getNeVersion());
+        entityData.setInterfaces(entity.getInterfaces());
+        entityData.setAdaptations(entity.getAdaptations());
+        entityData.setAlarmObjects(entity.getAlarmObjects());
+        entityData.setNeSize(entity.getNeSize());
+        entityData.setObjectLoads(entity.getObjectLoads());
+        entityData.setParentHierarchies(entity.getParentHierarchies());
+
+        ReleaseConfig updatedEntity = neService.saveReleaseConfig(entityData);
+
+        return new ResponseEntity<>(updatedEntity, HttpStatus.OK);
+    }
+
+    @DeleteMapping(value = "/api/relconfig/{id}")
+    public void removeReleaseConfig(@PathVariable("id") String id) {
+        neService.deleteReleaseConfig(id);
+    }
+
+    @PostMapping(value = "/api/relconfig/delete")
+    public void removeReleaseConfigs(@RequestBody List<String> ids) {
+        neService.deleteReleaseConfigs(ids);
     }
 }
