@@ -21,7 +21,7 @@ public class ReleaseConfig {
 
     private List<String> adaptations = new ArrayList<>();
 
-    private List<String> alarmObjects = new ArrayList<>();
+    private List<String> alarmObjs = new ArrayList<>();
 
     private List<String> objectLoads = new ArrayList<>();
 
@@ -69,12 +69,12 @@ public class ReleaseConfig {
         this.adaptations = adaptations;
     }
 
-    public List<String> getAlarmObjects() {
-        return alarmObjects;
+    public List<String> getAlarmObjs() {
+        return alarmObjs;
     }
 
-    public void setAlarmObjects(List<String> alarmObjects) {
-        this.alarmObjects = alarmObjects;
+    public void setAlarmObjs(List<String> alarmObjs) {
+        this.alarmObjs = alarmObjs;
     }
 
     public List<String> getObjectLoads() {

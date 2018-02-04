@@ -40,6 +40,11 @@ public class AdminRestController {
         }
     }
 
+    @PostMapping(value = "/api/ifo/list")
+    public Iterable<InterfaceObject> getInterfaces(@RequestBody List<String> ids) {
+        return configService.findInterfaces(ids);
+    }
+
     @PutMapping(value = "/api/ifo/{id}")
     public ResponseEntity<InterfaceObject> updateInterface(@PathVariable("id") String id, @RequestBody InterfaceObject entity) {
         InterfaceObject entityData = configService.findInterface(id);

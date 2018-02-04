@@ -59,13 +59,7 @@ public class ArsController {
     @Autowired
     private ArsGenerator arsGenerator;
 
-    @RequestMapping("/api/ars")
-    public List<ARS> listArs() {
-        List<ARS> list = arsRepository.findAll();
-        return list;
-    }
-
-    @RequestMapping("/ars1")
+    @RequestMapping("/ars")
     public ModelAndView list(HttpServletRequest request) {
         String neTypeId = request.getParameter("neTypeId");
 

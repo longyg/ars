@@ -20,6 +20,7 @@ import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -45,6 +46,26 @@ public class ArsService {
     @Autowired
     private AlarmRepository alarmRepository;
 
+    // ARS services
+    public List<ARS> findAllArses() {
+        return arsRepository.findAll();
+    }
+
+    public ARS findArs(String neType, String neVersion) {
+        return arsRepository.findByNeTypeAndRelease(neType, neVersion);
+    }
+
+    public ARS saveArs(ARS ars) {
+        return arsRepository.save(ars);
+    }
+
+    public void deleteArses(List<String> ids) {
+        if (null != ids && ids.size() > 0) {
+            arsRepository.deleteByIdIn(ids);
+        }
+    }
+
+    // ARS Config Services
     public ArsConfig findArsConfig(NeRelease neRelease) {
         if (null == neRelease) {
             return null;
@@ -56,14 +77,12 @@ public class ArsService {
         return arsConfigRepository.save(arsConfig);
     }
 
-    public ARS saveArs(ARS ars) {
-        return arsRepository.save(ars);
-    }
-
+    // User Story Services
     public UserStorySpec saveUs(UserStorySpec usSpec) {
         return usRepository.save(usSpec);
     }
 
+    // Object Model Services
     public ObjectModelSpec saveObjectModel(ObjectModelSpec omSpec) {
         return omRepository.save(omSpec);
     }
@@ -79,6 +98,7 @@ public class ArsService {
         return null;
     }
 
+    // PM Data Load Services
     public PmDataLoadSpec savePmDataLoad(PmDataLoadSpec spec) {
         return pmRepository.save(spec);
     }
@@ -94,6 +114,7 @@ public class ArsService {
         return null;
     }
 
+    // Counter Services
     public CounterSpec saveCounter(CounterSpec spec) {
         return counterRepository.save(spec);
     }
@@ -109,6 +130,7 @@ public class ArsService {
         return null;
     }
 
+    // Alarm Services
     public AlarmSpec saveAlarm(AlarmSpec spec) {
         return alarmRepository.save(spec);
     }

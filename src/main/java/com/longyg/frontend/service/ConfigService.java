@@ -54,6 +54,10 @@ public class ConfigService {
         return interfaceRepository.findAll();
     }
 
+    public Iterable<InterfaceObject> findInterfaces(Iterable<String> ids) {
+        return interfaceRepository.findAllById(ids);
+    }
+
     public InterfaceObject findInterface(String id) {
         if (null == id) {
             return null;

@@ -8,7 +8,7 @@ Object Loads (Done)
 Parent Objects (Done)
 User Story Variables
 
-Release Configuration:
+Release Configuration: (Done)
  - Interfaces
  - Adaptations
  - Alarm objects
@@ -21,3 +21,4 @@ Generate ARS:
 1. NE Type
 2. NE release
 3. Last NE release
+4. Older NE releases

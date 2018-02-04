@@ -196,7 +196,7 @@ public class NeRestController {
         entityData.setNeVersion(entity.getNeVersion());
         entityData.setInterfaces(entity.getInterfaces());
         entityData.setAdaptations(entity.getAdaptations());
-        entityData.setAlarmObjects(entity.getAlarmObjects());
+        entityData.setAlarmObjs(entity.getAlarmObjs());
         entityData.setNeSize(entity.getNeSize());
         entityData.setObjectLoads(entity.getObjectLoads());
         entityData.setParentHierarchies(entity.getParentHierarchies());
